@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Dividend Investing — DivSprout</title>
+  <meta name="description" content="Clear, jargon-free guides to dividend investing concepts: DRIP, dividend yield, yield on cost, and compounding. Free educational resources for retail investors.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/learn/">
+
+  <meta property="og:type"      content="website">
+  <meta property="og:title"     content="Learn Dividend Investing — DivSprout">
+  <meta property="og:description" content="Clear, jargon-free guides to dividend investing concepts. Free educational resources.">
+  <meta property="og:url"       content="https://divsprout.com/learn/">
+  <meta property="og:site_name" content="DivSprout">
+  <meta property="og:image"     content="https://divsprout.com/assets/images/og-home.png">
+  <meta name="twitter:card"     content="summary_large_image">
+  <meta name="twitter:image"    content="https://divsprout.com/assets/images/og-home.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+
+  <style>
+    .learn-hero {
+      padding-top: calc(var(--nav-height) + var(--space-9));
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-10);
+    }
+
+    .learn-hero__inner { max-width: 640px; }
+
+    .learn-eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-green);
+      opacity: .85;
+      margin-bottom: var(--space-4);
+    }
+
+    .learn-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 300;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-4);
+    }
+
+    .learn-hero__lead {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: 560px;
+    }
+
+    .disclaimer-bar {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-green);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-10);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+    }
+
+    .disclaimer-bar strong { color: var(--color-text-secondary); }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      margin-bottom: var(--space-12);
+    }
+
+    @media (max-width: 680px) {
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      transition: border-color var(--duration-fast), transform var(--duration-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-green-dim);
+      opacity: 0;
+      transition: opacity var(--duration-fast);
+    }
+
+    .article-card:hover {
+      border-color: var(--color-border-accent);
+      transform: translateY(-2px);
+    }
+
+    .article-card:hover::before { opacity: 1; }
+
+    .article-card__tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-green);
+      margin-bottom: var(--space-3);
+      position: relative;
+    }
+
+    .article-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 300;
+      color: var(--color-text-primary);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-3);
+      position: relative;
+    }
+
+    .article-card__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      flex: 1;
+      position: relative;
+    }
+
+    .article-card__cta {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-green);
+      letter-spacing: var(--tracking-wide);
+      margin-top: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      transition: gap var(--duration-fast);
+    }
+
+    .article-card:hover .article-card__cta { gap: 10px; }
+
+    .article-card__read {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-4);
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Learn Dividend Investing",
+    "description": "Clear, jargon-free guides to dividend investing concepts.",
+    "url": "https://divsprout.com/learn/",
+    "isPartOf": { "@id": "https://divsprout.com/#website" },
+    "hasPart": [
+      { "@type": "Article", "name": "What is a DRIP?", "url": "https://divsprout.com/learn/what-is-drip/" },
+      { "@type": "Article", "name": "Dividend Yield Explained", "url": "https://divsprout.com/learn/dividend-yield-explained/" },
+      { "@type": "Article", "name": "Yield on Cost (YOC) Explained", "url": "https://divsprout.com/learn/yield-on-cost/" },
+      { "@type": "Article", "name": "How Dividend Compounding Works", "url": "https://divsprout.com/learn/how-dividend-compounding-works/" }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+              stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+              stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link nav__link--active">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <div class="learn-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:var(--space-5);">
+        <span class="breadcrumb__item"><a href="/">Home</a></span>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current">Learn</span>
+      </nav>
+      <div class="learn-hero__inner">
+        <p class="learn-eyebrow">Dividend Investing Guides</p>
+        <h1 class="learn-hero__title">Understand your<br><em>dividends</em>, deeply.</h1>
+        <p class="learn-hero__lead">Plain-English explanations of the concepts behind dividend investing — no fluff, no sales pitch. Learn how the numbers actually work before you put them into a calculator.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-bottom: var(--space-12);">
+
+    <div class="disclaimer-bar">
+      <strong>Educational content only.</strong> The articles on this page are for informational and educational purposes only. Nothing here constitutes investment advice or a recommendation to buy or sell any security. Always do your own research and consult a qualified financial adviser before making investment decisions.
+    </div>
+
+    <p class="section-label">All guides</p>
+
+    <div class="articles-grid">
+
+      <a href="/learn/what-is-drip/" class="article-card">
+        <div class="article-card__tag">Beginner · 5 min read</div>
+        <h2 class="article-card__title">What is a DRIP?</h2>
+        <p class="article-card__desc">A Dividend Reinvestment Plan automatically converts your cash dividends into more shares — turning a passive income stream into a compounding growth engine.</p>
+        <div class="article-card__cta">Read guide <span>→</span></div>
+      </a>
+
+      <a href="/learn/dividend-yield-explained/" class="article-card">
+        <div class="article-card__tag">Beginner · 5 min read</div>
+        <h2 class="article-card__title">Dividend Yield Explained</h2>
+        <p class="article-card__desc">Dividend yield tells you how much a stock pays in dividends relative to its price. Learn the formula, what counts as a "good" yield, and how to spot a yield trap.</p>
+        <div class="article-card__cta">Read guide <span>→</span></div>
+      </a>
+
+      <a href="/learn/yield-on-cost/" class="article-card">
+        <div class="article-card__tag">Intermediate · 6 min read</div>
+        <h2 class="article-card__title">Yield on Cost (YOC) Explained</h2>
+        <p class="article-card__desc">Yield on cost measures your dividend income against what you originally paid — not today's price. Long-term investors use it to track how their income has grown over time.</p>
+        <div class="article-card__cta">Read guide <span>→</span></div>
+      </a>
+
+      <a href="/learn/how-dividend-compounding-works/" class="article-card">
+        <div class="article-card__tag">Intermediate · 7 min read</div>
+        <h2 class="article-card__title">How Dividend Compounding Works</h2>
+        <p class="article-card__desc">Compounding is the reason long-term dividend investors end up with portfolios that look nothing like what they put in. Here's the exact math behind the snowball effect.</p>
+        <div class="article-card__cta">Read guide <span>→</span></div>
+      </a>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid" style="grid-template-columns: 1.5fr repeat(4, 1fr);">
+
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors.</p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                    class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                       class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"            class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                      class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"     class="footer__link">Compounding</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js" defer></script>
+</body>
+</html>

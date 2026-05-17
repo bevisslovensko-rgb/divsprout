@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Dividend Yield Calculator — Free & Instant | DivSprout</title>
+  <meta name="description" content="Calculate dividend yield instantly. Enter your stock price and annual dividend — get your yield, income projections, and investment analysis in seconds. Free, no signup.">
+  <meta name="keywords" content="dividend yield calculator, calculate dividend yield, dividend yield formula, how to calculate dividend yield, stock yield calculator">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/calculators/dividend-yield/">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Dividend Yield Calculator — Free & Instant | DivSprout">
+  <meta property="og:description" content="Calculate dividend yield instantly. Free tool for dividend investors.">
+  <meta property="og:url"         content="https://divsprout.com/calculators/dividend-yield/">
+  <meta property="og:site_name"   content="DivSprout">
+  <meta property="og:image"        content="https://divsprout.com/assets/images/og-yield.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Dividend Yield Calculator — DivSprout">
+  <meta name="twitter:description" content="Free dividend yield calculator. Instant results. No signup.">
+  <meta name="twitter:image"       content="https://divsprout.com/assets/images/og-yield.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+
+  <!-- Page styles -->
+  <style>
+
+    /* ── Calculator layout ──────────────────────────────── */
+    .calc-page {
+      padding-top: calc(var(--nav-height) + var(--space-6));
+    }
+
+    .calc-hero {
+      padding-bottom: var(--space-8);
+    }
+
+    .calc-hero__breadcrumb {
+      margin-bottom: var(--space-4);
+    }
+
+    .calc-hero__label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .calc-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-4);
+    }
+
+    .calc-hero__title em {
+      font-style: italic;
+      color: var(--color-green);
+    }
+
+    .calc-hero__subtitle {
+      font-size: var(--text-md);
+      font-weight: 300;
+      color: var(--color-text-secondary);
+      max-width: 540px;
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ── Two-column layout ──────────────────────────────── */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Sticky calculator on desktop ───────────────────── */
+    .calc-sticky {
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-4));
+    }
+
+    @media (max-width: 900px) {
+      .calc-sticky { position: static; }
+    }
+
+    /* ── Results panel ──────────────────────────────────── */
+    .results-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    /* ── Yield gauge ────────────────────────────────────── */
+    .yield-gauge {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .yield-gauge__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .yield-gauge__bar-track {
+      height: 6px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: var(--space-2);
+    }
+
+    .yield-gauge__bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: linear-gradient(90deg, var(--color-blue), var(--color-green), var(--color-gold));
+      transition: width 0.4s var(--ease-out);
+    }
+
+    .yield-gauge__scale {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-text-muted);
+    }
+
+    .yield-rating {
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .yield-rating--low    { background: var(--color-blue-dim);  color: var(--color-blue);  }
+    .yield-rating--fair   { background: var(--color-green-dim); color: var(--color-green); }
+    .yield-rating--good   { background: var(--color-green-dim); color: var(--color-green); }
+    .yield-rating--high   { background: var(--color-gold-dim);  color: var(--color-gold);  }
+    .yield-rating--danger { background: rgba(245,101,101,0.12); color: #f56565; }
+
+    /* ── Income projections ─────────────────────────────── */
+    .income-table {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .income-table__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      gap: var(--space-4);
+    }
+
+    .income-table__row:last-child {
+      border-bottom: none;
+    }
+
+    .income-table__row--header {
+      background: var(--color-bg-elevated);
+      padding: var(--space-2) var(--space-4);
+    }
+
+    .income-table__period {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .income-table__amount {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    .income-table__amount--highlight {
+      color: var(--color-green);
+    }
+
+    /* ── Shares input toggle ─────────────────────────────── */
+    .shares-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--color-green);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(16px);
+    }
+
+    .toggle-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Content section ─────────────────────────────────── */
+    .content-block {
+      margin-top: var(--space-8);
+    }
+
+    .content-block h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+      letter-spacing: var(--tracking-snug);
+      margin-bottom: var(--space-4);
+    }
+
+    .content-block h2 em {
+      font-style: italic;
+      color: var(--color-green);
+    }
+
+    .content-block h3 {
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    .content-block p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Formula box */
+    .formula-box {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-5) 0;
+      font-family: var(--font-mono);
+      font-size: var(--text-base);
+      text-align: center;
+      color: var(--color-text-primary);
+    }
+
+    .formula-box span {
+      color: var(--color-green);
+    }
+
+    /* ── Share bar ───────────────────────────────────────── */
+    .share-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-5);
+    }
+
+    .share-bar__label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-right: auto;
+    }
+
+    .share-btn {
+      padding: 6px 12px;
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      background: none;
+    }
+
+    .share-btn:hover {
+      color: var(--color-text-primary);
+      border-color: var(--color-border-hover);
+      background: var(--color-bg-hover);
+    }
+
+  </style>
+
+  <!-- Structured Data: Calculator + FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://divsprout.com/calculators/dividend-yield/#webpage",
+        "name": "Dividend Yield Calculator",
+        "description": "Free online dividend yield calculator. Calculate dividend yield instantly from stock price and annual dividend payment.",
+        "url": "https://divsprout.com/calculators/dividend-yield/",
+        "isPartOf": { "@id": "https://divsprout.com/#website" },
+        "about": {
+          "@type": "FinancialProduct",
+          "name": "Dividend Yield Calculator"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is dividend yield?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dividend yield is a financial ratio that shows how much a company pays out in dividends relative to its stock price. It is calculated by dividing the annual dividend per share by the current stock price, then multiplying by 100 to get a percentage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a good dividend yield?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A good dividend yield typically ranges between 2% and 6% for most established companies. Yields below 2% are considered low, 2-4% are fair, 4-6% are good, and above 6% may be high but could signal higher risk or a falling stock price."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is dividend yield calculated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dividend yield is calculated using the formula: Dividend Yield = (Annual Dividend Per Share / Current Stock Price) x 100. For example, if a stock pays $2.40 per year in dividends and trades at $48.00, the dividend yield is 5%."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does a higher dividend yield always mean a better investment?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Not necessarily. A very high yield (above 8-10%) can sometimes indicate that the stock price has fallen significantly due to business problems, or that the dividend may not be sustainable. Always check the company's payout ratio and earnings history."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between dividend yield and yield on cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dividend yield is calculated using the current stock price, so it changes as the stock price moves. Yield on cost uses your original purchase price, showing your actual return on the money you invested. Long-term dividend investors often track yield on cost to see how dividends have grown relative to their cost basis."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" fill="none" stroke="#22d47a" stroke-width="1.3"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link nav__link--active">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="calc-page">
+
+  <!-- ── HERO / HEADER ──────────────────────────────────────── -->
+  <section class="calc-hero">
+    <div class="container">
+
+      <nav class="calc-hero__breadcrumb breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb__item"><a href="/">Home</a></span>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current" aria-current="page">Dividend Yield Calculator</span>
+      </nav>
+
+      <div class="calc-hero__label">
+        <span class="badge badge--green"><span class="badge__dot"></span> Free</span>
+        <span class="badge badge--green"><span class="badge__dot"></span> Instant</span>
+        <span class="badge badge--outline">No signup</span>
+      </div>
+
+      <h1 class="calc-hero__title">
+        Dividend <em>Yield</em> Calculator
+      </h1>
+      <p class="calc-hero__subtitle">
+        Enter your stock price and annual dividend — get your yield, income projections, and a yield quality rating instantly.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── CALCULATOR + RESULTS ───────────────────────────────── -->
+  <section class="section--sm" aria-label="Calculator">
+    <div class="container">
+      <div class="calc-layout">
+
+        <!-- LEFT: Calculator Widget -->
+        <div class="calc-sticky">
+          <div class="calc-widget" role="main" aria-label="Dividend yield calculator">
+
+            <div class="calc-widget__header">
+              <div class="calc-widget__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18">
+                  <rect x="3"   y="10" width="3" height="7" rx="1" fill="rgba(34,212,122,0.2)"/>
+                  <rect x="8.5" y="6"  width="3" height="11" rx="1" fill="rgba(34,212,122,0.3)"/>
+                  <rect x="14"  y="3"  width="3" height="14" rx="1" fill="rgba(34,212,122,0.45)"/>
+                </svg>
+              </div>
+              <h2 class="calc-widget__header-title">Dividend Yield</h2>
+              <span class="badge badge--green" style="margin-left:auto;">
+                <span class="live-dot" aria-hidden="true"></span>
+                Live
+              </span>
+            </div>
+
+            <div class="calc-widget__body">
+
+              <!-- Stock Price -->
+              <div class="input-group">
+                <label class="input-label" for="stock-price">
+                  <span>Current Stock Price</span>
+                  <span class="input-label__hint" aria-live="polite" id="price-hint">$48.00</span>
+                </label>
+                <div class="input-wrapper has-prefix">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input
+                    type="number"
+                    id="stock-price"
+                    class="input-field"
+                    value="48.00"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="48.00"
+                    aria-describedby="price-desc"
+                    inputmode="decimal"
+                    autocomplete="off"
+                  >
+                </div>
+                <span id="price-desc" class="sr-only">Enter the current market price of the stock in US dollars</span>
+              </div>
+
+              <!-- Annual Dividend -->
+              <div class="input-group">
+                <label class="input-label" for="annual-dividend">
+                  <span>Annual Dividend per Share</span>
+                  <span class="input-label__hint" aria-live="polite" id="div-hint">$2.40</span>
+                </label>
+                <div class="input-wrapper has-prefix">
+                  <span class="input-prefix" aria-hidden="true">$</span>
+                  <input
+                    type="number"
+                    id="annual-dividend"
+                    class="input-field"
+                    value="2.40"
+                    min="0"
+                    step="0.01"
+                    placeholder="2.40"
+                    aria-describedby="div-desc"
+                    inputmode="decimal"
+                    autocomplete="off"
+                  >
+                </div>
+                <span id="div-desc" class="sr-only">Enter the total annual dividend paid per share. If paid quarterly, multiply quarterly amount by 4.</span>
+              </div>
+
+              <!-- Shares toggle -->
+              <div class="shares-toggle">
+                <label class="toggle-switch" for="shares-toggle" aria-label="Include number of shares">
+                  <input type="checkbox" id="shares-toggle">
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label">Calculate total income (add shares)</span>
+              </div>
+
+              <!-- Shares count (shown when toggle on) -->
+              <div class="input-group" id="shares-group" style="display:none;">
+                <label class="input-label" for="shares-count">
+                  <span>Number of Shares</span>
+                  <span class="input-label__hint" id="shares-hint">100</span>
+                </label>
+                <input
+                  type="number"
+                  id="shares-count"
+                  class="input-field"
+                  value="100"
+                  min="1"
+                  step="1"
+                  placeholder="100"
+                  inputmode="numeric"
+                  autocomplete="off"
+                >
+              </div>
+
+              <!-- Primary Result -->
+              <div class="result-box" role="region" aria-label="Dividend yield result" aria-live="polite">
+                <div>
+                  <div class="result-box__label">Dividend Yield</div>
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);margin-top:2px;">(Annual Dividend ÷ Stock Price)</div>
+                </div>
+                <div class="result-box__value" id="yield-result">5.00%</div>
+              </div>
+
+              <!-- Share button -->
+              <div class="share-bar">
+                <span class="share-bar__label">Share this result</span>
+                <button class="share-btn" data-share aria-label="Copy link to clipboard">Copy link</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Results + Analysis -->
+        <div>
+
+          <!-- Yield gauge -->
+          <div class="yield-gauge reveal">
+            <div class="yield-gauge__label">Yield quality rating</div>
+            <div class="yield-gauge__bar-track" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Yield quality">
+              <div class="yield-gauge__bar-fill" id="gauge-fill" style="width:50%;"></div>
+            </div>
+            <div class="yield-gauge__scale">
+              <span>0%</span>
+              <span>2%</span>
+              <span>4%</span>
+              <span>6%</span>
+              <span>8%+</span>
+            </div>
+            <div class="yield-rating yield-rating--fair" id="yield-rating" role="status" aria-live="polite">
+              ✦ Fair yield — typical for established dividend payers.
+            </div>
+          </div>
+
+          <!-- Stats grid -->
+          <div class="results-grid reveal" style="margin-top:var(--space-4);" aria-live="polite" aria-label="Income projections">
+            <div class="result-stat">
+              <div class="result-stat__label">Monthly</div>
+              <div class="result-stat__value result-stat__value--green" id="monthly-income">$20.00</div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat__label">Annual</div>
+              <div class="result-stat__value" id="annual-income">$240</div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat__label">5-Year Income</div>
+              <div class="result-stat__value result-stat__value--gold" id="fiveyear-income">$1,200</div>
+            </div>
+          </div>
+
+          <!-- Detailed income table (shows when shares enabled) -->
+          <div id="income-table-section" style="display:none;margin-top:var(--space-4);" aria-live="polite">
+            <div class="income-table">
+              <div class="income-table__row income-table__row--header">
+                <span class="label">Period</span>
+                <span class="label">Dividend Income</span>
+              </div>
+              <div class="income-table__row">
+                <span class="income-table__period">Per share (monthly)</span>
+                <span class="income-table__amount" id="t-monthly-per-share">$0.20</span>
+              </div>
+              <div class="income-table__row">
+                <span class="income-table__period">Per share (annual)</span>
+                <span class="income-table__amount" id="t-annual-per-share">$2.40</span>
+              </div>
+              <div class="income-table__row" style="background:var(--color-bg-elevated);">
+                <span class="income-table__period">Your shares (monthly)</span>
+                <span class="income-table__amount income-table__amount--highlight" id="t-monthly-total">$20.00</span>
+              </div>
+              <div class="income-table__row" style="background:var(--color-bg-elevated);">
+                <span class="income-table__period">Your shares (annual)</span>
+                <span class="income-table__amount income-table__amount--highlight" id="t-annual-total">$240.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Insight box -->
+          <div id="insight-box" class="reveal" style="margin-top:var(--space-4);padding:var(--space-4);background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);">
+            <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-green);margin-bottom:var(--space-2);">Insight</p>
+            <p id="insight-text" style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:var(--leading-relaxed);">
+              At 5.00% yield, you would need to invest approximately <strong style="color:var(--color-text-primary);" id="insight-needed">$20,000</strong> to generate <strong style="color:var(--color-green);">$1,000/year</strong> in passive dividend income.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATIONAL CONTENT ────────────────────────────────── -->
+  <section class="section" aria-labelledby="content-title">
+    <div class="container container--narrow">
+
+      <div class="content-block reveal">
+        <h2 id="content-title">What is <em>dividend yield</em>?</h2>
+        <p>
+          Dividend yield is a financial ratio that shows how much income a company returns to shareholders relative to its stock price. Expressed as a percentage, it tells you: for every dollar invested, how many cents you receive annually in dividends.
+        </p>
+        <p>
+          It's one of the most fundamental metrics for dividend investors — letting you quickly compare the income potential of different stocks, sectors, and investment opportunities.
+        </p>
+
+        <h3>The dividend yield formula</h3>
+        <div class="formula-box">
+          Dividend Yield = (<span>Annual Dividend Per Share</span> ÷ <span>Current Stock Price</span>) × 100
+        </div>
+        <p>
+          For example: If a stock trades at $48.00 and pays an annual dividend of $2.40 per share, the dividend yield is <strong style="color:var(--color-green);">5.00%</strong>. This means for every $100 invested, you receive $5.00 in annual dividend income.
+        </p>
+
+        <h3>What is a good dividend yield?</h3>
+        <p>
+          There's no universally "perfect" yield — it depends on your goals, risk tolerance, and the sector you're investing in. Here's a general framework:
+        </p>
+        <div style="display:grid;gap:var(--space-2);margin:var(--space-4) 0;">
+          <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:var(--color-bg-elevated);border-radius:var(--radius-md);border:1px solid var(--color-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-blue);width:60px;flex-shrink:0;">0–2%</span>
+            <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Low — growth-focused companies like tech stocks. Income is minimal.</span>
+          </div>
+          <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:var(--color-bg-elevated);border-radius:var(--radius-md);border:1px solid var(--color-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-green);width:60px;flex-shrink:0;">2–4%</span>
+            <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Fair — balanced dividend payers. Solid income with reasonable growth potential.</span>
+          </div>
+          <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:var(--color-green-dim);border-radius:var(--radius-md);border:1px solid var(--color-border-accent);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-green);width:60px;flex-shrink:0;">4–6%</span>
+            <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Good — strong dividend payers. REITs, utilities, mature companies.</span>
+          </div>
+          <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:var(--color-gold-dim);border-radius:var(--radius-md);border:1px solid rgba(232,200,74,0.2);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-gold);width:60px;flex-shrink:0;">6–8%</span>
+            <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">High — investigate carefully. May be sustainable or may signal risk.</span>
+          </div>
+          <div style="display:flex;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:rgba(245,101,101,0.08);border-radius:var(--radius-md);border:1px solid rgba(245,101,101,0.2);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-sm);color:#f56565;width:60px;flex-shrink:0;">8%+</span>
+            <span style="font-size:var(--text-sm);color:var(--color-text-secondary);">Very high — dividend may be unsustainable. Check payout ratio and earnings.</span>
+          </div>
+        </div>
+
+        <h3>Dividend yield vs. yield on cost</h3>
+        <p>
+          Dividend yield uses the <em>current</em> stock price. If you bought a stock years ago at a lower price and dividends have grown, your personal "yield on cost" will be much higher. Long-term dividend investors often track both metrics. Try our <a href="/calculators/yield-on-cost/" style="color:var(--color-green);">Yield on Cost Calculator</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ ────────────────────────────────────────────────── -->
+  <section class="section section--sm" aria-labelledby="faq-title">
+    <div class="container container--narrow">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-header__eyebrow">FAQ</p>
+          <h2 class="section-header__title" id="faq-title">
+            Common <em class="accent">questions</em>
+          </h2>
+        </div>
+      </div>
+
+      <div class="faq reveal">
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false" itemprop="name">
+            What is dividend yield and why does it matter?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              <p>Dividend yield tells you how much annual income you receive per dollar invested. A 5% yield means you earn $5 per year for every $100 invested. It's the primary metric for comparing income-generating potential across stocks, letting you answer: "Is this stock generating enough income for my goals?"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false" itemprop="name">
+            How do I find a stock's annual dividend?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              <p>You can find it on any financial site (Yahoo Finance, Seeking Alpha, your broker's platform). If a stock pays quarterly dividends, multiply the quarterly payment by 4 to get the annual figure. For example, a $0.60 quarterly dividend = $2.40 annual dividend per share.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false" itemprop="name">
+            Why does dividend yield change even when the dividend doesn't?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              <p>Because yield depends on the current stock price, which changes every day. If a stock's price falls, the yield rises (your fixed dividend is now a larger percentage of the lower price). If the price rises, yield falls. This is why a suddenly high yield can sometimes be a warning sign — it may mean the stock has dropped significantly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false" itemprop="name">
+            Does a higher dividend yield always mean a better investment?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              <p>No. A very high yield (8%+) can be a "yield trap" — it may look attractive but indicate the stock price has fallen due to business problems, or the dividend is at risk of being cut. Always check the payout ratio (dividends paid ÷ earnings) — a payout ratio above 80-90% may be unsustainable for most companies.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false" itemprop="name">
+            What is a payout ratio and how does it relate to dividend yield?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <div itemprop="text">
+              <p>The payout ratio shows what percentage of earnings a company pays as dividends. A yield of 6% means nothing if the payout ratio is 110% — the company is paying out more than it earns, which is unsustainable. A healthy payout ratio is typically below 60-70% for most sectors, though REITs and utilities often run higher.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RELATED CALCULATORS ────────────────────────────────── -->
+  <section class="section section--sm" aria-labelledby="related-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-header__eyebrow">Explore</p>
+          <h2 class="section-header__title" id="related-title">
+            Related <em class="accent">tools</em>
+          </h2>
+        </div>
+      </div>
+
+      <div class="related-calcs stagger">
+        <a href="/calculators/drip/" class="calc-card">
+          <div class="calc-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20">
+              <path d="M4 10a6 6 0 1 0 12 0"/>
+              <path d="M16 10a6 6 0 0 0-5.3-5.96"/>
+              <path d="M14.5 7l2-2.5 2.5 2"/>
+            </svg>
+          </div>
+          <div class="calc-card__name">DRIP Calculator</div>
+          <div class="calc-card__desc">See how reinvesting your dividends compounds into significant wealth over time.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" fill="none" stroke="#22d47a" stroke-width="1.3"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free financial calculators for dividend investors.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────── -->
+<script src="/assets/js/core.js" defer></script>
+<script>
+/**
+ * Dividend Yield Calculator Logic
+ * All math runs client-side. No network requests.
+ */
+
+/* ── State ─────────────────────────────────────────────────── */
+const state = {
+  price:  48.00,
+  div:    2.40,
+  shares: 100,
+  sharesEnabled: false
+};
+
+/* ── DOM refs ───────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+
+/* ── Core calculation ─────────────────────────────────────── */
+function calculate() {
+  const price  = state.price  || 1;
+  const div    = state.div    || 0;
+  const shares = state.shares || 0;
+
+  const yield_pct     = (div / price) * 100;
+  const monthly_share = div / 12;
+  const annual_share  = div;
+  const monthly_total = monthly_share * shares;
+  const annual_total  = annual_share  * shares;
+  const fiveyear      = annual_share  * 5 * (state.sharesEnabled ? shares : 1);
+
+  return {
+    yield_pct,
+    monthly_share,
+    annual_share,
+    monthly_total,
+    annual_total,
+    fiveyear,
+    needed_for_1k: div > 0 ? ((1000 / yield_pct) * 100) : 0
+  };
+}
+
+/* ── Update UI ──────────────────────────────────────────────── */
+function updateUI() {
+  const c   = calculate();
+  const fmt = window.DS?.Utils || {
+    formatCurrency: (v, _, d=2) => '$' + v.toFixed(d),
+    formatNumber:   (v, d=0)    => v.toFixed(d),
+    formatPercent:  (v, d=2)    => v.toFixed(d) + '%'
+  };
+
+  /* Main yield */
+  $('yield-result').textContent = fmt.formatPercent(c.yield_pct);
+
+  /* Hint labels */
+  $('price-hint').textContent = fmt.formatCurrency(state.price, 'USD');
+  $('div-hint').textContent   = fmt.formatCurrency(state.div,   'USD');
+
+  /* Stats grid */
+  const useShares  = state.sharesEnabled;
+  $('monthly-income').textContent = fmt.formatCurrency(
+    useShares ? c.monthly_total : c.monthly_share, 'USD'
+  );
+  $('annual-income').textContent  = fmt.formatCurrency(
+    useShares ? c.annual_total  : c.annual_share,  'USD', 0
+  );
+  $('fiveyear-income').textContent = fmt.formatCurrency(c.fiveyear, 'USD', 0);
+
+  /* Income table */
+  if (useShares) {
+    $('shares-hint').textContent = fmt.formatNumber(state.shares);
+    $('t-monthly-per-share').textContent = fmt.formatCurrency(c.monthly_share, 'USD');
+    $('t-annual-per-share').textContent  = fmt.formatCurrency(c.annual_share,  'USD');
+    $('t-monthly-total').textContent     = fmt.formatCurrency(c.monthly_total, 'USD');
+    $('t-annual-total').textContent      = fmt.formatCurrency(c.annual_total,  'USD');
+  }
+
+  /* Yield gauge */
+  const gauge_pct = Math.min((c.yield_pct / 10) * 100, 100);
+  $('gauge-fill').style.width = gauge_pct + '%';
+  $('gauge-fill').parentElement.setAttribute('aria-valuenow', Math.round(gauge_pct));
+
+  /* Rating */
+  updateRating(c.yield_pct);
+
+  /* Insight */
+  if (c.needed_for_1k > 0) {
+    $('insight-needed').textContent = fmt.formatCurrency(c.needed_for_1k, 'USD', 0);
+  }
+  $('insight-text').innerHTML = `At ${fmt.formatPercent(c.yield_pct)} yield, you would need to invest approximately <strong style="color:var(--color-text-primary);">${fmt.formatCurrency(c.needed_for_1k, 'USD', 0)}</strong> to generate <strong style="color:var(--color-green);">$1,000/year</strong> in passive dividend income.`;
+
+  /* Analytics (debounced via caller) */
+}
+
+function updateRating(yld) {
+  const el = $('yield-rating');
+  el.className = 'yield-rating';
+
+  if (yld < 2) {
+    el.classList.add('yield-rating--low');
+    el.textContent = '○ Low yield — typical of growth-focused companies.';
+  } else if (yld < 4) {
+    el.classList.add('yield-rating--fair');
+    el.textContent = '◐ Fair yield — typical for balanced dividend payers.';
+  } else if (yld < 6) {
+    el.classList.add('yield-rating--good');
+    el.textContent = '● Good yield — strong dividend income. Common in REITs and utilities.';
+  } else if (yld < 8) {
+    el.classList.add('yield-rating--high');
+    el.textContent = '⚠ High yield — investigate sustainability. Check payout ratio.';
+  } else {
+    el.classList.add('yield-rating--danger');
+    el.textContent = '⚠ Very high yield — may signal dividend at risk. Verify with care.';
+  }
+}
+
+/* ── Event listeners ────────────────────────────────────────── */
+const debouncedAnalytics = (() => {
+  let t;
+  return () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      if (window.DS?.Analytics) {
+        DS.Analytics.trackCalculator('dividend-yield', {
+          yield_pct: calculate().yield_pct.toFixed(2),
+          stock_price: state.price,
+          annual_div: state.div
+        });
+      }
+    }, 1500);
+  };
+})();
+
+function handleInput(field, el) {
+  const val = parseFloat(el.value);
+  if (!isNaN(val) && val >= 0) {
+    state[field] = val;
+    updateUI();
+    debouncedAnalytics();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  /* Inputs */
+  $('stock-price').addEventListener('input', e => handleInput('price',  e.target));
+  $('annual-dividend').addEventListener('input', e => handleInput('div', e.target));
+  $('shares-count').addEventListener('input', e => handleInput('shares', e.target));
+
+  /* Shares toggle */
+  $('shares-toggle').addEventListener('change', e => {
+    state.sharesEnabled = e.target.checked;
+    const show = state.sharesEnabled;
+    $('shares-group').style.display          = show ? '' : 'none';
+    $('income-table-section').style.display  = show ? '' : 'none';
+    updateUI();
+  });
+
+  /* Initial calculation */
+  updateUI();
+});
+</script>
+
+</body>
+</html>

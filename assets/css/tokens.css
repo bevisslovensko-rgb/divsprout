@@ -1,0 +1,154 @@
+/* ============================================================
+   DIVSPROUT — DESIGN TOKENS
+   Single source of truth for the entire design system.
+   Never hardcode values; always use these variables.
+   ============================================================ */
+
+:root {
+
+  /* ── Color: Backgrounds ─────────────────────────────────── */
+  --color-bg-base:     #0a0b0d;   /* Page base */
+  --color-bg-surface:  #111318;   /* Cards, sections */
+  --color-bg-elevated: #181c22;   /* Elevated cards */
+  --color-bg-card:     #1d2128;   /* Deep card bg */
+  --color-bg-input:    #181c22;   /* Form inputs */
+  --color-bg-hover:    #1f2430;   /* Hover state */
+
+  /* ── Color: Text ────────────────────────────────────────── */
+  --color-text-primary:   #f0f2f5;
+  --color-text-secondary: #8a9ab0;
+  --color-text-muted:     #4a5568;
+  --color-text-disabled:  #2d3748;
+
+  /* ── Color: Borders ─────────────────────────────────────── */
+  --color-border:        rgba(255, 255, 255, 0.07);
+  --color-border-hover:  rgba(255, 255, 255, 0.14);
+  --color-border-focus:  rgba(34, 212, 122, 0.50);
+  --color-border-accent: rgba(34, 212, 122, 0.25);
+
+  /* ── Color: Accent — Growth Green (primary) ─────────────── */
+  --color-green:         #22d47a;
+  --color-green-dark:    #1aaa60;
+  --color-green-dim:     rgba(34, 212, 122, 0.12);
+  --color-green-glow:    rgba(34, 212, 122, 0.25);
+  --color-green-subtle:  rgba(34, 212, 122, 0.06);
+
+  /* ── Color: Accent — Dividend Gold (secondary) ──────────── */
+  --color-gold:          #e8c84a;
+  --color-gold-dim:      rgba(232, 200, 74, 0.12);
+
+  /* ── Color: Accent — Data Blue (tertiary) ───────────────── */
+  --color-blue:          #4a9eff;
+  --color-blue-dim:      rgba(74, 158, 255, 0.12);
+
+  /* ── Color: Semantic ────────────────────────────────────── */
+  --color-success: #22d47a;
+  --color-warning: #e8c84a;
+  --color-error:   #f56565;
+
+  /* ── Typography: Font Families ──────────────────────────── */
+  --font-display: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+  --font-body:    'DM Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono:    'DM Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* ── Typography: Scale ──────────────────────────────────── */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-md:   17px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  32px;
+  --text-3xl:  40px;
+  --text-4xl:  52px;
+  --text-5xl:  64px;
+
+  /* ── Typography: Line Heights ───────────────────────────── */
+  --leading-tight:  1.05;
+  --leading-snug:   1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.7;
+  --leading-loose:  1.9;
+
+  /* ── Typography: Letter Spacing ─────────────────────────── */
+  --tracking-tight:  -0.03em;
+  --tracking-snug:   -0.02em;
+  --tracking-normal: -0.01em;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.10em;
+  --tracking-widest: 0.15em;
+
+  /* ── Spacing: 8px base grid ─────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ── Border Radius ──────────────────────────────────────── */
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:    0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-lg:    0 4px 16px rgba(0,0,0,0.5);
+  --shadow-xl:    0 8px 32px rgba(0,0,0,0.6);
+  --shadow-green: 0 8px 24px rgba(34,212,122,0.30);
+  --shadow-glow:  0 0 40px rgba(34,212,122,0.15);
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   150ms;
+  --duration-base:   220ms;
+  --duration-slow:   380ms;
+  --duration-slower: 550ms;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --max-width:        1100px;
+  --max-width-narrow: 720px;
+  --max-width-wide:   1320px;
+  --nav-height:       64px;
+  --gutter:           24px;
+  --section-gap:      var(--space-9);
+
+  /* ── Z-Index scale ──────────────────────────────────────── */
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+}
+
+/* ── Responsive overrides ─────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --gutter: 16px;
+    --section-gap: var(--space-8);
+    --text-4xl: 38px;
+    --text-5xl: 44px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    --text-4xl: 30px;
+    --text-3xl: 28px;
+    --text-2xl: 24px;
+    --section-gap: var(--space-7);
+  }
+}

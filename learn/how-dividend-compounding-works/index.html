@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Dividend Compounding Works — DivSprout</title>
+  <meta name="description" content="Dividend compounding is the snowball effect of reinvested dividends buying more shares, which pay more dividends. Learn the exact math behind exponential portfolio growth.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/learn/how-dividend-compounding-works/">
+
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="How Dividend Compounding Works — DivSprout">
+  <meta property="og:description" content="The math behind dividend compounding — why reinvested dividends produce portfolio growth that looks nothing like what you put in.">
+  <meta property="og:url"         content="https://divsprout.com/learn/how-dividend-compounding-works/">
+  <meta property="og:site_name"   content="DivSprout">
+  <meta property="og:image"       content="https://divsprout.com/assets/images/og-drip.png">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:image"      content="https://divsprout.com/assets/images/og-drip.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+  <link rel="stylesheet" href="/assets/css/article.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How Dividend Compounding Works",
+    "description": "Dividend compounding is the snowball effect of reinvested dividends buying more shares, which pay more dividends.",
+    "url": "https://divsprout.com/learn/how-dividend-compounding-works/",
+    "datePublished": "2026-05-17",
+    "dateModified": "2026-05-17",
+    "author": { "@type": "Organization", "name": "DivSprout" },
+    "publisher": { "@type": "Organization", "name": "DivSprout", "url": "https://divsprout.com" },
+    "isPartOf": { "@type": "WebPage", "url": "https://divsprout.com/learn/" }
+  }
+  </script>
+</head>
+
+<body>
+
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+              stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+              stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link nav__link--active">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="article-page">
+  <div class="container">
+    <div class="article-layout">
+
+      <div class="article-main">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <span class="breadcrumb__item"><a href="/">Home</a></span>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <span class="breadcrumb__item"><a href="/learn/">Learn</a></span>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <span class="breadcrumb__current">How Dividend Compounding Works</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-tag">Intermediate</span>
+          <span class="article-read-time">7 min read</span>
+          <span class="article-date">May 2026</span>
+        </div>
+
+        <h1 class="article-title">How Dividend<br>Compounding Works</h1>
+
+        <div class="article-disclaimer">
+          <strong>Educational content only.</strong> This article is for informational purposes only and does not constitute investment advice. Consult a qualified financial adviser before making investment decisions.
+        </div>
+
+        <div class="article-body">
+
+          <p>Compounding is the process by which investment returns themselves generate further returns over time. In the context of dividends, it works like this: dividends buy more shares, more shares pay more dividends next period, those dividends buy even more shares — and so on. Each cycle the base grows slightly larger, and the growth accelerates.</p>
+
+          <p>People often describe compounding as magical or counterintuitive. The reason is that human intuition handles linear growth well (add $100 every year) but struggles with exponential growth — where the rate of increase itself increases over time.</p>
+
+          <h2>The math: simple vs. compound growth</h2>
+
+          <p>Suppose you invest $10,000 in a stock with a 4% annual dividend yield. If you simply collect the $400 dividend every year and spend it, after 20 years you've received $8,000 in dividends — and your portfolio value is still around $10,000 (assuming flat price).</p>
+
+          <p>Now suppose you reinvest every dividend back into the same stock:</p>
+
+          <div class="article-callout">
+            <div class="article-callout__row">
+              <span>Year 1</span>
+              <strong>$10,400</strong>
+            </div>
+            <div class="article-callout__row">
+              <span>Year 5</span>
+              <strong>$12,167</strong>
+            </div>
+            <div class="article-callout__row">
+              <span>Year 10</span>
+              <strong>$14,802</strong>
+            </div>
+            <div class="article-callout__row">
+              <span>Year 20</span>
+              <strong>$21,911</strong>
+            </div>
+            <div class="article-callout__note">$10,000 initial investment, 4% annual yield, dividends fully reinvested, no dividend growth, no additional contributions. Prices assumed flat.</div>
+          </div>
+
+          <p>Instead of $18,000 (original $10,000 + $8,000 in collected dividends), reinvestment gives you $21,911 — your money is doing more work with each passing year.</p>
+
+          <h2>Three forces that accelerate compounding</h2>
+
+          <p>In practice, dividend compounding rarely operates in isolation. Three additional factors stack on top of each other to dramatically change the trajectory:</p>
+
+          <p><strong>1. Regular additional contributions.</strong> Adding even a modest monthly contribution — say $200/month — to a reinvesting portfolio doesn't just add linearly. Each additional contribution also compounds from its entry date. The earlier in the timeline a contribution arrives, the longer it has to compound. A $200 contribution made in year 1 has a decade more to work than the same contribution made in year 10.</p>
+
+          <p><strong>2. Dividend growth.</strong> If the underlying companies increase their dividends each year — which quality dividend-growth stocks typically do at rates of 5–10% per year — the income base grows independently of share accumulation. Dividend growth on top of reinvestment is a double compounding effect: you're buying more shares, and each share is paying a higher dividend each year. Over 15–20 years, this transforms a modest initial yield into something substantially larger.</p>
+
+          <p><strong>3. Time.</strong> Compounding is overwhelmingly time-dependent. The first decade of a long compounding run often feels underwhelming — growth is slow and linear-looking. The acceleration becomes visible in years 10–15 and becomes dramatic beyond year 20. This is why investors who start early and stay patient tend to end up with portfolios that look almost impossible relative to what they contributed.</p>
+
+          <h2>Monthly vs. quarterly compounding</h2>
+
+          <p>Dividends from most stocks are paid quarterly, but some pay monthly. The frequency of reinvestment affects compounding outcomes — monthly reinvestment means each dividend is put back to work sooner than quarterly reinvestment, giving it slightly more time to generate returns. The difference over short periods is small, but it compounds meaningfully over decades. DivSprout's calculator models monthly compounding throughout to give the most accurate projection.</p>
+
+          <h2>What compounding looks like visually</h2>
+
+          <p>The characteristic shape of a compounding curve is not a straight line — it starts shallow and then bends upward. In the DRIP Calculator's chart, you can see this bend happening in the bar chart: earlier bars grow slowly and are mostly "capital contributed" (the grey portion), while later bars grow rapidly and are dominated by "dividends reinvested" (the green portion). At some point in the projection, the dividend-generated growth overtakes the contributions. This crossover point — shown in the calculator results — is when your money is genuinely working harder than you are.</p>
+
+          <h2>The real-world caveats</h2>
+
+          <p>Compounding projections assume things stay constant: dividend yields maintained, share prices not collapsing, no interruptions to reinvestment. In reality, markets move, dividends get cut, companies change. The projections are not predictions — they're models that help you understand the mechanics of what's possible if conditions hold reasonably well. Stress-testing them with realistic tax rates and inflation adjustments gives a more grounded view of likely real-world outcomes.</p>
+
+        </div>
+
+        <div class="article-cta-box">
+          <div class="article-cta-box__text">
+            <strong>See compounding in action</strong>
+            <span>Model your own scenario with tax, inflation, and dividend growth in the DRIP Calculator.</span>
+          </div>
+          <a href="/calculators/drip/" class="btn btn--primary">Open DRIP Calculator →</a>
+        </div>
+
+        <div class="article-related">
+          <p class="article-related__label">Related guides</p>
+          <div class="article-related__links">
+            <a href="/learn/what-is-drip/"              class="article-related__link">What is a DRIP? →</a>
+            <a href="/learn/yield-on-cost/"              class="article-related__link">Yield on Cost (YOC) →</a>
+            <a href="/learn/dividend-yield-explained/"   class="article-related__link">Dividend Yield Explained →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="article-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-card__label">In this guide</div>
+          <nav class="sidebar-toc">
+            <a href="#" class="sidebar-toc__link">Simple vs. compound growth</a>
+            <a href="#" class="sidebar-toc__link">Three forces that accelerate</a>
+            <a href="#" class="sidebar-toc__link">Monthly vs. quarterly</a>
+            <a href="#" class="sidebar-toc__link">What it looks like visually</a>
+            <a href="#" class="sidebar-toc__link">Real-world caveats</a>
+          </nav>
+        </div>
+        <div class="sidebar-card sidebar-card--cta">
+          <div class="sidebar-card__label">Free calculator</div>
+          <p class="sidebar-card__desc">Project your compounding curve with your real numbers.</p>
+          <a href="/calculators/drip/" class="btn btn--primary btn--sm" style="width:100%;justify-content:center;">DRIP Calculator →</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid" style="grid-template-columns: 1.5fr repeat(4, 1fr);">
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/" class="footer__link footer__link--active">Compounding</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js" defer></script>
+</body>
+</html>

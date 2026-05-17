@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRIP Calculator — Dividend Reinvestment Growth Projector | DivSprout</title>
+  <meta name="description" content="Project the power of dividend reinvestment. Enter your portfolio size, monthly contributions, yield, and growth rate to see exactly how your dividends compound over time. Free, instant, no signup.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/calculators/drip/">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="DRIP Calculator — Dividend Reinvestment Growth | DivSprout">
+  <meta property="og:description" content="See how reinvested dividends compound your wealth. Free DRIP calculator with dividend growth rate.">
+  <meta property="og:url"         content="https://divsprout.com/calculators/drip/">
+  <meta property="og:site_name"    content="DivSprout">
+  <meta property="og:image"        content="https://divsprout.com/assets/images/og-drip.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="DRIP Calculator — DivSprout">
+  <meta name="twitter:description" content="Project how reinvested dividends compound your portfolio. Free, instant, no signup.">
+  <meta name="twitter:image"       content="https://divsprout.com/assets/images/og-drip.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+
+  <style>
+    /* ── Page layout ──────────────────────────────────────── */
+    .calc-page {
+      padding-top: calc(var(--nav-height) + var(--space-6));
+      padding-bottom: var(--space-10);
+    }
+
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .calc-sticky {
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-4));
+    }
+
+    @media (max-width: 900px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+      }
+      .calc-sticky { position: static; }
+    }
+
+    /* ── Chart ────────────────────────────────────────────── */
+    .drip-chart {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      position: relative;
+    }
+
+    .chart-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 180px;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      overflow: visible;
+    }
+
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+      cursor: default;
+    }
+
+    .chart-bar-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0;
+      /* transition set inline in JS for staggered delay */
+    }
+
+    .chart-bar--contrib {
+      background: var(--color-bg-hover);
+      border: 1px solid var(--color-border);
+      border-bottom: none;
+      border-radius: 3px 3px 0 0;
+      transition: filter 0.15s ease;
+    }
+
+    .chart-bar--divs {
+      background: var(--color-green);
+      border-radius: 3px 3px 0 0;
+      transition: filter 0.15s ease;
+    }
+
+    .chart-col:hover .chart-bar--divs    { filter: brightness(1.2); }
+    .chart-col:hover .chart-bar--contrib { filter: brightness(1.4); }
+
+    /* ── Chart tooltip ──────────────────────────────────── */
+    .chart-tooltip {
+      position: absolute;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      z-index: 20;
+      line-height: 1.7;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    .chart-tooltip.is-visible { opacity: 1; }
+
+    .chart-tooltip__year {
+      font-size: 9px;
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 5px;
+    }
+
+    .chart-tooltip__row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .chart-tooltip__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    .chart-tooltip__total {
+      border-top: 1px solid var(--color-border);
+      margin-top: 5px;
+      padding-top: 5px;
+      color: var(--color-text-primary);
+    }
+
+    .chart-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+      margin-top: 6px;
+      white-space: nowrap;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: var(--space-5);
+      margin-top: var(--space-3);
+    }
+
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+
+    .chart-legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Insight box ──────────────────────────────────────── */
+    .insight-box {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-green);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .insight-box strong {
+      color: var(--color-green);
+      font-weight: 600;
+    }
+
+    /* ── Share button ─────────────────────────────────────── */
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: color var(--duration-fast), border-color var(--duration-fast);
+    }
+
+    .share-btn:hover {
+      color: var(--color-text-secondary);
+      border-color: var(--color-border-hover);
+    }
+
+    /* ── Tighten result fonts for full precision numbers ─────── */
+    .result-box__value {
+      font-size: clamp(16px, 3.5vw, var(--text-2xl));
+      letter-spacing: -0.02em;
+    }
+
+    /* Stats: 2 cols so numbers have more room */
+    .calc-widget .results-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .calc-widget .result-stat:last-child {
+      grid-column: 1 / -1; /* income stat spans full width */
+    }
+
+    .result-stat__value {
+      font-size: clamp(12px, 2.8vw, var(--text-base));
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Year range display ───────────────────────────────── */
+    .range-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .range-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xl);
+      color: var(--color-green);
+      font-weight: 400;
+    }
+
+    /* ── SEO content ──────────────────────────────────────── */
+    .content-section {
+      max-width: 720px;
+      margin-top: var(--space-10);
+    }
+
+    .content-section h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 300;
+      letter-spacing: var(--tracking-snug);
+      margin-bottom: var(--space-4);
+      margin-top: var(--space-8);
+      color: var(--color-text-primary);
+    }
+
+    .content-section h2:first-child { margin-top: 0; }
+
+    .content-section p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .content-section p:last-child { margin-bottom: 0; }
+
+    /* ── Related calculators ──────────────────────────────── */
+    .related-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .related-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: border-color var(--duration-fast), transform var(--duration-fast);
+    }
+
+    .related-link:hover {
+      border-color: var(--color-border-accent);
+      transform: translateX(3px);
+    }
+
+    .related-link__name {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .related-link__desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .related-link__arrow {
+      color: var(--color-green);
+      font-size: var(--text-lg);
+      flex-shrink: 0;
+    }
+
+    /* ── Yearly breakdown table ──────────────────────────────── */
+    .yearly-breakdown {
+      margin-top: var(--space-6);
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: none; /* shown by JS after first calc */
+    }
+
+    .yearly-breakdown.is-visible { display: block; }
+
+    .breakdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .breakdown-header__title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .breakdown-header__legend {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+    }
+
+    .breakdown-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .breakdown-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .breakdown-table thead th {
+      position: sticky;
+      top: 0;
+      padding: 9px var(--space-4);
+      text-align: right;
+      font-size: 9px;
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: 400;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      z-index: 1;
+    }
+
+    .breakdown-table thead th:first-child { text-align: left; }
+
+    .breakdown-table td {
+      padding: 8px var(--space-4);
+      text-align: right;
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      white-space: nowrap;
+    }
+
+    .breakdown-table td:first-child {
+      text-align: left;
+      color: var(--color-text-primary);
+    }
+
+    .breakdown-table tr:last-child td { border-bottom: none; }
+
+    .breakdown-table tbody tr:hover td { background: var(--color-bg-hover); }
+
+    .breakdown-table .td--green { color: var(--color-green); }
+
+    /* Crossover year highlight */
+    .breakdown-row--crossover td {
+      background: rgba(34,212,122,0.06);
+    }
+    .breakdown-row--crossover .breakdown-year-label::after {
+      content: ' ★';
+      color: var(--color-green);
+      font-size: 8px;
+    }
+
+    .breakdown-year-label {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .breakdown-year-label span {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      font-weight: 300;
+    }
+
+    .breakdown-note {
+      padding: var(--space-3) var(--space-5);
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border);
+      line-height: 1.6;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://divsprout.com/calculators/drip/",
+        "name": "DRIP Calculator — Dividend Reinvestment Growth Projector",
+        "description": "Free DRIP calculator. Project how reinvested dividends compound your portfolio over time.",
+        "url": "https://divsprout.com/calculators/drip/",
+        "isPartOf": { "@id": "https://divsprout.com/#website" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",        "item": "https://divsprout.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://divsprout.com/calculators/" },
+            { "@type": "ListItem", "position": 3, "name": "DRIP Calculator" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a DRIP calculator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A DRIP calculator (Dividend Reinvestment Plan calculator) projects how your investment grows when dividends are automatically reinvested to purchase more shares. It shows the compounding effect over time, accounting for your initial investment, regular contributions, dividend yield, and dividend growth rate."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does dividend reinvestment compound wealth?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "When dividends are reinvested, they purchase additional shares. Those additional shares then generate their own dividends in the next period, which are also reinvested. Over time, this creates exponential growth — your dividends earn dividends, which earn more dividends. The longer the time horizon, the more dramatic the compounding effect becomes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a realistic dividend growth rate for DRIP calculations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Historically, dividend growth rates for quality dividend-growth stocks and ETFs range from 3% to 8% annually. The S&P 500 dividend growth rate has averaged around 5-6% per year over the long term. Conservative investors often use 3-4%, while optimistic projections might use 6-8%. For broad ETFs like SCHD or VYM, 5-6% is a reasonable assumption."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a good dividend yield for DRIP investing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For DRIP investing, a yield between 3% and 5% is typically considered a sweet spot — high enough to generate meaningful reinvestment income, but not so high that it signals company financial stress. Yields above 6-7% warrant extra scrutiny. Many successful DRIP investors focus on dividend growth rate over current yield, as a growing dividend reinvested compounds more powerfully over time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take for dividends to exceed my contributions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "This 'crossover point' depends on your yield, dividend growth rate, and contribution amount. At a 4% yield with 5% annual growth and consistent monthly contributions, most investors see dividends exceed their monthly contributions within 15-25 years. The DRIP calculator above shows you the exact crossover point for your specific inputs."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+              stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+              stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link nav__link--active">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="/calculators/dividend-yield/" class="btn btn--ghost btn--sm">Dividend Yield →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="calc-page">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:var(--space-5);">
+      <span class="breadcrumb__item"><a href="/">Home</a></span>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <span class="breadcrumb__current">DRIP Calculator</span>
+    </nav>
+
+    <div class="calc-layout">
+
+      <!-- ── LEFT: Calculator widget ───────────────────────── -->
+      <div class="calc-sticky">
+        <div class="calc-widget">
+          <div class="calc-widget__header">
+            <div class="calc-widget__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18">
+                <path d="M4 10a6 6 0 1 0 12 0"/>
+                <path d="M16 10a6 6 0 0 0-5.3-5.96"/>
+                <path d="M14.5 7l2-2.5 2.5 2"/>
+              </svg>
+            </div>
+            <div>
+              <div class="calc-widget__header-title">DRIP Calculator</div>
+            </div>
+          </div>
+
+          <div class="calc-widget__body">
+
+            <!-- Initial investment -->
+            <div class="input-group">
+              <label class="input-label" for="input-initial">
+                Starting portfolio value
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input
+                  id="input-initial"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="10,000"
+                  value="10000"
+                  min="0"
+                  aria-label="Starting portfolio value in dollars"
+                >
+              </div>
+            </div>
+
+            <!-- Monthly contribution -->
+            <div class="input-group">
+              <label class="input-label" for="input-monthly">
+                Monthly contribution
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input
+                  id="input-monthly"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="500"
+                  value="500"
+                  min="0"
+                  aria-label="Monthly contribution in dollars"
+                >
+              </div>
+            </div>
+
+            <!-- Dividend yield -->
+            <div class="input-group">
+              <label class="input-label" for="input-yield">
+                Annual dividend yield
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input
+                  id="input-yield"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="4.0"
+                  value="4"
+                  min="0"
+                  max="30"
+                  step="0.1"
+                  aria-label="Annual dividend yield as percentage"
+                >
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Dividend growth rate -->
+            <div class="input-group">
+              <label class="input-label" for="input-growth">
+                Annual dividend growth rate
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input
+                  id="input-growth"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="5.0"
+                  value="5"
+                  min="0"
+                  max="30"
+                  step="0.1"
+                  aria-label="Annual dividend growth rate as percentage"
+                >
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Advanced divider -->
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin:var(--space-1) 0;">
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-muted);white-space:nowrap;">Assumptions</span>
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+            </div>
+
+            <!-- Tax rate -->
+            <div class="input-group">
+              <label class="input-label" for="input-tax">
+                Dividend tax rate
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input
+                  id="input-tax"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="0"
+                  value="0"
+                  min="0"
+                  max="60"
+                  step="0.1"
+                  aria-label="Dividend tax rate as percentage"
+                >
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Inflation rate -->
+            <div class="input-group">
+              <label class="input-label" for="input-inflation">
+                Expected inflation
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input
+                  id="input-inflation"
+                  class="input-field"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="0"
+                  value="0"
+                  min="0"
+                  max="20"
+                  step="0.1"
+                  aria-label="Expected inflation rate as percentage"
+                >
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Years slider -->
+            <div class="input-group">
+              <div class="input-label range-display">
+                <label for="input-years">Time period</label>
+                <span class="range-value" id="years-display">20 years</span>
+              </div>
+              <input
+                id="input-years"
+                class="slider"
+                type="range"
+                min="5"
+                max="40"
+                value="20"
+                step="1"
+                aria-label="Investment time period in years"
+                aria-valuemin="5"
+                aria-valuemax="40"
+                aria-valuenow="20"
+              >
+            </div>
+
+            <!-- ── RESULTS ──────────────────────────────────── -->
+            <div class="result-box result-box--full" id="result-main" aria-live="polite" aria-atomic="true">
+              <div class="result-box__label">Final portfolio value</div>
+              <div class="result-box__value" id="result-final">—</div>
+            </div>
+
+            <div class="results-grid">
+              <div class="result-stat">
+                <div class="result-stat__label">Total invested</div>
+                <div class="result-stat__value" id="result-invested">—</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat__label" id="label-dividends">Net divs earned</div>
+                <div class="result-stat__value result-stat__value--green" id="result-dividends">—</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat__label" id="label-income">Net annual income</div>
+                <div class="result-stat__value result-stat__value--gold" id="result-income">—</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Chart + Insight ─────────────────────────── -->
+      <div>
+        <h1 style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:300;letter-spacing:var(--tracking-snug);margin-bottom:var(--space-2);">
+          DRIP Calculator
+        </h1>
+        <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-6);">
+          Project how reinvested dividends compound your portfolio over time.
+        </p>
+
+        <!-- Chart -->
+        <div class="drip-chart" style="margin-bottom:var(--space-4);">
+          <div class="chart-title">Portfolio growth over time</div>
+          <div class="chart-tooltip" id="chart-tooltip" aria-hidden="true"></div>
+          <div class="chart-bars" id="chart-bars" aria-label="Portfolio growth chart" role="img"></div>
+          <div class="chart-legend">
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot" style="background:var(--color-green);"></div>
+              Dividends reinvested
+            </div>
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot" style="background:var(--color-bg-hover);border:1px solid var(--color-border);"></div>
+              Capital contributed
+            </div>
+          </div>
+        </div>
+
+        <!-- Insight -->
+        <div class="insight-box" id="insight-box" style="margin-bottom:var(--space-4);">
+          Enter your details to see your personalised projection.
+        </div>
+
+        <!-- Share -->
+        <button class="share-btn" id="share-btn" onclick="shareCalc()" aria-label="Copy link to this calculation">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9.5 1.5h3v3M12.5 1.5L7 7M6 2.5H2.5A1 1 0 0 0 1.5 3.5v8A1 1 0 0 0 2.5 12.5h8A1 1 0 0 0 11.5 11.5V8"/>
+          </svg>
+          Copy link
+        </button>
+
+        <!-- Related calculator -->
+        <div style="margin-top:var(--space-6);">
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-3);">Related tool</p>
+          <div class="related-grid">
+            <a href="/calculators/dividend-yield/" class="related-link">
+              <div>
+                <div class="related-link__name">Dividend Yield Calculator</div>
+                <div class="related-link__desc">Find the yield of any stock from price and dividend</div>
+              </div>
+              <span class="related-link__arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── YEARLY BREAKDOWN ──────────────────────────────────── -->
+    <div class="yearly-breakdown" id="yearly-breakdown">
+      <div class="breakdown-header">
+        <div class="breakdown-header__title">Year-by-year breakdown</div>
+        <div class="breakdown-header__legend">
+          ★ = crossover year (dividends exceed monthly contributions)
+        </div>
+      </div>
+      <div class="breakdown-table-wrap">
+        <table class="breakdown-table" id="breakdown-table">
+          <thead id="breakdown-thead">
+            <tr>
+              <th>Year</th>
+              <th>Portfolio (nominal)</th>
+              <th>Portfolio (real)</th>
+              <th>Capital invested</th>
+              <th>Gross divs / yr</th>
+              <th>Tax paid / yr</th>
+              <th>Net divs / yr</th>
+              <th>Monthly income</th>
+              <th>Cumul. net divs</th>
+              <th>Yield on cost</th>
+              <th>Eff. yield</th>
+            </tr>
+          </thead>
+          <tbody id="breakdown-body"></tbody>
+        </table>
+      </div>
+      <div class="breakdown-note" id="breakdown-note"></div>
+    </div>
+
+    <!-- ── SEO CONTENT ────────────────────────────────────────── -->
+    <div class="content-section reveal">
+
+      <h2>What is DRIP investing?</h2>
+      <p>
+        DRIP stands for Dividend Reinvestment Plan. Instead of receiving your dividend
+        payments as cash, a DRIP automatically uses those payments to purchase additional
+        shares of the same stock or fund. This creates a powerful compounding cycle:
+        more shares generate more dividends, which buy more shares, and so on.
+      </p>
+      <p>
+        Most major brokerages offer DRIP enrollment for free. Once enabled, the process
+        is completely automatic — dividends are reinvested on the payment date without
+        any action required from the investor. Some brokers even allow fractional share
+        purchases through DRIP, ensuring every dollar of dividends is immediately put to work.
+      </p>
+
+      <h2>How to use this DRIP calculator</h2>
+      <p>
+        Start by entering your current portfolio value and any amount you plan to add
+        each month. Then enter the annual dividend yield of your portfolio (for diversified
+        ETFs like SCHD or VYM, this is typically 3–5%). The annual dividend growth rate
+        is optional but important — it reflects how much the dividend per share grows each
+        year, which for quality dividend-growth stocks historically runs 4–8%.
+      </p>
+      <p>
+        Finally, drag the slider to your intended investment horizon. The calculator
+        computes month-by-month, reinvesting dividends each month and applying the
+        dividend growth rate annually, giving you an accurate projection of your final
+        portfolio value, total dividends received, and the annual income your portfolio
+        would generate in the final year.
+      </p>
+
+      <h2>Why dividend growth rate matters</h2>
+      <p>
+        Most DRIP calculators ignore dividend growth rate — this one doesn't. A stock
+        or fund that grows its dividend by 6% per year will double its per-share dividend
+        in roughly 12 years. Applied to a growing portfolio, this means your annual income
+        compounds far faster than a static yield would suggest. An investor starting with
+        a 3.5% yield and 6% dividend growth will effectively be earning a much higher
+        "yield on cost" a decade later, without any change in their original investment thesis.
+      </p>
+
+      <h2>DRIP vs. taking dividends as cash</h2>
+      <p>
+        Taking dividends as cash gives you immediate income — useful for retirees or
+        those who need cash flow. Reinvesting (DRIP) maximises long-term growth by
+        keeping all capital working. Over a 20+ year horizon, the difference between
+        a DRIP investor and a cash-dividend investor with the same starting portfolio
+        is typically substantial — often 40–80% higher terminal value, depending on
+        yield and growth assumptions.
+      </p>
+      <p>
+        The calculator above shows the total dividend income earned regardless of
+        reinvestment strategy, so you can compare both approaches with the same inputs.
+      </p>
+
+      <!-- FAQ ─────────────────────────────────────────────── -->
+      <h2 style="margin-top:var(--space-9);">Frequently asked questions</h2>
+
+      <div class="faq" id="faq">
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false">
+            <span itemprop="name">What is a DRIP calculator?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">A DRIP calculator projects how your investment grows when dividends are automatically reinvested to buy more shares. It shows the compounding effect over time, accounting for your initial investment, regular contributions, dividend yield, and dividend growth rate.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false">
+            <span itemprop="name">How does dividend reinvestment compound wealth?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Reinvested dividends purchase additional shares, which generate their own dividends, which are also reinvested. Over time, this creates exponential growth — your dividends earn dividends. The longer the time horizon, the more dramatic the compounding effect becomes.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false">
+            <span itemprop="name">What is a realistic dividend growth rate?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">For quality dividend-growth stocks and ETFs, annual dividend growth of 3–8% is typical. The S&P 500 dividend growth rate has averaged around 5–6% per year historically. Conservative projections use 3–4%; broad ETFs like SCHD or VYM justify 5–6%.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false">
+            <span itemprop="name">What is a good dividend yield for DRIP investing?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">A yield between 3% and 5% is typically the DRIP sweet spot — high enough for meaningful reinvestment, low enough to avoid the yield traps that signal financial distress. Many successful DRIP investors prioritise dividend growth rate over current yield, as a growing dividend compounds more powerfully over time.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq__question" aria-expanded="false">
+            <span itemprop="name">How long until dividends exceed my monthly contributions?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">This "crossover point" depends on yield, dividend growth rate, and contribution amount. At a 4% yield with 5% annual growth and consistent monthly contributions, most investors see dividends exceed their monthly contributions within 15–25 years. The calculator above shows the crossover point for your specific inputs.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors.</p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ─────────────────────────────────────────────── */
+  // Full precision: $12,345.67
+  function fmtFull(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // Compact for tiny chart labels only: $12k / $1.2M
+  function fmtK(n) {
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
+    if (n >= 1000)    return '$' + (n / 1000).toFixed(2) + 'k';
+    return fmtFull(n);
+  }
+
+  // Keep fmt as alias for fmtFull for backwards compat
+  function fmt(n) { return fmtFull(n); }
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+  const els = {
+    initial:        document.getElementById('input-initial'),
+    monthly:        document.getElementById('input-monthly'),
+    yield:          document.getElementById('input-yield'),
+    growth:         document.getElementById('input-growth'),
+    tax:            document.getElementById('input-tax'),
+    inflation:      document.getElementById('input-inflation'),
+    years:          document.getElementById('input-years'),
+    yearsDisp:      document.getElementById('years-display'),
+    final:          document.getElementById('result-final'),
+    invested:       document.getElementById('result-invested'),
+    dividends:      document.getElementById('result-dividends'),
+    income:         document.getElementById('result-income'),
+    labelDivs:      document.getElementById('label-dividends'),
+    labelIncome:    document.getElementById('label-income'),
+    chart:          document.getElementById('chart-bars'),
+    insight:        document.getElementById('insight-box'),
+    breakdown:      document.getElementById('yearly-breakdown'),
+    breakdownBody:  document.getElementById('breakdown-body'),
+    breakdownNote:  document.getElementById('breakdown-note'),
+  };
+
+  /* ── Core calculation ────────────────────────────────────── */
+  function calculate() {
+    const initial    = Math.max(0, parseFloat(els.initial.value)   || 0);
+    const monthly    = Math.max(0, parseFloat(els.monthly.value)   || 0);
+    const yieldPct   = Math.max(0, parseFloat(els.yield.value)     || 0) / 100;
+    const growthPct  = Math.max(0, parseFloat(els.growth.value)    || 0) / 100;
+    const taxRate    = Math.min(0.99, Math.max(0, parseFloat(els.tax.value)       || 0) / 100);
+    const inflRate   = Math.max(0, parseFloat(els.inflation.value) || 0) / 100;
+    const years      = parseInt(els.years.value) || 20;
+
+    let portfolio       = initial;
+    let totalNetDivs    = 0;
+    let totalGrossDivs  = 0;
+    let totalTaxPaid    = 0;
+    let totalContrib    = initial;
+    let currentYield    = yieldPct;
+    let crossoverYear   = null;
+
+    const yearlyData = [{
+      year: 0, portfolio: initial, realPortfolio: initial,
+      contrib: initial, annualGross: 0, annualTax: 0,
+      annualNet: 0, cumNetDivs: 0,
+    }];
+
+    for (let y = 1; y <= years; y++) {
+      let annualGross = 0;
+      let annualNet   = 0;
+      let annualTax   = 0;
+
+      for (let m = 0; m < 12; m++) {
+        portfolio      += monthly;
+        totalContrib   += monthly;
+
+        const grossDiv  = portfolio * (currentYield / 12);
+        const taxAmt    = grossDiv * taxRate;
+        const netDiv    = grossDiv - taxAmt;
+
+        portfolio      += netDiv;   // only after-tax reinvested
+        annualGross    += grossDiv;
+        annualNet      += netDiv;
+        annualTax      += taxAmt;
+        totalNetDivs   += netDiv;
+        totalGrossDivs += grossDiv;
+        totalTaxPaid   += taxAmt;
+      }
+
+      currentYield *= (1 + growthPct);
+
+      // Inflation-adjusted portfolio value (real purchasing power)
+      const realPortfolio = portfolio / Math.pow(1 + inflRate, y);
+
+      // Crossover: net annual divs >= monthly contributions
+      const annualContrib = monthly * 12;
+      if (crossoverYear === null && annualNet >= annualContrib && annualContrib > 0) {
+        crossoverYear = y;
+      }
+
+      yearlyData.push({
+        year:         y,
+        portfolio:    portfolio,
+        realPortfolio: realPortfolio,
+        contrib:      totalContrib,
+        annualGross:  annualGross,
+        annualTax:    annualTax,
+        annualNet:    annualNet,
+        cumNetDivs:   totalNetDivs,
+      });
+    }
+
+    const last = yearlyData[yearlyData.length - 1];
+    const finalAnnualIncome = last ? last.annualNet : 0;
+    const finalRealPortfolio = last ? last.realPortfolio : 0;
+
+    return {
+      portfolio, finalRealPortfolio,
+      totalNetDivs, totalGrossDivs, totalTaxPaid,
+      totalContrib, finalAnnualIncome,
+      yearlyData, crossoverYear, years,
+      taxRate, inflRate,
+    };
+  }
+
+  /* ── Update DOM ──────────────────────────────────────────── */
+  function update() {
+    const r = calculate();
+
+    els.final.textContent     = fmtFull(r.portfolio);
+    els.invested.textContent  = fmtFull(r.totalContrib);
+    els.dividends.textContent = fmtFull(r.totalNetDivs);
+    els.income.textContent    = fmtFull(r.finalAnnualIncome) + ' / yr';
+
+    // Update stat labels dynamically based on settings
+    if (els.labelDivs)   els.labelDivs.textContent   = r.taxRate > 0 ? 'Net divs earned' : 'Total divs earned';
+    if (els.labelIncome) els.labelIncome.textContent  = r.taxRate > 0 ? 'Net income / yr' : 'Annual income / yr';
+
+    renderChart(r.yearlyData, r.years);
+    renderInsight(r);
+    renderBreakdown(r);
+  }
+
+  /* ── Chart ───────────────────────────────────────────────── */
+  function renderChart(data, years) {
+    // Pick which data points to display (max ~10 bars)
+    const step = years <= 10 ? 1 : years <= 20 ? 2 : years <= 30 ? 3 : 4;
+    const points = data.filter((d, i) => i > 0 && (i % step === 0 || i === data.length - 1));
+
+    const maxVal = Math.max(...points.map(d => d.portfolio));
+    if (maxVal === 0) { els.chart.innerHTML = ''; return; }
+
+    const CHART_H = 160; // px
+
+    // Render bars at height 0 first, then animate in (domino effect)
+    els.chart.innerHTML = points.map((d, idx) => {
+      const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
+      const contH  = Math.round((d.contrib   / maxVal) * CHART_H);
+      const divsH  = Math.max(0, totalH - contH);
+      const yr     = new Date().getFullYear() + d.year;
+      const delay  = idx * 55; // ms per bar for domino effect
+
+      return `
+        <div class="chart-col"
+          data-year="${yr}"
+          data-portfolio="${d.portfolio}"
+          data-contrib="${d.contrib}"
+          data-divs="${d.annualNet}"
+          data-totalh="${totalH}">
+          <div class="chart-bar-wrap" style="height:0;transition:height 0.55s var(--ease-out) ${delay}ms;">
+            <div class="chart-bar--divs"    style="height:${divsH}px;"></div>
+            <div class="chart-bar--contrib" style="height:${contH}px;"></div>
+          </div>
+          <div class="chart-label">${yr}</div>
+        </div>`;
+    }).join('');
+
+    // Double-RAF: allow paint at height 0, then animate to target heights
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        els.chart.querySelectorAll('.chart-col').forEach(col => {
+          col.querySelector('.chart-bar-wrap').style.height = col.dataset.totalh + 'px';
+        });
+      });
+    });
+
+    setupChartHover();
+  }
+
+  /* ── Chart tooltip ───────────────────────────────────────── */
+  function setupChartHover() {
+    const tooltip  = document.getElementById('chart-tooltip');
+    const chartCard = els.chart.closest('.drip-chart');
+
+    els.chart.querySelectorAll('.chart-col').forEach(col => {
+      col.addEventListener('mouseenter', () => {
+        const colRect  = col.getBoundingClientRect();
+        const cardRect = chartCard.getBoundingClientRect();
+        const barH     = parseInt(col.dataset.totalh) || 0;
+
+        // Tooltip position: above the bar top, centred on column
+        const tipLeft = colRect.left - cardRect.left + colRect.width / 2;
+        const tipBottom = cardRect.bottom - colRect.bottom + barH + 8;
+
+        tooltip.innerHTML = buildTooltip(col);
+        tooltip.style.left   = tipLeft + 'px';
+        tooltip.style.bottom = tipBottom + 'px';
+        tooltip.style.top    = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
+
+        // Keep tooltip within card bounds
+        requestAnimationFrame(() => {
+          const tw = tooltip.offsetWidth;
+          const cardW = cardRect.width;
+          const rawLeft = tipLeft - tw / 2;
+          if (rawLeft < 8) tooltip.style.left = (tw / 2 + 8) + 'px';
+          else if (rawLeft + tw > cardW - 8) tooltip.style.left = (cardW - tw / 2 - 8) + 'px';
+        });
+
+        tooltip.classList.add('is-visible');
+      });
+
+      col.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('is-visible');
+      });
+    });
+  }
+
+  function buildTooltip(col) {
+    const yr        = col.dataset.year;
+    const portfolio = parseFloat(col.dataset.portfolio);
+    const contrib   = parseFloat(col.dataset.contrib);
+    const divs      = parseFloat(col.dataset.divs);
+
+    return `
+      <div class="chart-tooltip__year">${yr}</div>
+      <div class="chart-tooltip__row">
+        <div class="chart-tooltip__dot" style="background:var(--color-green);"></div>
+        Dividends: ${fmtFull(divs)}
+      </div>
+      <div class="chart-tooltip__row">
+        <div class="chart-tooltip__dot" style="background:var(--color-bg-hover);border:1px solid var(--color-border);"></div>
+        Invested: ${fmtFull(contrib)}
+      </div>
+      <div class="chart-tooltip__total">Total: ${fmtFull(portfolio)}</div>`;
+  }
+
+  /* ── Yearly breakdown table ─────────────────────────────── */
+  function renderBreakdown(r) {
+    const { yearlyData, crossoverYear, taxRate, inflRate } = r;
+    const rows     = yearlyData.slice(1); // skip year 0
+    const baseYear = new Date().getFullYear();
+    const hasTax   = taxRate > 0;
+    const hasInfl  = inflRate > 0;
+
+    // Update thead dynamically
+    const thead = document.getElementById('breakdown-thead');
+    if (thead) {
+      thead.innerHTML = `<tr>
+        <th>Year</th>
+        <th>Portfolio</th>
+        ${hasInfl ? '<th>Real value</th>' : ''}
+        <th>Invested</th>
+        ${hasTax ? '<th>Gross divs / yr</th>' : ''}
+        ${hasTax ? '<th>Tax / yr</th>' : ''}
+        <th>${hasTax ? 'Net divs / yr' : 'Divs / yr'}</th>
+        <th>${hasTax ? 'Net / mo' : 'Divs / mo'}</th>
+        <th>Cumul. divs</th>
+        <th>Yield on cost</th>
+        <th>Eff. yield</th>
+      </tr>`;
+    }
+
+    els.breakdownBody.innerHTML = rows.map(d => {
+      const calYear    = baseYear + d.year;
+      const monthly    = d.annualNet / 12;
+      const yoc        = d.contrib > 0
+        ? (d.annualNet / d.contrib * 100).toFixed(4) + '%'
+        : '—';
+      const effYield   = d.portfolio > 0
+        ? (d.annualNet / d.portfolio * 100).toFixed(4) + '%'
+        : '—';
+      const isCross    = d.year === crossoverYear;
+
+      return `
+        <tr class="${isCross ? 'breakdown-row--crossover' : ''}">
+          <td>
+            <div class="breakdown-year-label">
+              Year ${d.year}
+              <span>${calYear}</span>
+            </div>
+          </td>
+          <td>${fmtFull(d.portfolio)}</td>
+          ${hasInfl ? `<td style="color:var(--color-text-muted);">${fmtFull(d.realPortfolio)}</td>` : ''}
+          <td>${fmtFull(d.contrib)}</td>
+          ${hasTax ? `<td>${fmtFull(d.annualGross)}</td>` : ''}
+          ${hasTax ? `<td style="color:var(--color-text-muted);">-${fmtFull(d.annualTax)}</td>` : ''}
+          <td class="td--green">${fmtFull(d.annualNet)}</td>
+          <td class="td--green">${fmtFull(monthly)}</td>
+          <td>${fmtFull(d.cumNetDivs)}</td>
+          <td class="td--green">${yoc}</td>
+          <td>${effYield}</td>
+        </tr>`;
+    }).join('');
+
+    // Build notes
+    const notes = [];
+    if (crossoverYear) {
+      notes.push(`★ Year ${crossoverYear} (${baseYear + crossoverYear}): dividends exceed monthly contributions.`);
+    }
+    if (hasTax)  notes.push(`Tax rate: ${(taxRate * 100).toFixed(1)}% applied to gross dividends; only after-tax amount reinvested.`);
+    if (hasInfl) notes.push(`Real value = nominal ÷ (1 + ${(inflRate * 100).toFixed(1)}%)^year — today's purchasing power.`);
+    notes.push('Yield on cost = net annual divs ÷ total invested. Eff. yield = net annual divs ÷ portfolio value.');
+    els.breakdownNote.textContent = notes.join('  ·  ');
+
+    els.breakdown.classList.add('is-visible');
+  }
+
+  /* ── Insight ─────────────────────────────────────────────── */
+  function renderInsight(r) {
+    const annualNet   = r.finalAnnualIncome;
+    const monthlyNet  = annualNet / 12;
+    const totalReturn = r.totalContrib > 0
+      ? ((r.portfolio - r.totalContrib) / r.totalContrib * 100).toFixed(2)
+      : '0.00';
+
+    const taxLabel  = r.taxRate > 0 ? ' (after tax)' : '';
+    const inflLabel = r.inflRate > 0
+      ? ` In today's money, that portfolio is worth <strong>${fmtFull(r.finalRealPortfolio)}</strong>.`
+      : '';
+
+    let text = `After <strong>${r.years} years</strong>, your portfolio generates
+      <strong>${fmtFull(annualNet)} / year</strong>
+      (<strong>${fmtFull(monthlyNet)} / month</strong>) in dividends${taxLabel}.
+      Total return on invested capital: <strong>${totalReturn}%</strong>.${inflLabel}`;
+
+    if (r.crossoverYear) {
+      text += ` Dividends exceed monthly contributions from
+        <strong>year ${r.crossoverYear}</strong> onward.`;
+    }
+
+    els.insight.innerHTML = text;
+  }
+
+  /* ── Share / copy link ───────────────────────────────────── */
+  window.shareCalc = function () {
+    const params = new URLSearchParams({
+      initial:   els.initial.value,
+      monthly:   els.monthly.value,
+      yield:     els.yield.value,
+      growth:    els.growth.value,
+      tax:       els.tax.value,
+      inflation: els.inflation.value,
+      years:     els.years.value,
+    });
+    const url = window.location.origin + window.location.pathname + '?' + params.toString();
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('share-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Link copied!';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    });
+  };
+
+  /* ── Restore from URL params ─────────────────────────────── */
+  function restoreFromURL() {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('initial'))   els.initial.value   = p.get('initial');
+    if (p.get('monthly'))   els.monthly.value   = p.get('monthly');
+    if (p.get('yield'))     els.yield.value     = p.get('yield');
+    if (p.get('growth'))    els.growth.value    = p.get('growth');
+    if (p.get('tax'))       els.tax.value       = p.get('tax');
+    if (p.get('inflation')) els.inflation.value = p.get('inflation');
+    if (p.get('years'))     els.years.value     = p.get('years');
+  }
+
+  /* ── Years slider display ────────────────────────────────── */
+  function syncSlider() {
+    const v = els.years.value;
+    els.yearsDisp.textContent = v + ' year' + (v == 1 ? '' : 's');
+    els.years.setAttribute('aria-valuenow', v);
+  }
+
+  /* ── Event listeners ─────────────────────────────────────── */
+  [els.initial, els.monthly, els.yield, els.growth, els.tax, els.inflation].forEach(el => {
+    el.addEventListener('input', update);
+  });
+
+  els.years.addEventListener('input', function () {
+    syncSlider();
+    update();
+  });
+
+  /* ── Init ────────────────────────────────────────────────── */
+  restoreFromURL();
+  syncSlider();
+  update();
+
+})();
+</script>
+
+</body>
+</html>

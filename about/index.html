@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About DivSprout — Free Dividend Calculator Tools</title>
+  <meta name="description" content="DivSprout is a free toolkit for dividend investors. No ads, no paywalls, no data collection. Built by an investor, for investors.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/about/">
+
+  <meta property="og:type"         content="website">
+  <meta property="og:title"        content="About DivSprout — Free Dividend Calculator Tools">
+  <meta property="og:description"  content="DivSprout is a free toolkit for dividend investors. No ads, no paywalls, no data collection.">
+  <meta property="og:url"          content="https://divsprout.com/about/">
+  <meta property="og:site_name"    content="DivSprout">
+  <meta property="og:image"        content="https://divsprout.com/assets/images/og-about.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="About DivSprout">
+  <meta name="twitter:description" content="Built by an investor, for investors. Free, private, no BS.">
+  <meta name="twitter:image"       content="https://divsprout.com/assets/images/og-about.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+
+  <style>
+    .about-page {
+      padding-top: calc(var(--nav-height) + var(--space-9));
+      padding-bottom: var(--space-10);
+    }
+
+    .about-inner {
+      max-width: 680px;
+    }
+
+    .about-eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-green);
+      opacity: .85;
+      margin-bottom: var(--space-4);
+    }
+
+    .about-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-snug);
+      margin-bottom: var(--space-7);
+    }
+
+    .about-title em {
+      font-style: italic;
+      color: var(--color-green);
+    }
+
+    .about-body h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 300;
+      letter-spacing: var(--tracking-snug);
+      color: var(--color-text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+    }
+
+    .about-body h2:first-child { margin-top: 0; }
+
+    .about-body p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-body a {
+      color: var(--color-green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--color-border-accent);
+      transition: text-decoration-color var(--duration-fast);
+    }
+
+    .about-body a:hover {
+      text-decoration-color: var(--color-green);
+    }
+
+    .principles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin: var(--space-5) 0;
+    }
+
+    .principle {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    .principle__icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-green-dim);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .principle__icon svg { width: 16px; height: 16px; }
+
+    .principle__title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .principle__text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .disclaimer-box {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    .disclaimer-box h3 {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .disclaimer-box p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-3);
+    }
+
+    .disclaimer-box p:last-child { margin-bottom: 0; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "About DivSprout",
+    "url": "https://divsprout.com/about/",
+    "description": "DivSprout is a free toolkit for dividend investors. No ads, no paywalls, no data collection.",
+    "isPartOf": { "@id": "https://divsprout.com/#website" }
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+              stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+              stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link nav__link--active">About</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="about-page">
+  <div class="container">
+    <div class="about-inner">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:var(--space-5);">
+        <span class="breadcrumb__item"><a href="/">Home</a></span>
+        <span class="breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="breadcrumb__current">About</span>
+      </nav>
+
+      <p class="about-eyebrow">About DivSprout</p>
+      <h1 class="about-title">
+        Built by an investor,<br>for <em>investors</em>.
+      </h1>
+
+      <div class="about-body">
+
+        <h2>What is DivSprout?</h2>
+        <p>
+          DivSprout is a free toolkit for dividend investors. The goal is simple:
+          give retail investors the same quality of financial tools that used to be
+          locked behind expensive platforms or buried under paywalls and popup ads.
+        </p>
+        <p>
+          Every calculator on DivSprout runs entirely in your browser. No data is
+          sent to any server. No account is required. No email needed. You close the
+          tab, and nothing is stored anywhere.
+        </p>
+
+        <h2>Why we built this</h2>
+        <p>
+          Dividend investing requires running a lot of numbers — yield, reinvestment
+          growth, income projections, FIRE targets. Most free tools online are either
+          broken, cluttered with advertising, or force you to create an account before
+          showing you a result.
+        </p>
+        <p>
+          DivSprout exists because those tools frustrated us as investors. We wanted
+          something fast, honest, and private. So we built it ourselves and made it
+          free for everyone.
+        </p>
+
+        <h2>Our principles</h2>
+
+        <div class="principles">
+          <div class="principle">
+            <div class="principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 2L2 5v4c0 3.3 2.3 6.1 6 7 3.7-.9 6-3.7 6-7V5L8 2z"/>
+                <path d="M5.5 8l2 2 3.5-3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="principle__title">Zero data collection</div>
+              <div class="principle__text">All calculations happen in your browser. We never see your numbers, your portfolio, or your email.</div>
+            </div>
+          </div>
+
+          <div class="principle">
+            <div class="principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round">
+                <circle cx="8" cy="8" r="5.5"/>
+                <path d="M8 5.5v2.5l1.5 1"/>
+              </svg>
+            </div>
+            <div>
+              <div class="principle__title">Instant results</div>
+              <div class="principle__text">No loading spinners, no submit buttons. Every result updates in real-time as you type.</div>
+            </div>
+          </div>
+
+          <div class="principle">
+            <div class="principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="8" r="5.5"/>
+                <path d="M6 8l1.5 1.5 3-3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="principle__title">Always free</div>
+              <div class="principle__text">Core tools will always be free. We're transparent about how the site is funded (see below).</div>
+            </div>
+          </div>
+
+          <div class="principle">
+            <div class="principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="12" height="10" rx="1.5"/>
+                <path d="M5 7h6M5 10h4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="principle__title">No BS content</div>
+              <div class="principle__text">No fake urgency, no misleading headlines, no "CLICK HERE TO GET RICH" nonsense. Just tools.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2>How DivSprout is funded</h2>
+        <p>
+          DivSprout is currently self-funded. In the future, the site may include
+          clearly labelled affiliate links to brokerages — meaning if you open an
+          account through a link on this site, we may receive a referral fee at no
+          cost to you. Any affiliate relationship will always be disclosed clearly
+          on the relevant page.
+        </p>
+        <p>
+          Affiliate links never influence calculator results, tool recommendations,
+          or editorial content. A broker will not appear on DivSprout because they
+          paid to be there. Period.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions, feedback, or found a bug? A contact form is on the roadmap.
+          In the meantime, DivSprout is a one-person project — all the tools
+          are open and free to use, no account required.
+        </p>
+
+        <!-- Disclaimer ─────────────────────────────────────── -->
+        <div class="disclaimer-box" id="disclaimer">
+          <h3>Disclaimer</h3>
+          <p>
+            DivSprout is for educational and informational purposes only. Nothing
+            on this website constitutes financial advice, investment advice, or a
+            recommendation to buy or sell any security.
+          </p>
+          <p>
+            All calculator results are projections based on the inputs you provide.
+            Past dividend performance does not guarantee future results. Always do
+            your own research and consult a qualified financial advisor before making
+            investment decisions.
+          </p>
+          <p>
+            &copy; 2026 DivSprout. All rights reserved.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors.</p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js" defer></script>
+</body>
+</html>

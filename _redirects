@@ -1,0 +1,14 @@
+# ============================================================
+# DIVSPROUT — Cloudflare Pages Redirects
+# Formát: [from] [to] [status]
+# ============================================================
+
+# ── Affiliate linky ───────────────────────────────────────
+# Pridaj sem svojho broker affiliate URL keď dostaneš kódy.
+# Príklad:
+# /go/interactive-brokers/  https://ibkr.com/?ref=TVOJ_KOD  301
+# /go/tastytrade/            https://tastytrade.com/?ref=...  301
+# /go/moomoo/                https://moomoo.com/?ref=...      301
+
+# ── 404 fallback ─────────────────────────────────────────
+# (Cloudflare Pages automaticky servuje /404.html ak existuje)

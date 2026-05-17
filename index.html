@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DivSprout — Free Dividend Calculator Tools for Investors</title>
+  <meta name="description" content="Free dividend calculators for retail investors. Calculate dividend yield, project DRIP growth, and plan your passive income. No signup. No paywall.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/">
+
+  <meta property="og:type"         content="website">
+  <meta property="og:title"        content="DivSprout — Free Dividend Calculator Tools">
+  <meta property="og:description"  content="Free calculators for dividend investors. No signup required.">
+  <meta property="og:url"          content="https://divsprout.com/">
+  <meta property="og:site_name"    content="DivSprout">
+  <meta property="og:image"        content="https://divsprout.com/assets/images/og-home.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="DivSprout — Free Dividend Calculator Tools">
+  <meta name="twitter:description" content="Free calculators for dividend investors. No signup required.">
+  <meta name="twitter:image"       content="https://divsprout.com/assets/images/og-home.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://divsprout.com/#website",
+        "name": "DivSprout",
+        "url": "https://divsprout.com/",
+        "description": "Free dividend calculators for retail investors. No signup. No paywall.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://divsprout.com/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://divsprout.com/#organization",
+        "name": "DivSprout",
+        "url": "https://divsprout.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://divsprout.com/assets/icons/favicon.svg"
+        },
+        "sameAs": []
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://divsprout.com/#webpage",
+        "url": "https://divsprout.com/",
+        "name": "DivSprout — Free Dividend Calculator Tools for Investors",
+        "description": "Free dividend calculators for retail investors. Calculate dividend yield, project DRIP growth, and plan your passive income.",
+        "isPartOf": { "@id": "https://divsprout.com/#website" },
+        "about": { "@id": "https://divsprout.com/#organization" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Dividend Calculator Tools",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Dividend Yield Calculator",
+            "url": "https://divsprout.com/calculators/dividend-yield/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "DRIP Calculator",
+            "url": "https://divsprout.com/calculators/drip/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/animations.css">
+
+  <style>
+    .accent { font-style: italic; color: var(--color-green); }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: calc(var(--nav-height) + var(--space-9)) 0 var(--space-9);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 360px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(34,212,122,0.11) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero__inner { position: relative; z-index: 1; }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 5px 14px;
+      background: var(--color-green-dim);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-green);
+      letter-spacing: var(--tracking-wide);
+      margin-bottom: var(--space-6);
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--color-green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 300;
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      max-width: 780px;
+      margin: 0 auto var(--space-5);
+    }
+
+    .hero__subtitle {
+      font-size: var(--text-md);
+      font-weight: 300;
+      color: var(--color-text-secondary);
+      max-width: 480px;
+      margin: 0 auto var(--space-7);
+      line-height: var(--leading-relaxed);
+    }
+
+    .hero__cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    /* ── Calculator cards ─────────────────────────────────── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .tools-grid { grid-template-columns: 1fr; }
+    }
+
+    .tool-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color var(--duration-base) var(--ease-out),
+        transform var(--duration-base) var(--ease-out),
+        box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-green-glow), transparent);
+      opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-out);
+    }
+
+    .tool-card:hover {
+      border-color: var(--color-border-accent);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .tool-card:hover::before { opacity: 1; }
+
+    .tool-card__icon {
+      width: 44px; height: 44px;
+      background: var(--color-green-dim);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool-card__icon svg { width: 22px; height: 22px; }
+
+    .tool-card__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-green);
+    }
+
+    .tool-card__name {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: var(--leading-snug);
+    }
+
+    .tool-card__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      flex: 1;
+    }
+
+    .tool-card__cta {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-green);
+      letter-spacing: var(--tracking-wide);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: var(--space-2);
+      transition: gap var(--duration-fast);
+    }
+
+    .tool-card:hover .tool-card__cta { gap: 10px; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://divsprout.com/#organization",
+        "name": "DivSprout",
+        "url": "https://divsprout.com",
+        "description": "Free dividend calculator tools for retail investors"
+      },
+      {
+        "@type": "WebSite",
+        "name": "DivSprout",
+        "url": "https://divsprout.com",
+        "publisher": { "@id": "https://divsprout.com/#organization" }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+              stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+              stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero__inner">
+
+      <div class="hero__badge">
+        <span class="live-dot" aria-hidden="true"></span>
+        Free · No signup · No paywall
+      </div>
+
+      <h1 class="hero__title">
+        <em class="accent">Dividend</em> calculators<br>
+        built for investors,<br>not banks.
+      </h1>
+
+      <p class="hero__subtitle">
+        Free tools to calculate your yield and project DRIP growth.
+        Instant results. No account needed.
+      </p>
+
+      <div class="hero__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--lg">
+          Try DRIP Calculator
+        </a>
+        <a href="/calculators/dividend-yield/" class="btn btn--ghost btn--lg">
+          Dividend Yield Calculator
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TOOLS ──────────────────────────────────────────────── -->
+  <section class="section" aria-labelledby="tools-title">
+    <div class="container">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-green);opacity:.85;text-align:center;margin-bottom:var(--space-6);">Free Tools</p>
+
+      <div class="tools-grid">
+
+        <a href="/calculators/drip/" class="tool-card reveal">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 22 22" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 11a6 6 0 1 0 12 0"/>
+              <path d="M17 11a6 6 0 0 0-5.3-5.96"/>
+              <path d="M15 7.5l2-2.5 2.5 2"/>
+              <path d="M8 14h2M12 14h2"/>
+            </svg>
+          </div>
+          <div class="tool-card__label">Most popular</div>
+          <div class="tool-card__name">DRIP Calculator</div>
+          <div class="tool-card__desc">
+            Project the compounding power of dividend reinvestment.
+            Enter your portfolio details and see how reinvested dividends
+            grow your wealth over time.
+          </div>
+          <div class="tool-card__cta">Open calculator →</div>
+        </a>
+
+        <a href="/calculators/dividend-yield/" class="tool-card reveal">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 22 22" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4"   y="11" width="3.5" height="8"  rx="1" fill="rgba(34,212,122,0.15)"/>
+              <rect x="9.5" y="7"  width="3.5" height="12" rx="1" fill="rgba(34,212,122,0.25)"/>
+              <rect x="15"  y="3"  width="3.5" height="16" rx="1" fill="rgba(34,212,122,0.4)"/>
+            </svg>
+          </div>
+          <div class="tool-card__label">Essential</div>
+          <div class="tool-card__name">Dividend Yield Calculator</div>
+          <div class="tool-card__desc">
+            Calculate the dividend yield for any stock instantly.
+            See your annual and monthly income based on share price
+            and dividend payments.
+          </div>
+          <div class="tool-card__cta">Open calculator →</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn</div>
+        <div class="footer__links">
+          <a href="/learn/"                                class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">
+        &copy; 2026 DivSprout. Not financial advice. For educational purposes only.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js" defer></script>
+</body>
+</html>
