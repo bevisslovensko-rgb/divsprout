@@ -1649,4 +1649,36 @@
       els.inflation.value = btn.dataset.inflation;
       els.years.value     = btn.dataset.years;
 
-      document.querySelectorAll('.preset-bt
+      document.querySelectorAll('.preset-btn').forEach(b => {
+        b.classList.toggle('preset-btn--active', b === btn);
+      });
+
+      syncSlider();
+      update();
+    });
+  });
+
+  /* ── Input event listeners ───────────────────────────────── */
+  [els.initial, els.monthly, els.yield, els.growth, els.tax, els.inflation].forEach(el => {
+    if (el) {
+      el.addEventListener('input', update);
+      el.addEventListener('change', update);
+    }
+  });
+
+  if (els.years) {
+    els.years.addEventListener('input', () => {
+      syncSlider();
+      update();
+    });
+  }
+
+  /* ── Init ────────────────────────────────────────────────── */
+  restoreFromURL();
+  syncSlider();
+  update();
+
+})();
+</script>
+</body>
+</html>
