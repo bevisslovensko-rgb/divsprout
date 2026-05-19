@@ -1247,8 +1247,11 @@
   /* Restore from URL */
   function restoreFromURL() {
     const p = new URLSearchParams(window.location.search);
-    const map = [['f-target','target'],['f-yield','yield'],['f-growth','growth'],
-                 ['f-portfolio','portfolio'],['f-monthly','monthly'],['f-tax','tax'],['f-inflation','inflation']];
+    const map = [
+      ['input-target','target'],['input-yield','yield'],['input-growth','growth'],
+      ['input-portfolio','portfolio'],['input-monthly','monthly'],
+      ['input-tax','tax'],['input-inflation','inflation']
+    ];
     map.forEach(function(pair) {
       const el = document.getElementById(pair[0]);
       const val = p.get(pair[1]);
@@ -1259,8 +1262,10 @@
   /* Preset buttons */
   document.querySelectorAll('.preset-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      [['f-target','target'],['f-yield','yield'],['f-growth','growth'],
-       ['f-portfolio','portfolio'],['f-monthly','monthly'],['f-tax','tax'],['f-inflation','inflation']
+      [
+        ['input-target','target'],['input-yield','yield'],['input-growth','growth'],
+        ['input-portfolio','portfolio'],['input-monthly','monthly'],
+        ['input-tax','tax'],['input-inflation','inflation']
       ].forEach(function(pair) {
         var el = document.getElementById(pair[0]);
         if (el && btn.dataset[pair[1]] !== undefined) el.value = btn.dataset[pair[1]];
@@ -1268,16 +1273,16 @@
       document.querySelectorAll('.preset-btn').forEach(function(b) {
         b.classList.toggle('preset-btn--active', b === btn);
       });
-      calculate();
+      update();
     });
   });
 
   /* Input listeners */
-  ['f-target','f-yield','f-growth','f-portfolio','f-monthly','f-tax','f-inflation'].forEach(function(id) {
+  ['input-target','input-yield','input-growth','input-portfolio','input-monthly','input-tax','input-inflation'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) {
-      el.addEventListener('input',  calculate);
-      el.addEventListener('change', calculate);
+      el.addEventListener('input',  update);
+      el.addEventListener('change', update);
     }
   });
 
@@ -1293,10 +1298,11 @@
     });
   });
 
+  /* Init */
   restoreFromURL();
-  calculate();
+  update();
 
-  })();
-  </script>
+})();
+</script>
 </body>
 </html>
