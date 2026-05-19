@@ -1361,4 +1361,23 @@
     if (sliderEl) {
       sliderEl.addEventListener('input', function () {
         if (sliderVal) sliderVal.textContent = sliderEl.value + ' yrs';
-        renderHe
+        renderHero(false);
+      });
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      var btn = item.querySelector('.faq-question');
+      var ans = item.querySelector('.faq-answer');
+      if (!btn || !ans) return;
+      btn.addEventListener('click', function () {
+        var open = item.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open);
+        ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>
