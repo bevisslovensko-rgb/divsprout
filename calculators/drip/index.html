@@ -617,6 +617,20 @@
         }
       },
       {
+        "@type": "SoftwareApplication",
+        "@id": "https://divsprout.com/calculators/drip/#app",
+        "name": "DRIP Calculator — Dividend Reinvestment Growth Projector",
+        "description": "Free DRIP calculator that projects how reinvested dividends compound your portfolio over time. Accounts for yield, dividend growth, monthly contributions, tax and inflation.",
+        "url": "https://divsprout.com/calculators/drip/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
         "@type": "FAQPage",
         "mainEntity": [
           {
@@ -706,6 +720,7 @@
     <div class="nav__mobile" id="mobile-menu">
       <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
       <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
       <a href="/learn/"                      class="nav__link">Learn</a>
       <a href="/about/"                      class="nav__link">About</a>
     </div>
@@ -1184,7 +1199,7 @@
           </div>
           <span class="nav__logo-text">Div<span>Sprout</span></span>
         </a>
-        <p>Free dividend calculators for retail investors.</p>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
       </div>
 
       <div>
@@ -1192,17 +1207,32 @@
         <div class="footer__links">
           <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
           <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
         </div>
       </div>
 
       <div>
-        <div class="footer__col-title">Learn</div>
+        <div class="footer__col-title">Learn &mdash; Basics</div>
         <div class="footer__links">
-          <a href="/learn/"                                class="footer__link">All Guides</a>
-          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
-          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
-          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
-          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
         </div>
       </div>
 
@@ -1223,8 +1253,11 @@
       </div>
 
     </div>
+
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+      <p class="footer__copy">
+        &copy; 2026 DivSprout. Not financial advice. For educational purposes only.
+      </p>
     </div>
   </div>
 </footer>
@@ -1658,27 +1691,4 @@
     });
   });
 
-  /* ── Input event listeners ───────────────────────────────── */
-  [els.initial, els.monthly, els.yield, els.growth, els.tax, els.inflation].forEach(el => {
-    if (el) {
-      el.addEventListener('input', update);
-      el.addEventListener('change', update);
-    }
-  });
-
-  if (els.years) {
-    els.years.addEventListener('input', () => {
-      syncSlider();
-      update();
-    });
-  }
-
-  /* ── Init ────────────────────────────────────────────────── */
-  restoreFromURL();
-  syncSlider();
-  update();
-
-})();
-</script>
-</body>
-</html>
+  /* ── Input event listeners ───────�

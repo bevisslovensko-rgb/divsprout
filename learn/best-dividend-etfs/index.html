@@ -52,6 +52,18 @@
     "isPartOf": { "@type": "WebPage", "url": "https://divsprout.com/learn/" }
   }
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://divsprout.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://divsprout.com/learn/" },
+      { "@type": "ListItem", "position": 3, "name": "Best Dividend ETFs" }
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -74,6 +86,7 @@
       <div class="nav__links">
         <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
         <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
         <a href="/learn/"                      class="nav__link nav__link--active">Learn</a>
         <a href="/about/"                      class="nav__link">About</a>
       </div>
@@ -91,6 +104,7 @@
     <div class="nav__mobile" id="mobile-menu">
       <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
       <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
       <a href="/learn/"                      class="nav__link">Learn</a>
       <a href="/about/"                      class="nav__link">About</a>
       <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
@@ -240,7 +254,8 @@
 <!-- ── FOOTER ──────────────────────────────────────────────── -->
 <footer class="footer">
   <div class="container">
-    <div class="footer__grid" style="grid-template-columns: 1.5fr repeat(4, 1fr);">
+    <div class="footer__grid">
+
       <div class="footer__brand">
         <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
           <div class="nav__logo-mark">
@@ -253,25 +268,43 @@
           </div>
           <span class="nav__logo-text">Div<span>Sprout</span></span>
         </a>
-        <p>Free dividend calculators for retail investors.</p>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
       </div>
+
       <div>
         <div class="footer__col-title">Calculators</div>
         <div class="footer__links">
           <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
           <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
         </div>
       </div>
+
       <div>
-        <div class="footer__col-title">Learn</div>
+        <div class="footer__col-title">Learn &mdash; Basics</div>
         <div class="footer__links">
-          <a href="/learn/"                                    class="footer__link">All Guides</a>
-          <a href="/learn/what-is-drip/"                       class="footer__link">What is DRIP?</a>
-          <a href="/learn/dividend-yield-explained/"            class="footer__link">Dividend Yield</a>
-          <a href="/learn/yield-on-cost/"                      class="footer__link">Yield on Cost</a>
-          <a href="/learn/how-dividend-compounding-works/"     class="footer__link">Compounding</a>
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
         </div>
       </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
+        </div>
+      </div>
+
       <div>
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
@@ -279,6 +312,7 @@
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
+
       <div>
         <div class="footer__col-title">Legal</div>
         <div class="footer__links">
@@ -286,9 +320,13 @@
           <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
         </div>
       </div>
+
     </div>
+
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+      <p class="footer__copy">
+        &copy; 2026 DivSprout. Not financial advice. For educational purposes only.
+      </p>
     </div>
   </div>
 </footer>

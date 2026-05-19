@@ -383,9 +383,27 @@
         "description": "Free online dividend yield calculator. Calculate dividend yield instantly from stock price and annual dividend payment.",
         "url": "https://divsprout.com/calculators/dividend-yield/",
         "isPartOf": { "@id": "https://divsprout.com/#website" },
-        "about": {
-          "@type": "FinancialProduct",
-          "name": "Dividend Yield Calculator"
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",        "item": "https://divsprout.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://divsprout.com/calculators/" },
+            { "@type": "ListItem", "position": 3, "name": "Dividend Yield Calculator" }
+          ]
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://divsprout.com/calculators/dividend-yield/#app",
+        "name": "Dividend Yield Calculator",
+        "description": "Free online tool to calculate dividend yield from stock price and annual dividend. Instant results, no signup needed.",
+        "url": "https://divsprout.com/calculators/dividend-yield/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         }
       },
       {
@@ -457,6 +475,7 @@
       <div class="nav__links">
         <a href="/calculators/dividend-yield/" class="nav__link nav__link--active">Dividend Yield</a>
         <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
         <a href="/learn/"                      class="nav__link">Learn</a>
         <a href="/about/"                      class="nav__link">About</a>
       </div>
@@ -475,6 +494,7 @@
     <div class="nav__mobile" id="mobile-menu">
       <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
       <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
       <a href="/learn/"                      class="nav__link">Learn</a>
       <a href="/about/"                      class="nav__link">About</a>
       <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
@@ -877,35 +897,56 @@
 <footer class="footer">
   <div class="container">
     <div class="footer__grid">
+
       <div class="footer__brand">
         <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
           <div class="nav__logo-mark">
             <svg viewBox="0 0 20 20" fill="none" width="18">
-              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" fill="none" stroke="#22d47a" stroke-width="1.3"/>
-              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <span class="nav__logo-text">Div<span>Sprout</span></span>
         </a>
-        <p>Free financial calculators for dividend investors.</p>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
       </div>
+
       <div>
         <div class="footer__col-title">Calculators</div>
         <div class="footer__links">
           <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
           <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
         </div>
       </div>
+
       <div>
-        <div class="footer__col-title">Learn</div>
+        <div class="footer__col-title">Learn &mdash; Basics</div>
         <div class="footer__links">
-          <a href="/learn/"                                class="footer__link">All Guides</a>
-          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
-          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
-          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
-          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
         </div>
       </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
+        </div>
+      </div>
+
       <div>
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
@@ -913,6 +954,7 @@
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
+
       <div>
         <div class="footer__col-title">Legal</div>
         <div class="footer__links">
@@ -920,9 +962,13 @@
           <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
         </div>
       </div>
+
     </div>
+
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+      <p class="footer__copy">
+        &copy; 2026 DivSprout. Not financial advice. For educational purposes only.
+      </p>
     </div>
   </div>
 </footer>
@@ -1057,38 +1103,4 @@ const debouncedAnalytics = (() => {
           annual_div: state.div
         });
       }
-    }, 1500);
-  };
-})();
-
-function handleInput(field, el) {
-  const val = parseFloat(el.value);
-  if (!isNaN(val) && val >= 0) {
-    state[field] = val;
-    updateUI();
-    debouncedAnalytics();
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  /* Inputs */
-  $('stock-price').addEventListener('input', e => handleInput('price',  e.target));
-  $('annual-dividend').addEventListener('input', e => handleInput('div', e.target));
-  $('shares-count').addEventListener('input', e => handleInput('shares', e.target));
-
-  /* Shares toggle */
-  $('shares-toggle').addEventListener('change', e => {
-    state.sharesEnabled = e.target.checked;
-    const show = state.sharesEnabled;
-    $('shares-group').style.display          = show ? '' : 'none';
-    $('income-table-section').style.display  = show ? '' : 'none';
-    updateUI();
-  });
-
-  /* Initial calculation */
-  updateUI();
-});
-</script>
-
-</body>
-</html>
+    }, 15

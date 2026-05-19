@@ -87,6 +87,12 @@
             "position": 2,
             "name": "DRIP Calculator",
             "url": "https://divsprout.com/calculators/drip/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "FIRE Calculator",
+            "url": "https://divsprout.com/calculators/fire/"
           }
         ]
       }
@@ -136,7 +142,7 @@
         "name": "What calculators are available?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "DivSprout offers a DRIP Calculator for projecting dividend reinvestment growth, and a Dividend Yield Calculator for instant yield calculations."
+          "text": "DivSprout offers a DRIP Calculator for projecting dividend reinvestment growth, a Dividend Yield Calculator for instant yield calculations, and a FIRE Calculator to find out how much portfolio you need to live off dividends permanently."
         }
       }
     ]
@@ -737,26 +743,6 @@
     .tool-card:hover .tool-card__cta { gap: 10px; }
   </style>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://divsprout.com/#organization",
-        "name": "DivSprout",
-        "url": "https://divsprout.com",
-        "description": "Free dividend calculator tools for retail investors"
-      },
-      {
-        "@type": "WebSite",
-        "name": "DivSprout",
-        "url": "https://divsprout.com",
-        "publisher": { "@id": "https://divsprout.com/#organization" }
-      }
-    ]
-  }
-  </script>
 </head>
 
 <body>
@@ -780,6 +766,7 @@
       <div class="nav__links">
         <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
         <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+        <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
         <a href="/learn/"                      class="nav__link">Learn</a>
         <a href="/about/"                      class="nav__link">About</a>
       </div>
@@ -799,6 +786,7 @@
     <div class="nav__mobile" id="mobile-menu">
       <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
       <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
       <a href="/learn/"                      class="nav__link">Learn</a>
       <a href="/about/"                      class="nav__link">About</a>
       <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
@@ -971,6 +959,23 @@
           <div class="tool-card__cta">Open calculator →</div>
         </a>
 
+        <a href="/calculators/fire/" class="tool-card reveal">
+          <div class="tool-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 22 22" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 19c-4 0-7-3-7-7 0-2.5 1-4.5 3-6 0 2 1 3.5 2.5 4.5C9 8 10 5.5 11 3c1.5 2 4 4.5 4 8 0 1-.2 2-.7 2.8" />
+              <path d="M11 19c1.5 0 3-1 3-3s-1.5-3-3-3-3 1-3 3 1.5 3 3 3z" fill="rgba(34,212,122,0.2)"/>
+            </svg>
+          </div>
+          <div class="tool-card__label">New</div>
+          <div class="tool-card__name">FIRE Calculator</div>
+          <div class="tool-card__desc">
+            Find out exactly how much you need to live off dividends forever.
+            Enter your target income and see your FIRE number, timeline,
+            and year-by-year progress.
+          </div>
+          <div class="tool-card__cta">Open calculator →</div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -1123,17 +1128,32 @@
         <div class="footer__links">
           <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
           <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
         </div>
       </div>
 
       <div>
-        <div class="footer__col-title">Learn</div>
+        <div class="footer__col-title">Learn &mdash; Basics</div>
         <div class="footer__links">
-          <a href="/learn/"                                class="footer__link">All Guides</a>
-          <a href="/learn/what-is-drip/"                   class="footer__link">What is DRIP?</a>
-          <a href="/learn/dividend-yield-explained/"        class="footer__link">Dividend Yield</a>
-          <a href="/learn/yield-on-cost/"                  class="footer__link">Yield on Cost</a>
-          <a href="/learn/how-dividend-compounding-works/" class="footer__link">Compounding</a>
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
         </div>
       </div>
 
@@ -1360,3 +1380,4 @@
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                              

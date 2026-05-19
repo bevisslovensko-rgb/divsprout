@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>!function(){var t=localStorage.getItem('ds-theme');t==='light'&&document.documentElement.setAttribute('data-theme','light')}()</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J6FGJX6C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R1J6FGJX6C');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRE Calculator — How Much Do You Need to Live Off Dividends? | DivSprout</title>
+  <meta name="description" content="Calculate exactly how much you need invested to live off dividend income. Enter your target monthly income, yield, and savings rate — get your FIRE number and the years to reach it.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/calculators/fire/">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="FIRE Calculator — How Much to Live Off Dividends?">
+  <meta property="og:description" content="Get your dividend FIRE number instantly. Enter target income, yield, and savings rate to see exactly how many years until you can live off dividends.">
+  <meta property="og:url"         content="https://divsprout.com/calculators/fire/">
+  <meta property="og:site_name"   content="DivSprout">
+  <meta property="og:image"       content="https://divsprout.com/assets/images/og-home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="Dividend FIRE Calculator — DivSprout">
+  <meta name="twitter:description" content="How much do you need invested to live off dividends? Get your FIRE number in seconds.">
+  <meta name="twitter:image"      content="https://divsprout.com/assets/images/og-home.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=2">
+  <link rel="stylesheet" href="/assets/css/base.css?v=2">
+  <link rel="stylesheet" href="/assets/css/components.css?v=2">
+  <link rel="stylesheet" href="/assets/css/animations.css?v=2">
+
+  <style>
+    .calc-page { padding-top: calc(var(--nav-height) + var(--space-6)); padding-bottom: var(--space-10); }
+    .calc-layout { display: grid; grid-template-columns: 400px 1fr; gap: var(--space-6); align-items: start; }
+    .calc-sticky { position: sticky; top: calc(var(--nav-height) + var(--space-4)); }
+    @media (max-width: 900px) { .calc-layout { grid-template-columns: 1fr; } .calc-sticky { position: static; } }
+
+    /* ── FIRE number hero ── */
+    .fire-number-card {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+      text-align: center;
+    }
+    .fire-number-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .fire-number-value {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--color-green);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+    .fire-number-sub {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* ── Progress bar ── */
+    .fire-progress {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+    .fire-progress__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-2);
+    }
+    .fire-progress__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .fire-progress__pct {
+      font-family: var(--font-mono);
+      font-size: var(--text-base);
+      color: var(--color-green);
+    }
+    .fire-progress__bar {
+      height: 6px;
+      background: var(--color-bg-hover);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .fire-progress__fill {
+      height: 100%;
+      background: var(--color-green);
+      border-radius: 3px;
+      transition: width 0.6s var(--ease-out);
+      width: 0%;
+    }
+    .fire-progress__years {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+    .fire-progress__years strong { color: var(--color-text-primary); }
+
+    /* ── Chart ── */
+    .fire-chart {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      position: relative;
+      margin-bottom: var(--space-4);
+    }
+    .chart-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 180px;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      overflow: visible;
+      position: relative;
+    }
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+      cursor: default;
+    }
+    .chart-bar-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .chart-bar--contrib { background: var(--color-bg-hover); border: 1px solid var(--color-border); border-bottom: none; border-radius: 3px 3px 0 0; }
+    .chart-bar--divs { background: var(--color-green); border-radius: 3px 3px 0 0; }
+    .chart-bar--fire { background: rgba(34,212,122,0.35); border: 2px solid var(--color-green); border-radius: 3px 3px 0 0; animation: fire-pulse 2s ease-in-out infinite; }
+    @keyframes fire-pulse { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.3)} }
+    .chart-col:hover .chart-bar--divs { filter: brightness(1.2); }
+    .chart-col:hover .chart-bar--contrib { filter: brightness(1.4); }
+    .chart-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+      margin-top: 6px;
+      white-space: nowrap;
+    }
+    /* Target line */
+    .fire-target-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: rgba(250,204,21,0.7);
+      border-top: 2px dashed rgba(250,204,21,0.8);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .fire-target-line::after {
+      content: 'FIRE target';
+      position: absolute;
+      right: 0;
+      top: -18px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: rgba(250,204,21,0.9);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── Tooltip ── */
+    .chart-tooltip {
+      position: absolute;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      z-index: 20;
+      line-height: 1.7;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .chart-tooltip.is-visible { opacity: 1; }
+    .chart-tooltip__year { font-size: 9px; letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
+    .chart-tooltip__row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+    .chart-tooltip__dot { width: 7px; height: 7px; border-radius: 1px; flex-shrink: 0; }
+    .chart-tooltip__total { border-top: 1px solid var(--color-border); margin-top: 5px; padding-top: 5px; color: var(--color-text-primary); }
+    .chart-tooltip__fire { color: var(--color-green); font-weight: 600; margin-top: 3px; }
+    .chart-legend { display: flex; gap: var(--space-5); margin-top: var(--space-3); flex-wrap: wrap; }
+    .chart-legend-item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-text-secondary); }
+    .chart-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── Insight ── */
+    .insight-box {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-green);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+    .insight-box strong { color: var(--color-green); font-weight: 600; }
+
+    /* ── Share ── */
+    .share-btn {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-mono); font-size: var(--text-xs);
+      color: var(--color-text-muted); background: none;
+      border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+      padding: 7px 14px; cursor: pointer;
+      transition: color var(--duration-fast), border-color var(--duration-fast);
+    }
+    .share-btn:hover { color: var(--color-text-secondary); border-color: var(--color-border-hover); }
+
+    /* ── Preset buttons ── */
+    .preset-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); margin-bottom: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .preset-btn { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-2); cursor: pointer; text-align: center; transition: border-color var(--duration-fast), background var(--duration-fast); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .preset-btn:hover { border-color: var(--color-border-accent); background: var(--color-green-dim); }
+    .preset-btn.is-active { border-color: var(--color-green); background: var(--color-green-dim); }
+    .preset-btn__name { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-primary); letter-spacing: var(--tracking-wide); }
+    .preset-btn__desc { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-muted); }
+
+    /* ── Range display ── */
+    .range-display { display: flex; justify-content: space-between; align-items: center; }
+    .range-value { font-family: var(--font-mono); font-size: var(--text-xl); color: var(--color-green); font-weight: 400; }
+
+    /* ── Related ── */
+    .related-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
+    .related-link { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); text-decoration: none; transition: border-color var(--duration-fast), transform var(--duration-fast); }
+    .related-link:hover { border-color: var(--color-border-accent); transform: translateX(3px); }
+    .related-link__name { font-size: var(--text-sm); font-weight: 500; color: var(--color-text-primary); }
+    .related-link__desc { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+    .related-link__arrow { color: var(--color-green); font-size: var(--text-lg); flex-shrink: 0; }
+
+    /* ── Breakdown table ── */
+    .yearly-breakdown { margin-top: var(--space-6); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; display: none; }
+    .yearly-breakdown.is-visible { display: block; }
+    .breakdown-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border); }
+    .breakdown-header__title { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-text-muted); }
+    .breakdown-header__legend { font-family: var(--font-mono); font-size: 9px; color: var(--color-text-muted); }
+    .breakdown-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-height: 420px; overflow-y: auto; }
+    .breakdown-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: var(--text-xs); }
+    .breakdown-table thead th { position: sticky; top: 0; padding: 9px var(--space-4); text-align: right; font-size: 9px; letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-text-muted); font-weight: 400; white-space: nowrap; border-bottom: 1px solid var(--color-border); background: var(--color-bg-surface); z-index: 1; }
+    .breakdown-table thead th:first-child { text-align: left; }
+    .breakdown-table td { padding: 8px var(--space-4); text-align: right; color: var(--color-text-secondary); border-bottom: 1px solid rgba(255,255,255,0.04); white-space: nowrap; }
+    .breakdown-table td:first-child { text-align: left; color: var(--color-text-primary); }
+    .breakdown-table tr:last-child td { border-bottom: none; }
+    .breakdown-table tbody tr:hover td { background: var(--color-bg-hover); }
+    .breakdown-table .td--green { color: var(--color-green); }
+    .breakdown-row--fire td { background: rgba(34,212,122,0.08); }
+    .breakdown-row--fire .breakdown-year-label::after { content: ' 🔥'; font-size: 10px; }
+    .breakdown-year-label { display: flex; flex-direction: column; gap: 1px; }
+    .breakdown-year-label span { font-size: 9px; color: var(--color-text-muted); font-weight: 300; }
+    .breakdown-note { padding: var(--space-3) var(--space-5); font-size: 9px; font-family: var(--font-mono); color: var(--color-text-muted); border-top: 1px solid var(--color-border); line-height: 1.6; }
+
+    /* ── SEO content ── */
+    .content-section { max-width: 720px; margin-top: var(--space-10); }
+    .content-section h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 300; letter-spacing: var(--tracking-snug); margin-bottom: var(--space-4); margin-top: var(--space-8); color: var(--color-text-primary); }
+    .content-section h2:first-child { margin-top: 0; }
+    .content-section p { font-size: var(--text-base); color: var(--color-text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+    .content-section p:last-child { margin-bottom: 0; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Dividend FIRE Calculator",
+        "description": "Calculate how much you need invested to live off dividend income. Enter your target monthly income, yield, and savings rate to find your FIRE number and years to reach financial independence.",
+        "url": "https://divsprout.com/calculators/fire/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@type": "Organization", "name": "DivSprout", "url": "https://divsprout.com" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://divsprout.com/calculators/fire/",
+        "name": "FIRE Calculator — How Much Do You Need to Live Off Dividends?",
+        "description": "Free dividend FIRE calculator. Enter target monthly income, yield, and savings to get your FIRE number and years to financial independence.",
+        "url": "https://divsprout.com/calculators/fire/",
+        "isPartOf": { "@id": "https://divsprout.com/#website" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",        "item": "https://divsprout.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://divsprout.com/calculators/" },
+            { "@type": "ListItem", "position": 3, "name": "FIRE Calculator" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much money do I need to live off dividends?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The formula is: Required Portfolio = (Monthly Income Goal × 12) ÷ (Annual Yield × (1 − Tax Rate)). For example, if you want $4,000/month, use a 4% yield, and pay 15% dividend tax, you need: ($48,000) ÷ (4% × 0.85) = $1,411,765. This calculator computes this instantly and also factors in dividend growth over time, which reduces the required portfolio as yield on cost rises." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a dividend FIRE number?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your dividend FIRE number is the total portfolio value needed to generate enough dividend income to cover all your living expenses — without touching the principal. Unlike the traditional 4% safe withdrawal rate (which draws down assets), dividend FIRE relies on income alone. Your portfolio stays intact and continues growing, while dividends — especially growing ones — provide an inflation-resistant income stream." }
+          },
+          {
+            "@type": "Question",
+            "name": "What yield should I use for FIRE planning?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For conservative FIRE planning, 3–4% is a realistic net yield assumption for a diversified portfolio of quality dividend stocks and ETFs. Using a yield above 5–6% for FIRE planning is risky because it requires investing in higher-risk assets to achieve that yield. Many dividend FIRE investors target a 3.5% starting yield with 5–6% annual dividend growth, which grows income substantially over time while maintaining portfolio safety." }
+          },
+          {
+            "@type": "Question",
+            "name": "How does dividend growth affect my FIRE number?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Dividend growth is crucial because it means your income increases every year without adding capital. A 4% yield growing at 6% annually will be generating an effective 7.2% yield on your original investment in 10 years. This growth means your purchasing power is protected against inflation, and you may need a smaller starting portfolio than a static high-yield approach would require." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use the 4% rule or dividend FIRE?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The traditional 4% rule withdraws 4% of your portfolio per year (principal + growth), depleting assets over ~30 years. Dividend FIRE lives only off income, preserving the principal indefinitely. Dividend FIRE generally requires a larger initial portfolio (since dividend yields are lower than 4%), but provides more security for very long retirements, leaves an estate, and generates income that grows over time rather than being a fixed nominal amount." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ── NAV ── -->
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP</a>
+        <a href="/calculators/fire/"           class="nav__link nav__link--active">FIRE</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--ghost btn--sm">DRIP →</a>
+        <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <svg class="icon-sun" viewBox="0 0 16 16" fill="none" width="15" height="15"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M11.6 3.4l-1 1M4.4 11.6l-1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M13.5 10A6 6 0 0 1 6 2.5a5.5 5.5 0 1 0 7.5 7.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"           class="nav__link">FIRE Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="calc-page">
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:var(--space-5);">
+      <span class="breadcrumb__item"><a href="/">Home</a></span>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <span class="breadcrumb__item"><a href="/calculators/drip/">Calculators</a></span>
+      <span class="breadcrumb__sep" aria-hidden="true">/</span>
+      <span class="breadcrumb__current">FIRE Calculator</span>
+    </nav>
+
+    <div class="calc-layout">
+
+      <!-- ── LEFT: inputs ── -->
+      <div class="calc-sticky">
+        <div class="calc-widget">
+          <div class="calc-widget__header">
+            <div class="calc-widget__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" stroke="#22d47a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18">
+                <path d="M10 2l1.8 5.5H18l-4.7 3.4 1.8 5.5L10 13l-5.1 3.4 1.8-5.5L2 7.5h6.2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="calc-widget__header-title">Dividend FIRE Calculator</div>
+            </div>
+          </div>
+
+          <div class="calc-widget__body">
+
+            <!-- Presets -->
+            <div class="preset-row" role="group" aria-label="Quick scenarios">
+              <button class="preset-btn" type="button"
+                data-target="2000" data-yield="3.5" data-growth="5" data-tax="15" data-inflation="3" data-portfolio="10000" data-monthly="500">
+                <span class="preset-btn__name">Modest</span>
+                <span class="preset-btn__desc">$2k/mo · 3.5%</span>
+              </button>
+              <button class="preset-btn" type="button"
+                data-target="4000" data-yield="4" data-growth="6" data-tax="15" data-inflation="3" data-portfolio="25000" data-monthly="1000">
+                <span class="preset-btn__name">Balanced</span>
+                <span class="preset-btn__desc">$4k/mo · 4%</span>
+              </button>
+              <button class="preset-btn" type="button"
+                data-target="8000" data-yield="4.5" data-growth="6" data-tax="15" data-inflation="3" data-portfolio="50000" data-monthly="2000">
+                <span class="preset-btn__name">Ambitious</span>
+                <span class="preset-btn__desc">$8k/mo · 4.5%</span>
+              </button>
+            </div>
+
+            <!-- Target monthly income -->
+            <div class="input-group">
+              <label class="input-label" for="input-target">Target monthly income</label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input id="input-target" class="input-field" type="number" inputmode="decimal"
+                  placeholder="4,000" value="4000" min="1" aria-label="Target monthly income in dollars">
+              </div>
+            </div>
+
+            <!-- Dividend yield -->
+            <div class="input-group">
+              <label class="input-label" for="input-yield">Expected portfolio yield</label>
+              <div class="input-wrapper has-suffix">
+                <input id="input-yield" class="input-field" type="number" inputmode="decimal"
+                  placeholder="4.0" value="4" min="0.1" max="20" step="0.1" aria-label="Expected annual dividend yield">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Dividend growth -->
+            <div class="input-group">
+              <label class="input-label" for="input-growth">Annual dividend growth rate
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input id="input-growth" class="input-field" type="number" inputmode="decimal"
+                  placeholder="5.0" value="5" min="0" max="20" step="0.1" aria-label="Annual dividend growth rate">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin:var(--space-1) 0;">
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-muted);white-space:nowrap;">Your current situation</span>
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+            </div>
+
+            <!-- Current portfolio -->
+            <div class="input-group">
+              <label class="input-label" for="input-portfolio">Current portfolio value</label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input id="input-portfolio" class="input-field" type="number" inputmode="decimal"
+                  placeholder="25,000" value="25000" min="0" aria-label="Current portfolio value">
+              </div>
+            </div>
+
+            <!-- Monthly contribution -->
+            <div class="input-group">
+              <label class="input-label" for="input-monthly">Monthly contribution</label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input id="input-monthly" class="input-field" type="number" inputmode="decimal"
+                  placeholder="1,000" value="1000" min="0" aria-label="Monthly contribution">
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin:var(--space-1) 0;">
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-muted);white-space:nowrap;">Assumptions</span>
+              <div style="flex:1;height:1px;background:var(--color-border);"></div>
+            </div>
+
+            <!-- Tax rate -->
+            <div class="input-group">
+              <label class="input-label" for="input-tax">Dividend tax rate
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input id="input-tax" class="input-field" type="number" inputmode="decimal"
+                  placeholder="15" value="15" min="0" max="60" step="0.5" aria-label="Dividend tax rate">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- Inflation -->
+            <div class="input-group">
+              <label class="input-label" for="input-inflation">Expected inflation
+                <span class="input-label__hint">Optional</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input id="input-inflation" class="input-field" type="number" inputmode="decimal"
+                  placeholder="3.0" value="3" min="0" max="15" step="0.5" aria-label="Expected inflation rate">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+
+            <!-- ── RESULTS ── -->
+            <div class="result-box result-box--full" aria-live="polite" aria-atomic="true">
+              <div class="result-box__label">Your FIRE number (today's money)</div>
+              <div class="result-box__value" id="result-fire" style="font-size:clamp(18px,4vw,var(--text-2xl));letter-spacing:-0.02em;">—</div>
+            </div>
+
+            <div class="results-grid">
+              <div class="result-stat">
+                <div class="result-stat__label">Years to FIRE</div>
+                <div class="result-stat__value" id="result-years">—</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat__label">FIRE year</div>
+                <div class="result-stat__value result-stat__value--green" id="result-year">—</div>
+              </div>
+              <div class="result-stat">
+                <div class="result-stat__label">Monthly income at FIRE</div>
+                <div class="result-stat__value result-stat__value--gold" id="result-income">—</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: chart + insight ── -->
+      <div>
+        <h1 style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:300;letter-spacing:var(--tracking-snug);margin-bottom:var(--space-2);">
+          Dividend FIRE Calculator
+        </h1>
+        <p style="color:var(--color-text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-6);">
+          How much do you need invested to live entirely off dividend income?
+        </p>
+
+        <!-- FIRE number hero -->
+        <div class="fire-number-card" id="fire-number-card">
+          <div class="fire-number-label">Your FIRE number</div>
+          <div class="fire-number-value" id="fire-hero-number">—</div>
+          <div class="fire-number-sub" id="fire-hero-sub">Enter your target income above</div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="fire-progress" id="fire-progress">
+          <div class="fire-progress__top">
+            <span class="fire-progress__label">Progress toward goal</span>
+            <span class="fire-progress__pct" id="progress-pct">0%</span>
+          </div>
+          <div class="fire-progress__bar">
+            <div class="fire-progress__fill" id="progress-fill"></div>
+          </div>
+          <div class="fire-progress__years" id="progress-years"></div>
+        </div>
+
+        <!-- Chart -->
+        <div class="fire-chart">
+          <div class="chart-title">Portfolio growth path · target line = FIRE number</div>
+          <div class="chart-tooltip" id="chart-tooltip" aria-hidden="true"></div>
+          <div class="chart-bars" id="chart-bars" aria-label="Portfolio growth chart" role="img">
+            <div class="fire-target-line" id="fire-target-line" style="display:none;"></div>
+          </div>
+          <div class="chart-legend">
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot" style="background:var(--color-green);"></div>
+              Dividends reinvested
+            </div>
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot" style="background:var(--color-bg-hover);border:1px solid var(--color-border);"></div>
+              Capital contributed
+            </div>
+            <div class="chart-legend-item">
+              <div class="chart-legend-dot" style="background:rgba(250,204,21,0.7);border-radius:0;height:3px;width:18px;"></div>
+              FIRE target
+            </div>
+          </div>
+        </div>
+
+        <!-- Insight -->
+        <div class="insight-box" id="insight-box">
+          Enter your target income and current situation above to see your path to dividend independence.
+        </div>
+
+        <!-- Share -->
+        <button class="share-btn" id="share-btn" onclick="shareCalc()" aria-label="Copy link to this calculation">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9.5 1.5h3v3M12.5 1.5L7 7M6 2.5H2.5A1 1 0 0 0 1.5 3.5v8A1 1 0 0 0 2.5 12.5h8A1 1 0 0 0 11.5 11.5V8"/>
+          </svg>
+          Copy link
+        </button>
+
+        <!-- Related -->
+        <div style="margin-top:var(--space-6);">
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-3);">Related tools</p>
+          <div class="related-grid">
+            <a href="/calculators/drip/" class="related-link">
+              <div>
+                <div class="related-link__name">DRIP Calculator</div>
+                <div class="related-link__desc">Model dividend reinvestment compounding in full detail</div>
+              </div>
+              <span class="related-link__arrow">→</span>
+            </a>
+            <a href="/calculators/dividend-yield/" class="related-link">
+              <div>
+                <div class="related-link__name">Dividend Yield Calculator</div>
+                <div class="related-link__desc">Calculate the yield of any stock from price and dividend</div>
+              </div>
+              <span class="related-link__arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.calc-layout -->
+
+    <!-- ── YEARLY BREAKDOWN ── -->
+    <div class="yearly-breakdown" id="yearly-breakdown">
+      <div class="breakdown-header">
+        <div class="breakdown-header__title">Year-by-year path to FIRE</div>
+        <div class="breakdown-header__legend">🔥 = FIRE year (income ≥ target)</div>
+      </div>
+      <div class="breakdown-table-wrap">
+        <table class="breakdown-table">
+          <thead id="breakdown-thead">
+            <tr>
+              <th>Year</th>
+              <th>Portfolio</th>
+              <th>Invested</th>
+              <th>Net divs / yr</th>
+              <th>Net / mo</th>
+              <th>Target / mo</th>
+              <th>Coverage</th>
+              <th>FIRE number</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody id="breakdown-body"></tbody>
+        </table>
+      </div>
+      <div class="breakdown-note" id="breakdown-note"></div>
+    </div>
+
+    <!-- ── SEO CONTENT ── -->
+    <div class="content-section reveal">
+
+      <h2>What is a dividend FIRE number?</h2>
+      <p>Your dividend FIRE number is the total invested portfolio value that generates enough passive dividend income to cover all your living expenses — without ever selling shares or touching the principal. The portfolio keeps growing while dividends pay your bills.</p>
+      <p>Unlike the traditional 4% rule (which withdraws from principal and depletes assets over ~30 years), dividend FIRE is designed to be permanent. A well-constructed dividend portfolio with growing payments can sustain withdrawals indefinitely and leave an estate, because only the income is spent — never the capital.</p>
+
+      <h2>The dividend FIRE formula</h2>
+      <p>The core calculation is straightforward. If your target annual income is $48,000 and your portfolio yields 4% after a 15% dividend tax rate, the math is: $48,000 ÷ (4% × 0.85) = $1,411,765. That's your FIRE number. The calculator above runs this instantly and also accounts for how dividend growth over time reduces the effective target — because as your dividends grow, each dollar of portfolio generates more income year after year.</p>
+
+      <h2>How dividend growth changes everything</h2>
+      <p>The most powerful — and most overlooked — variable in dividend FIRE planning is the <a href="/learn/dividend-growth-investing/" style="color:var(--color-green);">annual dividend growth rate</a>. A portfolio yielding 3.5% with 6% annual dividend growth will be yielding effectively over 6% on your original cost basis in 10 years, and over 10% in 20 years. This means your inflation-adjusted income grows without deploying new capital — which is the engine that makes dividend FIRE sustainable across very long retirement periods.</p>
+
+      <h2>How to use this calculator</h2>
+      <p>Start by entering your target monthly income — what you need your dividends to cover. Then enter a realistic yield for your target portfolio (3–5% is typical for quality dividend portfolios). Add your current portfolio value and monthly contribution to see exactly how many years until your dividends match your target. The chart shows the full path, with the yellow dashed line marking your FIRE target — the year your bars cross it is your FIRE year.</p>
+
+      <!-- FAQ -->
+      <h2 style="margin-top:var(--space-9);">Frequently asked questions</h2>
+      <div class="faq" id="faq">
+
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span>How much money do I need to live off dividends?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer">
+            <p>The formula is: Annual income needed ÷ (Dividend yield × (1 − Tax rate)). For $4,000/month at a 4% yield with 15% tax: $48,000 ÷ (0.04 × 0.85) = $1,411,765. This calculator computes it instantly and factors in dividend growth, which grows your income over time and reduces the effective required portfolio.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span>What is the difference between dividend FIRE and the 4% rule?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer">
+            <p>The 4% rule withdraws 4% of your portfolio annually — principal plus growth — and is designed to last ~30 years. Dividend FIRE spends only income, never principal, making it theoretically permanent. It typically requires a larger initial portfolio (since quality dividend yields are below 4%), but is safer for very long retirements and maintains — or grows — your net worth while you spend.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span>What yield should I use for FIRE planning?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer">
+            <p>For conservative planning, 3–4% net yield is realistic for a diversified portfolio of quality <a href="/learn/dividend-aristocrats/" style="color:var(--color-green);">dividend growth stocks</a> and ETFs like SCHD or VIG. Using 5–6%+ requires higher-risk assets. Most dividend FIRE planners target a modest starting yield (3–3.5%) with 5–6% annual growth — the growing income stream catches up to and surpasses a static high-yield approach within a decade.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span>Does inflation affect my FIRE number?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer">
+            <p>Yes. If inflation runs at 3% annually, the $4,000/month you need today will cost $5,375/month in 10 years in nominal terms. However, dividend growth counters this directly. A portfolio growing dividends at 5–6% per year comfortably outpaces 3% inflation, meaning your real purchasing power increases over time rather than erodes — which is one of dividend investing's key advantages over bond-heavy fixed-income strategies.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span>How does this calculator determine the years to FIRE?</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__answer">
+            <p>The calculator simulates month-by-month growth: your current portfolio grows via monthly contributions and dividend reinvestment (DRIP). Each year, the dividend growth rate increases the per-dollar yield. Simultaneously, the target income grows with inflation. The FIRE year is when your portfolio's annual net dividend income first equals or exceeds your inflation-adjusted target income. The chart above shows this crossover visually.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18">
+              <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z"
+                stroke="#22d47a" stroke-width="1.3" fill="none"/>
+              <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12"
+                stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Basics</div>
+        <div class="footer__links">
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Learn &mdash; Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">
+        &copy; 2026 DivSprout. Not financial advice. For educational purposes only.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js?v=2" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ── */
+  function fmtFull(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtK(n) {
+    if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return '$' + (n/1e3).toFixed(1) + 'k';
+    return fmtFull(n);
+  }
+
+  /* ── Inputs ── */
+  const els = {
+    target:    document.getElementById('input-target'),
+    yield:     document.getElementById('input-yield'),
+    growth:    document.getElementById('input-growth'),
+    portfolio: document.getElementById('input-portfolio'),
+    monthly:   document.getElementById('input-monthly'),
+    tax:       document.getElementById('input-tax'),
+    inflation: document.getElementById('input-inflation'),
+  };
+
+  /* ── Core calculation ── */
+  function calculate() {
+    const targetMonthly  = Math.max(1,   parseFloat(els.target.value)    || 4000);
+    const yieldPct       = Math.max(0.1, parseFloat(els.yield.value)     || 4) / 100;
+    const growthPct      = Math.max(0,   parseFloat(els.growth.value)    || 0) / 100;
+    const taxRate        = Math.min(0.99, Math.max(0, parseFloat(els.tax.value)       || 0) / 100);
+    const inflRate       = Math.max(0,   parseFloat(els.inflation.value) || 0) / 100;
+    const currentPortfolio = Math.max(0, parseFloat(els.portfolio.value) || 0);
+    const monthlyContrib   = Math.max(0, parseFloat(els.monthly.value)   || 0);
+
+    const targetAnnual = targetMonthly * 12;
+    const netYield = yieldPct * (1 - taxRate);
+
+    // FIRE number in today's money (static, ignores growth for the base figure)
+    const fireNumberToday = netYield > 0 ? targetAnnual / netYield : 0;
+
+    // Simulate month-by-month growth to find FIRE year
+    let portfolio      = currentPortfolio;
+    let totalContrib   = currentPortfolio;
+    let currentYield   = yieldPct;
+    let fireYear       = null;
+    let fireYearActual = null;
+    const MAX_YEARS    = 60;
+    const yearlyData   = [{
+      year: 0, portfolio, totalContrib,
+      annualNet: 0, targetNominal: targetAnnual,
+      fireNumber: fireNumberToday, pct: currentPortfolio / fireNumberToday * 100,
+    }];
+
+    for (let y = 1; y <= MAX_YEARS; y++) {
+      let annualNet = 0;
+      for (let m = 0; m < 12; m++) {
+        portfolio    += monthlyContrib;
+        totalContrib += monthlyContrib;
+        const gross   = portfolio * (currentYield / 12);
+        const net     = gross * (1 - taxRate);
+        portfolio    += net;
+        annualNet    += net;
+      }
+      currentYield *= (1 + growthPct);
+
+      // Inflation-adjusted target this year
+      const targetNominal = targetAnnual * Math.pow(1 + inflRate, y);
+      // FIRE number this year (nominal) — also shifts with inflation but yield also grew
+      const fireNumNominal = (currentYield * (1 - taxRate)) > 0
+        ? targetNominal / (currentYield * (1 - taxRate))
+        : fireNumberToday * Math.pow(1 + inflRate, y);
+
+      const pct = fireNumNominal > 0 ? Math.min(100, portfolio / fireNumNominal * 100) : 0;
+
+      yearlyData.push({
+        year: y, portfolio, totalContrib,
+        annualNet, targetNominal,
+        fireNumber: fireNumNominal, pct,
+      });
+
+      if (fireYear === null && annualNet >= targetNominal) {
+        fireYear = y;
+        fireYearActual = new Date().getFullYear() + y;
+      }
+    }
+
+    const currentPct = currentPortfolio > 0 && fireNumberToday > 0
+      ? Math.min(100, currentPortfolio / fireNumberToday * 100)
+      : 0;
+
+    // Income at FIRE
+    const fireData  = fireYear ? yearlyData[fireYear] : yearlyData[yearlyData.length - 1];
+    const fireIncome = fireData ? fireData.annualNet / 12 : 0;
+
+    return {
+      targetMonthly, targetAnnual, fireNumberToday, fireYear, fireYearActual,
+      yearlyData, fireIncome, currentPortfolio, currentPct, taxRate, inflRate,
+    };
+  }
+
+  /* ── Update DOM ── */
+  function update() {
+    const r = calculate();
+
+    // FIRE number
+    const fireEl  = document.getElementById('result-fire');
+    const heroNum = document.getElementById('fire-hero-number');
+    const heroSub = document.getElementById('fire-hero-sub');
+    if (fireEl)  fireEl.textContent  = fmtFull(r.fireNumberToday);
+    if (heroNum) heroNum.textContent = fmtK(r.fireNumberToday);
+    if (heroSub) heroSub.textContent = 'to generate ' + fmtFull(r.targetMonthly) + '/month in dividends';
+
+    // Years & FIRE year
+    const yrsEl  = document.getElementById('result-years');
+    const yearEl = document.getElementById('result-year');
+    const incEl  = document.getElementById('result-income');
+    if (yrsEl)  yrsEl.textContent  = r.fireYear ? r.fireYear + ' yrs' : '60+ yrs';
+    if (yearEl) yearEl.textContent = r.fireYearActual ? String(r.fireYearActual) : '—';
+    if (incEl)  incEl.textContent  = fmtFull(r.fireIncome) + ' / mo';
+
+    // Progress bar
+    const fill     = document.getElementById('progress-fill');
+    const pctEl    = document.getElementById('progress-pct');
+    const yrsLabel = document.getElementById('progress-years');
+    const pct = r.currentPct;
+    if (fill)     fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
+    if (pctEl)    pctEl.textContent = pct.toFixed(1) + '%';
+    if (yrsLabel) {
+      if (r.fireYear) {
+        yrsLabel.innerHTML = `<strong>${r.fireYear} years</strong> to reach your FIRE number at your current savings rate`;
+      } else {
+        yrsLabel.innerHTML = 'Increase contributions or yield to reach FIRE within 60 years';
+      }
+    }
+
+    renderChart(r);
+    renderInsight(r);
+    renderBreakdown(r);
+  }
+
+  /* ── Chart ── */
+  function renderChart(r) {
+    const container = document.getElementById('chart-bars');
+    const targetLine = document.getElementById('fire-target-line');
+    if (!container) return;
+
+    const { yearlyData, fireNumberToday } = r;
+    const MAX_SHOW = 30;
+    const years = Math.min(r.fireYear ? r.fireYear + 5 : MAX_SHOW, MAX_SHOW);
+    const data = yearlyData.slice(0, years + 1).filter((d, i) => {
+      if (years <= 10) return i > 0;
+      if (years <= 20) return i > 0 && (i % 2 === 0 || i === years);
+      return i > 0 && (i % 3 === 0 || i === years);
+    });
+
+    const maxVal = Math.max(...data.map(d => d.portfolio), fireNumberToday) * 1.08;
+    const CHART_H = 160;
+    const targetPx = fireNumberToday > 0 ? Math.round((fireNumberToday / maxVal) * CHART_H) : 0;
+
+    container.innerHTML = data.map((d, idx) => {
+      const totalH  = maxVal > 0 ? Math.round((d.portfolio / maxVal) * CHART_H) : 0;
+      const contH   = maxVal > 0 ? Math.round((d.totalContrib / maxVal) * CHART_H) : 0;
+      const divsH   = Math.max(0, totalH - contH);
+      const isFire  = r.fireYear && d.year === r.fireYear;
+      const barClass = isFire ? 'chart-bar--fire' : 'chart-bar--divs';
+      const calYear = new Date().getFullYear() + d.year;
+      const delay   = idx * 45;
+      return `
+        <div class="chart-col"
+          data-year="${calYear}"
+          data-portfolio="${d.portfolio}"
+          data-contrib="${d.totalContrib}"
+          data-divs="${d.annualNet}"
+          data-fire="${r.fireYear && d.year >= r.fireYear ? '1' : '0'}"
+          data-totalh="${totalH}">
+          <div class="chart-bar-wrap" style="height:0;transition:height 0.55s var(--ease-out) ${delay}ms;">
+            <div class="${barClass}" style="height:${divsH}px;"></div>
+            <div class="chart-bar--contrib" style="height:${contH}px;"></div>
+          </div>
+          <div class="chart-label">${calYear}</div>
+        </div>`;
+    }).join('');
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      container.querySelectorAll('.chart-col').forEach(col => {
+        col.querySelector('.chart-bar-wrap').style.height = col.dataset.totalh + 'px';
+      });
+    }));
+
+    // Target line
+    if (targetLine) {
+      if (targetPx > 0 && targetPx < CHART_H) {
+        targetLine.style.display = 'block';
+        targetLine.style.bottom = (targetPx + 28) + 'px'; // 28px = label area
+      } else {
+        targetLine.style.display = 'none';
+      }
+    }
+
+    setupChartHover(r);
+  }
+
+  function setupChartHover(r) {
+    const tooltip  = document.getElementById('chart-tooltip');
+    const chartEl  = document.getElementById('chart-bars');
+    if (!tooltip || !chartEl) return;
+    const card = chartEl.closest('.fire-chart');
+
+    chartEl.querySelectorAll('.chart-col').forEach(col => {
+      col.addEventListener('mouseenter', () => {
+        const colRect  = col.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        const barH     = parseInt(col.dataset.totalh) || 0;
+        const tipLeft  = colRect.left - cardRect.left + colRect.width / 2;
+        const tipBottom = cardRect.bottom - colRect.bottom + barH + 8;
+        const portfolio = parseFloat(col.dataset.portfolio);
+        const contrib   = parseFloat(col.dataset.contrib);
+        const divs      = parseFloat(col.dataset.divs);
+        const isFire    = col.dataset.fire === '1';
+        const pct       = r.fireNumberToday > 0 ? Math.min(100, portfolio / r.fireNumberToday * 100).toFixed(1) : '—';
+        tooltip.innerHTML = `
+          <div class="chart-tooltip__year">${col.dataset.year}</div>
+          <div class="chart-tooltip__row"><div class="chart-tooltip__dot" style="background:var(--color-green);"></div>Net divs/yr: ${fmtFull(divs)}</div>
+          <div class="chart-tooltip__row"><div class="chart-tooltip__dot" style="background:var(--color-bg-hover);border:1px solid var(--color-border);"></div>Invested: ${fmtFull(contrib)}</div>
+          <div class="chart-tooltip__total">Portfolio: ${fmtFull(portfolio)}</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--color-text-muted);margin-top:3px;">${pct}% of FIRE goal${isFire ? '<span class="chart-tooltip__fire"> ★ FIRE reached!</span>' : ''}</div>`;
+        tooltip.style.left      = tipLeft + 'px';
+        tooltip.style.bottom    = tipBottom + 'px';
+        tooltip.style.top       = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
+        requestAnimationFrame(() => {
+          const tw    = tooltip.offsetWidth;
+          const cardW = card ? card.getBoundingClientRect().width : 600;
+          const raw   = tipLeft - tw / 2;
+          if (raw < 8) tooltip.style.left = (tw / 2 + 8) + 'px';
+          else if (raw + tw > cardW - 8) tooltip.style.left = (cardW - tw / 2 - 8) + 'px';
+        });
+        tooltip.classList.add('is-visible');
+      });
+      col.addEventListener('mouseleave', () => tooltip.classList.remove('is-visible'));
+    });
+  }
+
+  /* ── Insight ── */
+  function renderInsight(r) {
+    const el = document.getElementById('insight-box');
+    if (!el) return;
+    const taxNote = r.taxRate > 0 ? ` (after ${(r.taxRate * 100).toFixed(0)}% dividend tax)` : '';
+    let text = `To generate <strong>${fmtFull(r.targetMonthly)}/month</strong>${taxNote} in dividend income, you need a portfolio of <strong>${fmtFull(r.fireNumberToday)}</strong>.`;
+    if (r.fireYear) {
+      text += ` At your current savings rate, you'll reach this in <strong>${r.fireYear} years</strong> — in <strong>${r.fireYearActual}</strong>.`;
+    } else {
+      text += ` At your current savings rate, this takes more than 60 years. Try increasing monthly contributions or targeting a higher yield.`;
+    }
+    if (r.inflRate > 0) {
+      text += ` Inflation is factored in — your target income grows at ${(r.inflRate*100).toFixed(1)}%/yr, and dividend growth keeps pace.`;
+    }
+    el.innerHTML = text;
+  }
+
+  /* ── Breakdown ── */
+  function renderBreakdown(r) {
+    const body  = document.getElementById('breakdown-body');
+    const note  = document.getElementById('breakdown-note');
+    const table = document.getElementById('yearly-breakdown');
+    if (!body) return;
+    const baseYear = new Date().getFullYear();
+    body.innerHTML = r.yearlyData.slice(1).map(d => {
+      const isFire   = r.fireYear && d.year === r.fireYear;
+      const calYear  = baseYear + d.year;
+      const monthly  = d.annualNet / 12;
+      const coverage = d.targetNominal > 0 ? Math.min(999.9, d.annualNet / d.targetNominal * 100).toFixed(1) + '%' : '—';
+      return `<tr class="${isFire ? 'breakdown-row--fire' : ''}">
+        <td><div class="breakdown-year-label">Year ${d.year}<span>${calYear}</span></div></td>
+        <td>${fmtFull(d.portfolio)}</td>
+        <td>${fmtFull(d.totalContrib)}</td>
+        <td class="td--green">${fmtFull(d.annualNet)}</td>
+        <td class="td--green">${fmtFull(monthly)}</td>
+        <td>${fmtFull(d.targetNominal / 12)}</td>
+        <td style="color:${d.annualNet >= d.targetNominal ? 'var(--color-green)' : 'var(--color-text-muted)'}">${coverage}</td>
+        <td>${fmtFull(d.fireNumber)}</td>
+        <td>${Math.min(100, d.pct).toFixed(1)}%</td>
+      </tr>`;
+    }).join('');
+    if (note) {
+      const parts = [];
+      if (r.fireYear) parts.push(`🔥 Year ${r.fireYear} (${baseYear + r.fireYear}): dividend income reaches your target.`);
+      if (r.taxRate > 0) parts.push(`Tax rate: ${(r.taxRate * 100).toFixed(1)}% applied to gross dividends.`);
+      if (r.inflRate > 0) parts.push(`Target grows with inflation at ${(r.inflRate * 100).toFixed(1)}%/yr. Dividend growth counters this.`);
+      parts.push('Coverage = net annual dividends ÷ inflation-adjusted annual target.');
+      note.textContent = parts.join('  ·  ');
+    }
+    if (table) table.classList.add('is-visible');
+  }
+
+  /* ── Share ── */
+  window.shareCalc = function () {
+    const p = new URLSearchParams({
+      target:    els.target.value,
+      yield:     els.yield.value,
+      growth:    els.growth.value,
+      portfolio: els.portfolio.value,
+      monthly:   els.monthly.value,
+      tax:       els.tax.value,
+      inflation: els.inflation.value,
+    });
+    const url = window.location.origin + window.location.pathname + '?' + p.toString();
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('share-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Link copied!';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    });
+  };
+
+  /* ── Restore from URL ── */
+  function restoreFromURL() {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('target'))    els.target.value    = p.get('target');
+    if (p.get('yield'))     els.yield.value     = p.get('yield');
+    if (p.get('growth'))    els.growth.value    = p.get('growth');
+    if (p.get('portfolio')) els.portfolio.value = p.get('portfolio');
+    if (p.get('monthly'))   els.monthly.value   = p.get('monthly');
+    if (p.get('tax'))       els.tax.value       = p.get('tax');
+    if (p.get('inflation')) els.inflation.value = p.get('inflation');
+  }
+
+  /* ── Preset buttons ── */
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      els.target.value    = btn.dataset.target;
+      els.yield.value     = btn.dataset.yield;
+      els.growth.value    = btn.dataset.growth;
+      els.portfolio.value = btn.dataset.portfolio;
+      els.monthly.value   = btn.dataset.monthly;
+      els.tax.value       = btn.dataset.tax;
+      els.inflation.value = btn.dataset.inflation;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('is-active', b === btn));
+      update();
+    });
+  });
+
+  /* ── Input listeners ── */
+  Object.values(els).forEach(el => {
+    if (el) {
+      el.addEventListener('input',  update);
+      el.addEventListener('change', update);
+    }
+  });
+
+  /* ── Init ── */
+  restoreFromURL();
+  update();
+
+})();
+</script>
+</body>
+</html>
