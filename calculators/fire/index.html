@@ -1084,9 +1084,11 @@
     const MAX_SHOW = 30;
     const years = Math.min(r.fireYear ? r.fireYear + 5 : MAX_SHOW, MAX_SHOW);
     const data = yearlyData.slice(0, years + 1).filter((d, i) => {
-      if (years <= 10) return i > 0;
-      if (years <= 20) return i > 0 && (i % 2 === 0 || i === years);
-      return i > 0 && (i % 3 === 0 || i === years);
+      if (i === 0) return false;
+      if (r.fireYear && i === r.fireYear) return true;   // always show FIRE year bar
+      if (years <= 10) return true;
+      if (years <= 20) return i % 2 === 0 || i === years;
+      return i % 3 === 0 || i === years;
     });
 
     const maxVal = Math.max(...data.map(d => d.portfolio), fireNumberToday) * 1.08;
