@@ -765,8 +765,8 @@
 
       <div class="nav__links">
         <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
-        <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
-        <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP</a>
+        <a href="/calculators/fire/"           class="nav__link">FIRE</a>
         <a href="/learn/"                      class="nav__link">Learn</a>
         <a href="/about/"                      class="nav__link">About</a>
       </div>
@@ -786,7 +786,7 @@
     <div class="nav__mobile" id="mobile-menu">
       <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
       <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
-      <a href="/calculators/fire/"          class="nav__link">FIRE Calculator</a>
+      <a href="/calculators/fire/"           class="nav__link">FIRE Calculator</a>
       <a href="/learn/"                      class="nav__link">Learn</a>
       <a href="/about/"                      class="nav__link">About</a>
       <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
@@ -820,8 +820,11 @@
         <a href="/calculators/drip/" class="btn btn--primary btn--lg">
           Try DRIP Calculator
         </a>
+        <a href="/calculators/fire/" class="btn btn--ghost btn--lg">
+          FIRE Calculator
+        </a>
         <a href="/calculators/dividend-yield/" class="btn btn--ghost btn--lg">
-          Dividend Yield Calculator
+          Dividend Yield
         </a>
       </div>
 
@@ -1358,26 +1361,4 @@
     if (sliderEl) {
       sliderEl.addEventListener('input', function () {
         if (sliderVal) sliderVal.textContent = sliderEl.value + ' yrs';
-        renderHero(false);
-      });
-    }
-  })();
-
-  /* ── FAQ accordion ───────────────────────────────────────── */
-  document.querySelectorAll('.faq-question').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      const isOpen = btn.classList.contains('open');
-      document.querySelectorAll('.faq-question.open').forEach(function (b) {
-        b.classList.remove('open');
-        b.setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        btn.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-</script>
-</body>
-</html>
-                                                                                                                                                                                                                                                                                                                                                                              
+        renderHe

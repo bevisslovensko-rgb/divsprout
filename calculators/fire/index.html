@@ -169,10 +169,64 @@
       justify-content: flex-end;
     }
     .chart-bar--contrib { background: var(--color-bg-hover); border: 1px solid var(--color-border); border-bottom: none; border-radius: 3px 3px 0 0; }
-    .chart-bar--divs { background: var(--color-green); border-radius: 3px 3px 0 0; }
-    .chart-bar--fire { background: rgba(34,212,122,0.35); border: 2px solid var(--color-green); border-radius: 3px 3px 0 0; animation: fire-pulse 2s ease-in-out infinite; }
-    @keyframes fire-pulse { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.3)} }
-    .chart-col:hover .chart-bar--divs { filter: brightness(1.2); }
+    .chart-bar--divs { background: var(--color-green); border-radius: 3px 3px 0 0; opacity: 0.75; }
+    /* FIRE year bar — bright solid green, prominent */
+    .chart-bar--fire {
+      background: var(--color-green);
+      border-radius: 3px 3px 0 0;
+      opacity: 1;
+      box-shadow: 0 0 12px rgba(34,212,122,0.55), 0 0 4px rgba(34,212,122,0.3);
+      animation: fire-pulse 2.5s ease-in-out infinite;
+    }
+    /* Bars after FIRE — show "living off dividends" phase */
+    .chart-bar--post-fire {
+      background: var(--color-green);
+      border-radius: 3px 3px 0 0;
+      opacity: 0.55;
+    }
+    @keyframes fire-pulse { 0%,100%{box-shadow:0 0 12px rgba(34,212,122,0.55)} 50%{box-shadow:0 0 22px rgba(34,212,122,0.9), 0 0 40px rgba(34,212,122,0.3)} }
+
+    /* FIRE col — the whole column gets marked */
+    .chart-col--fire { position: relative; }
+    .chart-col--fire::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 28px;
+      left: 50%; transform: translateX(-50%);
+      width: 1px;
+      background: rgba(34,212,122,0.35);
+      pointer-events: none;
+    }
+    /* Floating "🔥 FIRE" badge above the bar */
+    .fire-col-badge {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-green);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .fire-col-badge::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: var(--color-green);
+      border-bottom: none;
+    }
+
+    .chart-col:hover .chart-bar--divs    { filter: brightness(1.2); }
     .chart-col:hover .chart-bar--contrib { filter: brightness(1.4); }
     .chart-label {
       font-family: var(--font-mono);
@@ -181,24 +235,27 @@
       margin-top: 6px;
       white-space: nowrap;
     }
-    /* Target line */
+    .chart-col--fire .chart-label {
+      color: var(--color-green);
+      font-weight: 600;
+    }
+    /* Target line — yellow dashed, clearly visible */
     .fire-target-line {
       position: absolute;
       left: 0; right: 0;
-      height: 2px;
-      background: rgba(250,204,21,0.7);
-      border-top: 2px dashed rgba(250,204,21,0.8);
+      height: 0;
+      border-top: 2px dashed rgba(250,204,21,0.9);
       pointer-events: none;
       z-index: 5;
     }
     .fire-target-line::after {
       content: 'FIRE target';
       position: absolute;
-      right: 0;
+      left: 0;
       top: -18px;
       font-family: var(--font-mono);
       font-size: 8px;
-      color: rgba(250,204,21,0.9);
+      color: rgba(250,204,21,1);
       letter-spacing: var(--tracking-wide);
       text-transform: uppercase;
       white-space: nowrap;
@@ -394,7 +451,7 @@
         <a href="/about/"                      class="nav__link">About</a>
       </div>
       <div class="nav__cta">
-        <a href="/calculators/drip/" class="btn btn--ghost btn--sm">DRIP →</a>
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
         <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
           <svg class="icon-sun" viewBox="0 0 16 16" fill="none" width="15" height="15"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M11.6 3.4l-1 1M4.4 11.6l-1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
           <svg class="icon-moon" viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M13.5 10A6 6 0 0 1 6 2.5a5.5 5.5 0 1 0 7.5 7.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
@@ -606,9 +663,20 @@
           <div class="fire-progress__years" id="progress-years"></div>
         </div>
 
+        <!-- FIRE achieved banner -->
+        <div id="fire-achieved-banner" style="display:none;background:linear-gradient(135deg,rgba(34,212,122,0.12),rgba(34,212,122,0.06));border:1px solid var(--color-border-accent);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-4);display:none;">
+          <div style="display:flex;align-items:center;gap:var(--space-3);">
+            <span style="font-size:24px;line-height:1;">🔥</span>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-green);margin-bottom:3px;">FIRE achieved</div>
+              <div id="fire-achieved-text" style="font-size:var(--text-sm);color:var(--color-text-primary);font-weight:500;"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Chart -->
         <div class="fire-chart">
-          <div class="chart-title">Portfolio growth path · target line = FIRE number</div>
+          <div class="chart-title">Portfolio growth path &middot; <span style="color:rgba(250,204,21,0.9);">&#8212;&#8212;</span> target = FIRE number &middot; <span style="color:var(--color-green);">&#9646;</span> = FIRE year</div>
           <div class="chart-tooltip" id="chart-tooltip" aria-hidden="true"></div>
           <div class="chart-bars" id="chart-bars" aria-label="Portfolio growth chart" role="img">
             <div class="fire-target-line" id="fire-target-line" style="display:none;"></div>
@@ -972,6 +1040,20 @@
     if (yearEl) yearEl.textContent = r.fireYearActual ? String(r.fireYearActual) : '—';
     if (incEl)  incEl.textContent  = fmtFull(r.fireIncome) + ' / mo';
 
+    // FIRE achieved banner
+    const banner     = document.getElementById('fire-achieved-banner');
+    const bannerText = document.getElementById('fire-achieved-text');
+    if (banner) {
+      if (r.fireYear) {
+        banner.style.display = 'block';
+        if (bannerText) {
+          bannerText.innerHTML = `In <strong>${r.fireYear} years</strong> (${r.fireYearActual}), your dividends will cover <strong>${fmtFull(r.fireIncome)}/month</strong> — your FIRE number reached.`;
+        }
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
     // Progress bar
     const fill     = document.getElementById('progress-fill');
     const pctEl    = document.getElementById('progress-pct');
@@ -1011,22 +1093,27 @@
     const CHART_H = 160;
     const targetPx = fireNumberToday > 0 ? Math.round((fireNumberToday / maxVal) * CHART_H) : 0;
 
+    const thisYear = new Date().getFullYear();
     container.innerHTML = data.map((d, idx) => {
-      const totalH  = maxVal > 0 ? Math.round((d.portfolio / maxVal) * CHART_H) : 0;
-      const contH   = maxVal > 0 ? Math.round((d.totalContrib / maxVal) * CHART_H) : 0;
-      const divsH   = Math.max(0, totalH - contH);
-      const isFire  = r.fireYear && d.year === r.fireYear;
-      const barClass = isFire ? 'chart-bar--fire' : 'chart-bar--divs';
-      const calYear = new Date().getFullYear() + d.year;
-      const delay   = idx * 45;
+      const totalH    = maxVal > 0 ? Math.round((d.portfolio / maxVal) * CHART_H) : 0;
+      const contH     = maxVal > 0 ? Math.round((d.totalContrib / maxVal) * CHART_H) : 0;
+      const divsH     = Math.max(0, totalH - contH);
+      const isFire    = r.fireYear && d.year === r.fireYear;
+      const isPostFire= r.fireYear && d.year > r.fireYear;
+      const barClass  = isFire ? 'chart-bar--fire' : (isPostFire ? 'chart-bar--post-fire' : 'chart-bar--divs');
+      const colClass  = isFire ? 'chart-col chart-col--fire' : 'chart-col';
+      const calYear   = thisYear + d.year;
+      const delay     = idx * 45;
+      const badge     = isFire ? `<div class="fire-col-badge">🔥 FIRE</div>` : '';
       return `
-        <div class="chart-col"
+        <div class="${colClass}"
           data-year="${calYear}"
           data-portfolio="${d.portfolio}"
           data-contrib="${d.totalContrib}"
           data-divs="${d.annualNet}"
           data-fire="${r.fireYear && d.year >= r.fireYear ? '1' : '0'}"
           data-totalh="${totalH}">
+          ${badge}
           <div class="chart-bar-wrap" style="height:0;transition:height 0.55s var(--ease-out) ${delay}ms;">
             <div class="${barClass}" style="height:${divsH}px;"></div>
             <div class="chart-bar--contrib" style="height:${contH}px;"></div>
@@ -1041,11 +1128,11 @@
       });
     }));
 
-    // Target line
+    // Target line — position relative to chart-bars container
     if (targetLine) {
-      if (targetPx > 0 && targetPx < CHART_H) {
+      if (targetPx > 0 && targetPx <= CHART_H) {
         targetLine.style.display = 'block';
-        targetLine.style.bottom = (targetPx + 28) + 'px'; // 28px = label area
+        targetLine.style.bottom = (targetPx + 28) + 'px';
       } else {
         targetLine.style.display = 'none';
       }
