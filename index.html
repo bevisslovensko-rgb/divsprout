@@ -147,10 +147,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
 
-  <link rel="stylesheet" href="/assets/css/tokens.css">
-  <link rel="stylesheet" href="/assets/css/base.css">
-  <link rel="stylesheet" href="/assets/css/components.css">
-  <link rel="stylesheet" href="/assets/css/animations.css">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=2">
+  <link rel="stylesheet" href="/assets/css/base.css?v=2">
+  <link rel="stylesheet" href="/assets/css/components.css?v=2">
+  <link rel="stylesheet" href="/assets/css/animations.css?v=2">
 
   <style>
     .accent { font-style: italic; color: var(--color-green); }
@@ -893,6 +893,13 @@
         </div>
       </div>
 
+      <div style="text-align:center;margin-top:var(--space-4);">
+        <a href="/calculators/drip/" class="btn btn--primary btn--lg">
+          Open DRIP Calculator — full version →
+        </a>
+        <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2);">Tax · inflation · dividend growth · year-by-year breakdown</p>
+      </div>
+
     </div>
   </section>
 
@@ -1156,7 +1163,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/core.js" defer></script>
+<script src="/assets/js/core.js?v=2" defer></script>
 <script>
   /* ── Hero mini chart ─────────────────────────────────────── */
   (function() {
@@ -1169,102 +1176,4 @@
       return { initial, monthly, annualYield: yieldPct / 100 };
     }
 
-    function calcHero(years, initial, monthly, annualYield) {
-      let portfolio = initial, totalContrib = initial, currentYield = annualYield;
-      const data = [{ portfolio: initial, contrib: initial }];
-      for (let y = 1; y <= years; y++) {
-        for (let m = 0; m < 12; m++) {
-          portfolio += monthly;
-          totalContrib += monthly;
-          portfolio += portfolio * (currentYield / 12);
-        }
-        currentYield *= (1 + GROWTH);
-        data.push({ portfolio, contrib: totalContrib });
-      }
-      return data;
-    }
-
-    function fmtHero(n) {
-      if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
-      if (n >= 1000)    return '$' + (n / 1000).toFixed(1) + 'k';
-      return '$' + Math.round(n).toLocaleString();
-    }
-
-    function renderHero(years) {
-      const { initial, monthly, annualYield } = getInputs();
-      const data    = calcHero(years, initial, monthly, annualYield);
-      const step    = years <= 10 ? 1 : years <= 20 ? 2 : 3;
-      const points  = data.filter((d, i) => i > 0 && (i % step === 0 || i === data.length - 1));
-      const maxVal  = Math.max(...points.map(d => d.portfolio));
-      const CHART_H = 100;
-
-      const barsEl  = document.getElementById('hero-bars');
-      const finalEl = document.getElementById('hero-final-val');
-      const metaEl  = document.getElementById('hero-final-meta');
-      if (!barsEl) return;
-
-      const last = data[data.length - 1];
-      finalEl.textContent = fmtHero(last.portfolio);
-      const gain = last.contrib > 0 ? ((last.portfolio / last.contrib - 1) * 100).toFixed(0) : 0;
-      metaEl.textContent = 'after ' + years + ' years · +' + gain + '% from reinvestment';
-
-      barsEl.innerHTML = points.map((d, idx) => {
-        const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
-        const contH  = Math.round((d.contrib   / maxVal) * CHART_H);
-        const divsH  = Math.max(0, totalH - contH);
-        const delay  = idx * 30;
-        return `<div class="hero-bar-col">
-          <div class="hero-bar-wrap" style="height:0;transition:height 0.5s ease ${delay}ms;">
-            <div class="hero-bar-d" style="height:${divsH}px;"></div>
-            <div class="hero-bar-c" style="height:${contH}px;"></div>
-          </div>
-        </div>`;
-      }).join('');
-
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        barsEl.querySelectorAll('.hero-bar-wrap').forEach((wrap, i) => {
-          const d      = points[i];
-          const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
-          wrap.style.height = totalH + 'px';
-        });
-      }));
-    }
-
-    const slider    = document.getElementById('hero-slider');
-    const sliderVal = document.getElementById('hero-slider-val');
-
-    function refresh() {
-      if (slider) renderHero(parseInt(slider.value));
-    }
-
-    // Prepočítaj chart keď sa zmení akýkoľvek vstup
-    ['h-initial', 'h-monthly', 'h-yield'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', refresh);
-    });
-
-    if (slider) {
-      slider.addEventListener('input', () => {
-        sliderVal.textContent = slider.value + ' yrs';
-        refresh();
-      });
-      renderHero(20);
-    }
-  })();
-
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const isOpen = btn.classList.contains('open');
-      document.querySelectorAll('.faq-question').forEach(b => {
-        b.classList.remove('open');
-        b.setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        btn.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-</script>
-</body>
-</html>
+    function calcHero(years, initial, m
