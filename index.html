@@ -371,6 +371,69 @@
       min-width: 50px;
     }
 
+    /* ── Hero inputs ──────────────────────────────────────── */
+    .hero-inputs {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-input-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .hero-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--color-bg-input);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      transition: border-color var(--duration-fast);
+      overflow: hidden;
+    }
+
+    .hero-input-wrap:focus-within {
+      border-color: var(--color-border-focus);
+    }
+
+    .hero-input-affix {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-text-muted);
+      padding: 0 5px;
+      flex-shrink: 0;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .hero-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-text-primary);
+      padding: 7px 4px;
+      outline: none;
+    }
+
+    .hero-input::-webkit-inner-spin-button,
+    .hero-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .hero-input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
     /* ── Stats strip ─────────────────────────────────────── */
     .stats-strip {
       display: flex;
@@ -724,8 +787,8 @@
       <div class="nav__cta">
         <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
         <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 16 16" fill="none" width="15" height="15"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M11.6 3.4l-1 1M4.4 11.6l-1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M13.5 10A6 6 0 0 1 6 2.5a5.5 5.5 0 1 0 7.5 7.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
         </button>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
@@ -775,15 +838,40 @@
       </div>
 
       <!-- Mini interactive chart -->
-      <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual">
         <div class="hero-chart-card">
           <div class="hero-chart-top">
             <div>
-              <div class="hero-chart-label">Portfolio projection · $10k start · $500/mo · 4% yield</div>
+              <div class="hero-chart-label">Portfolio projection · try your own numbers</div>
               <div class="hero-chart-value" id="hero-final-val">—</div>
               <div class="hero-chart-meta" id="hero-final-meta"></div>
             </div>
           </div>
+
+          <div class="hero-inputs">
+            <div class="hero-input-group">
+              <label class="hero-input-label" for="h-initial">Start</label>
+              <div class="hero-input-wrap">
+                <span class="hero-input-affix">$</span>
+                <input class="hero-input" id="h-initial" type="number" value="10000" min="0" max="9999999" step="1000">
+              </div>
+            </div>
+            <div class="hero-input-group">
+              <label class="hero-input-label" for="h-monthly">Monthly</label>
+              <div class="hero-input-wrap">
+                <span class="hero-input-affix">$</span>
+                <input class="hero-input" id="h-monthly" type="number" value="500" min="0" max="99999" step="100">
+              </div>
+            </div>
+            <div class="hero-input-group">
+              <label class="hero-input-label" for="h-yield">Yield</label>
+              <div class="hero-input-wrap">
+                <input class="hero-input" id="h-yield" type="number" value="4" min="0.1" max="20" step="0.1">
+                <span class="hero-input-affix">%</span>
+              </div>
+            </div>
+          </div>
+
           <div class="hero-bars" id="hero-bars"></div>
           <div class="hero-chart-footer">
             <div class="hero-chart-legend">
@@ -1072,15 +1160,22 @@
 <script>
   /* ── Hero mini chart ─────────────────────────────────────── */
   (function() {
-    const INITIAL = 10000, MONTHLY = 500, YIELD = 0.04, GROWTH = 0.05;
+    const GROWTH = 0.05; // fixed 5% annual dividend growth rate
 
-    function calcHero(years) {
-      let portfolio = INITIAL, totalContrib = INITIAL, currentYield = YIELD;
-      const data = [{ portfolio: INITIAL, contrib: INITIAL }];
+    function getInputs() {
+      const initial  = Math.max(0,   parseFloat(document.getElementById('h-initial')?.value)  || 10000);
+      const monthly  = Math.max(0,   parseFloat(document.getElementById('h-monthly')?.value)  || 500);
+      const yieldPct = Math.max(0.1, parseFloat(document.getElementById('h-yield')?.value)    || 4);
+      return { initial, monthly, annualYield: yieldPct / 100 };
+    }
+
+    function calcHero(years, initial, monthly, annualYield) {
+      let portfolio = initial, totalContrib = initial, currentYield = annualYield;
+      const data = [{ portfolio: initial, contrib: initial }];
       for (let y = 1; y <= years; y++) {
         for (let m = 0; m < 12; m++) {
-          portfolio += MONTHLY;
-          totalContrib += MONTHLY;
+          portfolio += monthly;
+          totalContrib += monthly;
           portfolio += portfolio * (currentYield / 12);
         }
         currentYield *= (1 + GROWTH);
@@ -1092,30 +1187,32 @@
     function fmtHero(n) {
       if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
       if (n >= 1000)    return '$' + (n / 1000).toFixed(1) + 'k';
-      return '$' + n.toFixed(0);
+      return '$' + Math.round(n).toLocaleString();
     }
 
     function renderHero(years) {
-      const data = calcHero(years);
-      const step = years <= 10 ? 1 : years <= 20 ? 2 : 3;
-      const points = data.filter((d, i) => i > 0 && (i % step === 0 || i === data.length - 1));
-      const maxVal = Math.max(...points.map(d => d.portfolio));
+      const { initial, monthly, annualYield } = getInputs();
+      const data    = calcHero(years, initial, monthly, annualYield);
+      const step    = years <= 10 ? 1 : years <= 20 ? 2 : 3;
+      const points  = data.filter((d, i) => i > 0 && (i % step === 0 || i === data.length - 1));
+      const maxVal  = Math.max(...points.map(d => d.portfolio));
       const CHART_H = 100;
-      const barsEl = document.getElementById('hero-bars');
+
+      const barsEl  = document.getElementById('hero-bars');
       const finalEl = document.getElementById('hero-final-val');
-      const metaEl = document.getElementById('hero-final-meta');
+      const metaEl  = document.getElementById('hero-final-meta');
       if (!barsEl) return;
 
       const last = data[data.length - 1];
       finalEl.textContent = fmtHero(last.portfolio);
-      const gain = ((last.portfolio / last.contrib - 1) * 100).toFixed(0);
+      const gain = last.contrib > 0 ? ((last.portfolio / last.contrib - 1) * 100).toFixed(0) : 0;
       metaEl.textContent = 'after ' + years + ' years · +' + gain + '% from reinvestment';
 
       barsEl.innerHTML = points.map((d, idx) => {
         const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
-        const contH  = Math.round((d.contrib / maxVal) * CHART_H);
+        const contH  = Math.round((d.contrib   / maxVal) * CHART_H);
         const divsH  = Math.max(0, totalH - contH);
-        const delay  = idx * 40;
+        const delay  = idx * 30;
         return `<div class="hero-bar-col">
           <div class="hero-bar-wrap" style="height:0;transition:height 0.5s ease ${delay}ms;">
             <div class="hero-bar-d" style="height:${divsH}px;"></div>
@@ -1126,19 +1223,30 @@
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
         barsEl.querySelectorAll('.hero-bar-wrap').forEach((wrap, i) => {
-          const d = points[i];
+          const d      = points[i];
           const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
           wrap.style.height = totalH + 'px';
         });
       }));
     }
 
-    const slider = document.getElementById('hero-slider');
+    const slider    = document.getElementById('hero-slider');
     const sliderVal = document.getElementById('hero-slider-val');
+
+    function refresh() {
+      if (slider) renderHero(parseInt(slider.value));
+    }
+
+    // Prepočítaj chart keď sa zmení akýkoľvek vstup
+    ['h-initial', 'h-monthly', 'h-yield'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', refresh);
+    });
+
     if (slider) {
       slider.addEventListener('input', () => {
         sliderVal.textContent = slider.value + ' yrs';
-        renderHero(parseInt(slider.value));
+        refresh();
       });
       renderHero(20);
     }

@@ -360,19 +360,13 @@ const ThemeToggle = {
    * and wire up the toggle button.
    */
   init() {
-    // Restore saved preference (the inline anti-flash script covers the
-    // initial paint; this call keeps the button state in sync on DOMContentLoaded)
+    // Default is always dark mode.
+    // Only switch to light if the user explicitly saved that preference.
     const saved = localStorage.getItem(this.KEY);
     if (saved === 'light') {
       document.documentElement.setAttribute('data-theme', 'light');
-    } else if (saved === 'dark') {
-      document.documentElement.removeAttribute('data-theme');
     } else {
-      // No saved preference — respect system preference as default
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (!prefersDark) {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
+      document.documentElement.removeAttribute('data-theme');
     }
 
     const btn = document.getElementById('theme-toggle');

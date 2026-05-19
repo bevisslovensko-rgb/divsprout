@@ -96,27 +96,25 @@
   margin-left: var(--space-3);
 }
 
-/* Theme toggle button */
+/* Theme toggle button — styled like a nav link */
 .nav__theme-toggle {
-  width: 32px;
-  height: 32px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-card);
+  border: none;
+  background: transparent;
   color: var(--color-text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  line-height: 1;
   transition:
-    border-color var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out),
     background var(--duration-fast) var(--ease-out);
 }
 
 .nav__theme-toggle:hover {
-  border-color: var(--color-border-hover);
   color: var(--color-text-primary);
   background: var(--color-bg-elevated);
 }
