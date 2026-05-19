@@ -1090,7 +1090,7 @@ function updateRating(yld) {
   }
 }
 
-/* ── Event listeners ────────────────────────────────────────── */
+/* ── Analytics debounce ─────────────────────────────────────── */
 const debouncedAnalytics = (() => {
   let t;
   return () => {
@@ -1104,24 +1104,65 @@ const debouncedAnalytics = (() => {
         });
       }
     }, 150);
+  };
+})();
+
+/* ── Input event listeners ──────────────────────────────────── */
+function onPriceInput() {
+  var v = parseFloat(document.getElementById('stock-price').value);
+  if (!isNaN(v) && v > 0) { state.price = v; updateUI(); debouncedAnalytics(); }
+}
+function onDivInput() {
+  var v = parseFloat(document.getElementById('annual-dividend').value);
+  if (!isNaN(v) && v >= 0) { state.div = v; updateUI(); debouncedAnalytics(); }
+}
+function onSharesInput() {
+  var v = parseFloat(document.getElementById('shares-count').value);
+  if (!isNaN(v) && v >= 0) { state.shares = v; updateUI(); }
+}
+
+document.getElementById('stock-price').addEventListener('input',  onPriceInput);
+document.getElementById('stock-price').addEventListener('change', onPriceInput);
+document.getElementById('annual-dividend').addEventListener('input',  onDivInput);
+document.getElementById('annual-dividend').addEventListener('change', onDivInput);
+document.getElementById('shares-count').addEventListener('input',  onSharesInput);
+document.getElementById('shares-count').addEventListener('change', onSharesInput);
+
+document.getElementById('shares-toggle').addEventListener('change', function() {
+  state.sharesEnabled = this.checked;
+  document.getElementById('shares-group').style.display = this.checked ? '' : 'none';
+  document.getElementById('income-table-section').style.display = this.checked ? '' : 'none';
+  updateUI();
+});
+
+/* ── Restore from URL ───────────────────────────────────────── */
+function restoreFromURL() {
+  var p = new URLSearchParams(window.location.search);
+  var price  = parseFloat(p.get('price'));
+  var div    = parseFloat(p.get('div'));
+  var shares = parseFloat(p.get('shares'));
+  if (!isNaN(price)  && price  > 0) { state.price  = price;  document.getElementById('stock-price').value     = price; }
+  if (!isNaN(div)    && div   >= 0) { state.div    = div;    document.getElementById('annual-dividend').value = div; }
+  if (!isNaN(shares) && shares > 0) { state.shares = shares; document.getElementById('shares-count').value    = shares; }
+}
+
+/* ── FAQ accordion ──────────────────────────────────────────── */
+document.querySelectorAll('.faq-item').forEach(function(item) {
+  var btn = item.querySelector('.faq-question');
+  var ans = item.querySelector('.faq-answer');
+  if (!btn || !ans) return;
+  btn.addEventListener('click', function() {
+    var open = item.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(open));
+    ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
   });
+});
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach(function(item) {
-    var btn = item.querySelector('.faq-question');
-    var ans = item.querySelector('.faq-answer');
-    if (!btn || !ans) return;
-    btn.addEventListener('click', function() {
-      var open = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', String(open));
-      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
-    });
-  });
+/* ── Init ───────────────────────────────────────────────────── */
+restoreFromURL();
+updateUI();
 
-  restoreFromURL();
-  calculate();
-
-  })();
+})();
   </script>
 </body>
 </html>
