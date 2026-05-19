@@ -649,13 +649,17 @@
     /* ── Calculator cards ─────────────────────────────────── */
     .tools-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--space-4);
-      max-width: 760px;
+      max-width: 1080px;
       margin: 0 auto;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 860px) {
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
       .tools-grid { grid-template-columns: 1fr; }
     }
 
@@ -899,7 +903,7 @@
     <div class="container">
       <div class="stats-strip">
         <div class="stat-item">
-          <span class="stat-value">2</span>
+          <span class="stat-value">3</span>
           <span class="stat-label">Free tools</span>
         </div>
         <div class="stat-item">

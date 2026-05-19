@@ -1210,90 +1210,93 @@
       const isFire   = r.fireYear && d.year === r.fireYear;
       const calYear  = baseYear + d.year;
       const monthly  = d.annualNet / 12;
-      const coverage = d.targetNominal > 0 ? Math.min(999.9, d.annualNet / d.targetNominal * 100).toFixed(1) + '%' : '—';
-      return `<tr class="${isFire ? 'breakdown-row--fire' : ''}">
-        <td><div class="breakdown-year-label">Year ${d.year}<span>${calYear}</span></div></td>
-        <td>${fmtFull(d.portfolio)}</td>
-        <td>${fmtFull(d.totalContrib)}</td>
-        <td class="td--green">${fmtFull(d.annualNet)}</td>
-        <td class="td--green">${fmtFull(monthly)}</td>
-        <td>${fmtFull(d.targetNominal / 12)}</td>
-        <td style="color:${d.annualNet >= d.targetNominal ? 'var(--color-green)' : 'var(--color-text-muted)'}">${coverage}</td>
-        <td>${fmtFull(d.fireNumber)}</td>
-        <td>${Math.min(100, d.pct).toFixed(1)}%</td>
-      </tr>`;
+      const coverage = d.targetNominal > 0 ? Math.min(999.9, d.annualNet / d.targetNominal * 100).toFixed(1) : '—';
+      const progress = r.fireNumberToday > 0 ? Math.min(100, d.portfolio / r.fireNumberToday * 100).toFixed(1) : '—';
+      const fireNum  = fmtFull(d.fireNumber);
+      return '<tr' + (isFire ? ' class="breakdown-fire-row"' : '') + '>'
+        + '<td>' + (isFire ? '🔥 ' : '') + calYear + '</td>'
+        + '<td>' + fmtFull(d.portfolio) + '</td>'
+        + '<td>' + fmtFull(d.totalContrib) + '</td>'
+        + '<td>' + fmtFull(d.annualNet) + '</td>'
+        + '<td>' + fmtFull(monthly) + '</td>'
+        + '<td>' + fmtFull(d.targetNominal / 12) + '</td>'
+        + '<td>' + coverage + '%</td>'
+        + '<td>' + fireNum + '</td>'
+        + '<td>' + progress + '%</td>'
+        + '</tr>';
     }).join('');
-    if (note) {
-      const parts = [];
-      if (r.fireYear) parts.push(`🔥 Year ${r.fireYear} (${baseYear + r.fireYear}): dividend income reaches your target.`);
-      if (r.taxRate > 0) parts.push(`Tax rate: ${(r.taxRate * 100).toFixed(1)}% applied to gross dividends.`);
-      if (r.inflRate > 0) parts.push(`Target grows with inflation at ${(r.inflRate * 100).toFixed(1)}%/yr. Dividend growth counters this.`);
-      parts.push('Coverage = net annual dividends ÷ inflation-adjusted annual target.');
-      note.textContent = parts.join('  ·  ');
-    }
     if (table) table.classList.add('is-visible');
   }
 
-  /* ── Share ── */
+  /* Share */
   window.shareCalc = function () {
-    const p = new URLSearchParams({
-      target:    els.target.value,
-      yield:     els.yield.value,
-      growth:    els.growth.value,
-      portfolio: els.portfolio.value,
-      monthly:   els.monthly.value,
-      tax:       els.tax.value,
-      inflation: els.inflation.value,
-    });
+    const ids = ['f-target','f-yield','f-growth','f-portfolio','f-monthly','f-tax','f-inflation'];
+    const keys = ['target','yield','growth','portfolio','monthly','tax','inflation'];
+    const p = new URLSearchParams();
+    ids.forEach((id, i) => { const el = document.getElementById(id); if (el) p.set(keys[i], el.value); });
     const url = window.location.origin + window.location.pathname + '?' + p.toString();
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('share-btn');
+      if (!btn) return;
       const orig = btn.innerHTML;
       btn.innerHTML = '✓ Link copied!';
-      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      setTimeout(function() { btn.innerHTML = orig; }, 2000);
     });
   };
 
-  /* ── Restore from URL ── */
+  /* Restore from URL */
   function restoreFromURL() {
     const p = new URLSearchParams(window.location.search);
-    if (p.get('target'))    els.target.value    = p.get('target');
-    if (p.get('yield'))     els.yield.value     = p.get('yield');
-    if (p.get('growth'))    els.growth.value    = p.get('growth');
-    if (p.get('portfolio')) els.portfolio.value = p.get('portfolio');
-    if (p.get('monthly'))   els.monthly.value   = p.get('monthly');
-    if (p.get('tax'))       els.tax.value       = p.get('tax');
-    if (p.get('inflation')) els.inflation.value = p.get('inflation');
+    const map = [['f-target','target'],['f-yield','yield'],['f-growth','growth'],
+                 ['f-portfolio','portfolio'],['f-monthly','monthly'],['f-tax','tax'],['f-inflation','inflation']];
+    map.forEach(function(pair) {
+      const el = document.getElementById(pair[0]);
+      const val = p.get(pair[1]);
+      if (el && val) el.value = val;
+    });
   }
 
-  /* ── Preset buttons ── */
-  document.querySelectorAll('.preset-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      els.target.value    = btn.dataset.target;
-      els.yield.value     = btn.dataset.yield;
-      els.growth.value    = btn.dataset.growth;
-      els.portfolio.value = btn.dataset.portfolio;
-      els.monthly.value   = btn.dataset.monthly;
-      els.tax.value       = btn.dataset.tax;
-      els.inflation.value = btn.dataset.inflation;
-      document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('is-active', b === btn));
-      update();
+  /* Preset buttons */
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      [['f-target','target'],['f-yield','yield'],['f-growth','growth'],
+       ['f-portfolio','portfolio'],['f-monthly','monthly'],['f-tax','tax'],['f-inflation','inflation']
+      ].forEach(function(pair) {
+        var el = document.getElementById(pair[0]);
+        if (el && btn.dataset[pair[1]] !== undefined) el.value = btn.dataset[pair[1]];
+      });
+      document.querySelectorAll('.preset-btn').forEach(function(b) {
+        b.classList.toggle('preset-btn--active', b === btn);
+      });
+      calculate();
     });
   });
 
-  /* ── Input listeners ── */
-  Object.values(els).forEach(el => {
+  /* Input listeners */
+  ['f-target','f-yield','f-growth','f-portfolio','f-monthly','f-tax','f-inflation'].forEach(function(id) {
+    var el = document.getElementById(id);
     if (el) {
-      el.addEventListener('input',  update);
-      el.addEventListener('change', update);
+      el.addEventListener('input',  calculate);
+      el.addEventListener('change', calculate);
     }
   });
 
-  /* ── Init ── */
-  restoreFromURL();
-  update();
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    var btn = item.querySelector('.faq-question');
+    var ans = item.querySelector('.faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
 
-})();
-</script>
+  restoreFromURL();
+  calculate();
+
+  })();
+  </script>
 </body>
 </html>
