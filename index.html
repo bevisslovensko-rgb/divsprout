@@ -1164,9 +1164,10 @@
 </footer>
 
 <script src="/assets/js/core.js?v=2" defer></script>
+
 <script>
   /* ── Hero mini chart ─────────────────────────────────────── */
-  (function() {
+  (function () {
     const GROWTH = 0.05; // fixed 5% annual dividend growth rate
 
     function getInputs() {
@@ -1176,4 +1177,175 @@
       return { initial, monthly, annualYield: yieldPct / 100 };
     }
 
-    function calcHero(years, initial, m
+    function calcHero(years, initial, monthly, annualYield) {
+      const bars = [];
+      let portfolio  = initial;
+      let contributed = initial;
+      for (let y = 1; y <= years; y++) {
+        // monthly contributions compounded monthly
+        const mRate = annualYield / 12;
+        for (let m = 0; m < 12; m++) {
+          portfolio  = (portfolio + monthly) * (1 + mRate);
+          contributed += monthly;
+        }
+        // apply dividend growth
+        annualYield *= (1 + GROWTH);
+        bars.push({
+          year: y,
+          total: portfolio,
+          contributed,
+          dividends: portfolio - contributed
+        });
+      }
+      return bars;
+    }
+
+    function fmtHero(v) {
+      if (v >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+      if (v >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'k';
+      return '$' + Math.round(v);
+    }
+
+    function renderHero(animate) {
+      const { initial, monthly, annualYield } = getInputs();
+      const YEARS = 20;
+      const data  = calcHero(YEARS, initial, monthly, annualYield);
+      const max   = Math.max(...data.map(d => d.total));
+
+      const container = document.getElementById('hero-bars');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // tooltip element
+      let tip = document.getElementById('hero-tooltip');
+      if (!tip) {
+        tip = document.createElement('div');
+        tip.id = 'hero-tooltip';
+        tip.style.cssText = [
+          'position:absolute',
+          'background:var(--color-bg-elevated,#1a1d23)',
+          'border:1px solid var(--color-border)',
+          'border-radius:6px',
+          'padding:8px 10px',
+          'font-family:var(--font-mono)',
+          'font-size:11px',
+          'color:var(--color-text-primary)',
+          'pointer-events:none',
+          'opacity:0',
+          'transition:opacity 0.15s',
+          'z-index:100',
+          'white-space:nowrap',
+          'line-height:1.7'
+        ].join(';');
+        document.body.appendChild(tip);
+      }
+
+      data.forEach((d, i) => {
+        const col = document.createElement('div');
+        col.className = 'hero-bar-col';
+        col.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;cursor:default;';
+
+        const track = document.createElement('div');
+        track.style.cssText = 'width:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end;';
+
+        const pct = max > 0 ? (d.total / max) * 100 : 0;
+        const contribPct = max > 0 ? (d.contributed / max) * 100 : 0;
+        const divPct = pct - contribPct;
+
+        const bar = document.createElement('div');
+        bar.style.cssText = 'width:100%;border-radius:2px 2px 0 0;overflow:hidden;transition:height 0.6s cubic-bezier(.4,0,.2,1);';
+        bar.style.height = animate ? '0%' : pct + '%';
+
+        const divLayer = document.createElement('div');
+        divLayer.style.cssText = 'background:var(--color-green);width:100%;';
+        divLayer.style.height = (divPct / pct * 100) + '%';
+
+        const baseLayer = document.createElement('div');
+        baseLayer.style.cssText = 'background:var(--color-green-dim,rgba(74,222,128,.15));width:100%;';
+        baseLayer.style.height = (contribPct / pct * 100) + '%';
+
+        bar.appendChild(divLayer);
+        bar.appendChild(baseLayer);
+        track.appendChild(bar);
+        col.appendChild(track);
+
+        if ((i + 1) % 5 === 0 || i === 0) {
+          const lbl = document.createElement('div');
+          lbl.textContent = 'Y' + d.year;
+          lbl.style.cssText = 'font-family:var(--font-mono);font-size:8px;color:var(--color-text-muted);';
+          col.appendChild(lbl);
+        } else {
+          const spacer = document.createElement('div');
+          spacer.style.cssText = 'height:13px;';
+          col.appendChild(spacer);
+        }
+
+        // hover tooltip
+        col.addEventListener('mouseenter', function (e) {
+          tip.innerHTML =
+            '<span style="color:var(--color-text-muted)">Year ' + d.year + '</span><br>' +
+            '<span style="color:var(--color-green)">Dividends: </span>' + fmtHero(d.dividends) + '<br>' +
+            '<span style="color:var(--color-text-secondary)">Contributed: </span>' + fmtHero(d.contributed) + '<br>' +
+            '<strong>Total: ' + fmtHero(d.total) + '</strong>';
+          tip.style.opacity = '1';
+          moveTip(e);
+        });
+        col.addEventListener('mousemove', moveTip);
+        col.addEventListener('mouseleave', function () {
+          tip.style.opacity = '0';
+        });
+
+        container.appendChild(col);
+
+        if (animate) {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            bar.style.height = pct + '%';
+          }));
+        }
+      });
+
+      const last = data[data.length - 1];
+      const finalEl = document.getElementById('hero-final-val');
+      const metaEl  = document.getElementById('hero-final-meta');
+      if (finalEl) finalEl.textContent = fmtHero(last.total);
+      if (metaEl)  metaEl.textContent  = 'after ' + YEARS + ' years · dividends reinvested';
+    }
+
+    function moveTip(e) {
+      const tip = document.getElementById('hero-tooltip');
+      if (!tip) return;
+      const x = e.clientX + window.scrollX;
+      const y = e.clientY + window.scrollY;
+      const tw = tip.offsetWidth;
+      const left = (x + tw + 12 > window.innerWidth) ? x - tw - 8 : x + 12;
+      tip.style.left = left + 'px';
+      tip.style.top  = (y - 10) + 'px';
+    }
+
+    // initial render
+    renderHero(true);
+
+    // re-render on input changes
+    ['h-initial', 'h-monthly', 'h-yield'].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', function () { renderHero(false); });
+    });
+  })();
+
+  /* ── FAQ accordion ───────────────────────────────────────── */
+  document.querySelectorAll('.faq-question').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const isOpen = btn.classList.contains('open');
+      document.querySelectorAll('.faq-question.open').forEach(function (b) {
+        b.classList.remove('open');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+</body>
+</html>
