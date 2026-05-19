@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>!function(){var t=localStorage.getItem('ds-theme');t==='light'&&document.documentElement.setAttribute('data-theme','light')}()</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J6FGJX6C"></script>
   <script>
@@ -285,6 +286,125 @@
       color: var(--color-green);
       font-weight: 400;
     }
+
+    /* ── Preset buttons ──────────────────────────────────── */
+    .preset-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .preset-btn {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-2);
+      cursor: pointer;
+      text-align: center;
+      transition: border-color var(--duration-fast), background var(--duration-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .preset-btn:hover { border-color: var(--color-border-accent); background: var(--color-green-dim); }
+    .preset-btn.is-active { border-color: var(--color-green); background: var(--color-green-dim); }
+
+    .preset-btn__name {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-primary);
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .preset-btn__desc {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+    }
+
+    /* ── DRIP vs No-DRIP comparison ──────────────────────── */
+    .drip-comparison {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .drip-comparison__title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .comparison-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .comparison-item {
+      flex: 1;
+      text-align: center;
+      padding: var(--space-3) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .comparison-item--drip {
+      background: rgba(34,212,122,0.08);
+      border: 1px solid rgba(34,212,122,0.25);
+    }
+
+    .comparison-item--no-drip {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+    }
+
+    .comparison-item__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .comparison-item--drip .comparison-item__label { color: var(--color-green); }
+
+    .comparison-item__value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .comparison-item--drip .comparison-item__value { color: var(--color-green); }
+
+    .comparison-divider {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+
+    .comparison-advantage {
+      text-align: center;
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      font-family: var(--font-mono);
+      line-height: var(--leading-relaxed);
+    }
+
+    .comparison-advantage strong { color: var(--color-green); }
 
     /* ── SEO content ──────────────────────────────────────── */
     .content-section {
@@ -573,6 +693,10 @@
 
       <div class="nav__cta">
         <a href="/calculators/dividend-yield/" class="btn btn--ghost btn--sm">Dividend Yield →</a>
+        <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -617,6 +741,25 @@
           </div>
 
           <div class="calc-widget__body">
+
+            <!-- Preset scenarios -->
+            <div class="preset-row" role="group" aria-label="Quick preset scenarios">
+              <button class="preset-btn" type="button"
+                data-initial="5000" data-monthly="200" data-yield="3.5" data-growth="5" data-tax="0" data-inflation="0" data-years="20">
+                <span class="preset-btn__name">Starter</span>
+                <span class="preset-btn__desc">$5k · 3.5%</span>
+              </button>
+              <button class="preset-btn" type="button"
+                data-initial="25000" data-monthly="500" data-yield="4" data-growth="6" data-tax="0" data-inflation="0" data-years="25">
+                <span class="preset-btn__name">Builder</span>
+                <span class="preset-btn__desc">$25k · 4%</span>
+              </button>
+              <button class="preset-btn" type="button"
+                data-initial="100000" data-monthly="1000" data-yield="5" data-growth="7" data-tax="0" data-inflation="0" data-years="30">
+                <span class="preset-btn__name">Growth</span>
+                <span class="preset-btn__desc">$100k · 5%</span>
+              </button>
+            </div>
 
             <!-- Initial investment -->
             <div class="input-group">
@@ -831,6 +974,23 @@
         <!-- Insight -->
         <div class="insight-box" id="insight-box" style="margin-bottom:var(--space-4);">
           Enter your details to see your personalised projection.
+        </div>
+
+        <!-- DRIP vs No-DRIP comparison -->
+        <div class="drip-comparison" id="drip-comparison">
+          <div class="drip-comparison__title">DRIP advantage</div>
+          <div class="comparison-row">
+            <div class="comparison-item comparison-item--drip">
+              <div class="comparison-item__label">With DRIP</div>
+              <div class="comparison-item__value" id="comp-drip">—</div>
+            </div>
+            <div class="comparison-divider">vs</div>
+            <div class="comparison-item comparison-item--no-drip">
+              <div class="comparison-item__label">Without DRIP</div>
+              <div class="comparison-item__value" id="comp-no-drip">—</div>
+            </div>
+          </div>
+          <div class="comparison-advantage" id="comp-advantage"></div>
         </div>
 
         <!-- Share -->
@@ -1211,6 +1371,7 @@
     renderChart(r.yearlyData, r.years);
     renderInsight(r);
     renderBreakdown(r);
+    updateComparison(r);
   }
 
   /* ── Chart ───────────────────────────────────────────────── */
@@ -1453,12 +1614,59 @@
     els.years.setAttribute('aria-valuenow', v);
   }
 
+  /* ── DRIP vs No-DRIP comparison ─────────────────────────── */
+  function updateComparison(r) {
+    const compDrip    = document.getElementById('comp-drip');
+    const compNoDrip  = document.getElementById('comp-no-drip');
+    const compAdv     = document.getElementById('comp-advantage');
+    if (!compDrip) return;
+
+    // Without DRIP: only contributions grow, dividends taken as cash (no compounding)
+    const noDripValue   = r.totalContrib;
+    const advantage     = r.portfolio - noDripValue;
+    const advantagePct  = noDripValue > 0
+      ? ((r.portfolio / noDripValue - 1) * 100).toFixed(1)
+      : '0.0';
+
+    compDrip.textContent   = fmtFull(r.portfolio);
+    compNoDrip.textContent = fmtFull(noDripValue);
+
+    if (advantage > 0) {
+      compAdv.innerHTML = `DRIP reinvestment generates <strong>+${fmtFull(advantage)}</strong> more (+${advantagePct}%) over ${r.years} years`;
+    } else {
+      compAdv.textContent = '';
+    }
+  }
+
+  /* ── Preset buttons ──────────────────────────────────────── */
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      els.initial.value   = btn.dataset.initial;
+      els.monthly.value   = btn.dataset.monthly;
+      els.yield.value     = btn.dataset.yield;
+      els.growth.value    = btn.dataset.growth;
+      els.tax.value       = btn.dataset.tax;
+      els.inflation.value = btn.dataset.inflation;
+      els.years.value     = btn.dataset.years;
+
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      syncSlider();
+      update();
+    });
+  });
+
   /* ── Event listeners ─────────────────────────────────────── */
   [els.initial, els.monthly, els.yield, els.growth, els.tax, els.inflation].forEach(el => {
-    el.addEventListener('input', update);
+    el.addEventListener('input', () => {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
+      update();
+    });
   });
 
   els.years.addEventListener('input', function () {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('is-active'));
     syncSlider();
     update();
   });

@@ -135,6 +135,45 @@
   --z-toast:    500;
 }
 
+/* ── Light mode overrides ─────────────────────────────────── */
+[data-theme="light"] {
+  --color-bg-base:     #f5f6f8;
+  --color-bg-surface:  #ffffff;
+  --color-bg-elevated: #f0f2f5;
+  --color-bg-card:     #ffffff;
+  --color-bg-input:    #f0f2f5;
+  --color-bg-hover:    #e8eaed;
+
+  --color-text-primary:   #0a0b0d;
+  --color-text-secondary: #374151;
+  --color-text-muted:     #6b7280;
+  --color-text-disabled:  #9ca3af;
+
+  --color-border:        rgba(0, 0, 0, 0.09);
+  --color-border-hover:  rgba(0, 0, 0, 0.18);
+  --color-border-focus:  rgba(22, 163, 74, 0.50);
+  --color-border-accent: rgba(22, 163, 74, 0.35);
+
+  --color-green:         #16a34a;
+  --color-green-dark:    #15803d;
+  --color-green-dim:     rgba(22, 163, 74, 0.08);
+  --color-green-glow:    rgba(22, 163, 74, 0.20);
+  --color-green-subtle:  rgba(22, 163, 74, 0.04);
+
+  --color-gold:          #b45309;
+  --color-gold-dim:      rgba(180, 83, 9, 0.10);
+
+  --color-blue:          #2563eb;
+  --color-blue-dim:      rgba(37, 99, 235, 0.10);
+
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:    0 2px 6px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  --shadow-lg:    0 4px 16px rgba(0,0,0,0.10);
+  --shadow-xl:    0 8px 32px rgba(0,0,0,0.12);
+  --shadow-green: 0 8px 24px rgba(22,163,74,0.20);
+  --shadow-glow:  0 0 40px rgba(22,163,74,0.10);
+}
+
 /* ── Responsive overrides ─────────────────────────────────── */
 @media (max-width: 768px) {
   :root {

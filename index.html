@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>!function(){var t=localStorage.getItem('ds-theme');t==='light'&&document.documentElement.setAttribute('data-theme','light')}()</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J6FGJX6C"></script>
   <script>
@@ -227,6 +228,147 @@
       justify-content: center;
       gap: var(--space-3);
       flex-wrap: wrap;
+    }
+
+    /* ── Hero chart ──────────────────────────────────────── */
+    .hero-visual {
+      margin-top: var(--space-8);
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-chart-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-chart-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,212,122,0.4), transparent);
+    }
+
+    .hero-chart-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .hero-chart-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .hero-chart-value {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      color: var(--color-green);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1;
+    }
+
+    .hero-chart-meta {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .hero-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 120px;
+      margin-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-2);
+    }
+
+    .hero-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
+    }
+
+    .hero-bar-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: height 0.6s var(--ease-out);
+    }
+
+    .hero-bar-d { background: var(--color-green); border-radius: 2px 2px 0 0; }
+    .hero-bar-c { background: var(--color-bg-hover); border: 1px solid var(--color-border); border-bottom: none; border-radius: 2px 2px 0 0; }
+
+    .hero-chart-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .hero-chart-legend {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .hero-chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+    }
+
+    .hero-chart-legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    .hero-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .hero-slider-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    .hero-slider {
+      width: 120px;
+      accent-color: var(--color-green);
+      cursor: pointer;
+    }
+
+    .hero-slider-val {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-green);
+      min-width: 50px;
     }
 
     /* ── Stats strip ─────────────────────────────────────── */
@@ -581,6 +723,10 @@
 
       <div class="nav__cta">
         <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -626,6 +772,37 @@
         <a href="/calculators/dividend-yield/" class="btn btn--ghost btn--lg">
           Dividend Yield Calculator
         </a>
+      </div>
+
+      <!-- Mini interactive chart -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-chart-card">
+          <div class="hero-chart-top">
+            <div>
+              <div class="hero-chart-label">Portfolio projection · $10k start · $500/mo · 4% yield</div>
+              <div class="hero-chart-value" id="hero-final-val">—</div>
+              <div class="hero-chart-meta" id="hero-final-meta"></div>
+            </div>
+          </div>
+          <div class="hero-bars" id="hero-bars"></div>
+          <div class="hero-chart-footer">
+            <div class="hero-chart-legend">
+              <div class="hero-chart-legend-item">
+                <div class="hero-chart-legend-dot" style="background:var(--color-green);"></div>
+                Dividends reinvested
+              </div>
+              <div class="hero-chart-legend-item">
+                <div class="hero-chart-legend-dot" style="background:var(--color-bg-hover);border:1px solid var(--color-border);"></div>
+                Capital contributed
+              </div>
+            </div>
+            <div class="hero-slider-wrap">
+              <span class="hero-slider-label">Years:</span>
+              <input type="range" class="hero-slider" id="hero-slider" min="5" max="30" value="20" step="1">
+              <span class="hero-slider-val" id="hero-slider-val">20 yrs</span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -893,6 +1070,80 @@
 
 <script src="/assets/js/core.js" defer></script>
 <script>
+  /* ── Hero mini chart ─────────────────────────────────────── */
+  (function() {
+    const INITIAL = 10000, MONTHLY = 500, YIELD = 0.04, GROWTH = 0.05;
+
+    function calcHero(years) {
+      let portfolio = INITIAL, totalContrib = INITIAL, currentYield = YIELD;
+      const data = [{ portfolio: INITIAL, contrib: INITIAL }];
+      for (let y = 1; y <= years; y++) {
+        for (let m = 0; m < 12; m++) {
+          portfolio += MONTHLY;
+          totalContrib += MONTHLY;
+          portfolio += portfolio * (currentYield / 12);
+        }
+        currentYield *= (1 + GROWTH);
+        data.push({ portfolio, contrib: totalContrib });
+      }
+      return data;
+    }
+
+    function fmtHero(n) {
+      if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
+      if (n >= 1000)    return '$' + (n / 1000).toFixed(1) + 'k';
+      return '$' + n.toFixed(0);
+    }
+
+    function renderHero(years) {
+      const data = calcHero(years);
+      const step = years <= 10 ? 1 : years <= 20 ? 2 : 3;
+      const points = data.filter((d, i) => i > 0 && (i % step === 0 || i === data.length - 1));
+      const maxVal = Math.max(...points.map(d => d.portfolio));
+      const CHART_H = 100;
+      const barsEl = document.getElementById('hero-bars');
+      const finalEl = document.getElementById('hero-final-val');
+      const metaEl = document.getElementById('hero-final-meta');
+      if (!barsEl) return;
+
+      const last = data[data.length - 1];
+      finalEl.textContent = fmtHero(last.portfolio);
+      const gain = ((last.portfolio / last.contrib - 1) * 100).toFixed(0);
+      metaEl.textContent = 'after ' + years + ' years · +' + gain + '% from reinvestment';
+
+      barsEl.innerHTML = points.map((d, idx) => {
+        const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
+        const contH  = Math.round((d.contrib / maxVal) * CHART_H);
+        const divsH  = Math.max(0, totalH - contH);
+        const delay  = idx * 40;
+        return `<div class="hero-bar-col">
+          <div class="hero-bar-wrap" style="height:0;transition:height 0.5s ease ${delay}ms;">
+            <div class="hero-bar-d" style="height:${divsH}px;"></div>
+            <div class="hero-bar-c" style="height:${contH}px;"></div>
+          </div>
+        </div>`;
+      }).join('');
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        barsEl.querySelectorAll('.hero-bar-wrap').forEach((wrap, i) => {
+          const d = points[i];
+          const totalH = Math.round((d.portfolio / maxVal) * CHART_H);
+          wrap.style.height = totalH + 'px';
+        });
+      }));
+    }
+
+    const slider = document.getElementById('hero-slider');
+    const sliderVal = document.getElementById('hero-slider-val');
+    if (slider) {
+      slider.addEventListener('input', () => {
+        sliderVal.textContent = slider.value + ' yrs';
+        renderHero(parseInt(slider.value));
+      });
+      renderHero(20);
+    }
+  })();
+
   document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {
       const isOpen = btn.classList.contains('open');

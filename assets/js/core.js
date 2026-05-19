@@ -351,7 +351,49 @@ const Utils = {
   }
 };
 
-/* ── 7. Share URL ─────────────────────────────────────────── */
+/* ── 7. Theme Toggle ──────────────────────────────────────── */
+const ThemeToggle = {
+  KEY: 'ds-theme',
+
+  /**
+   * Apply saved theme on load (fast-path is also handled inline in <head>)
+   * and wire up the toggle button.
+   */
+  init() {
+    // Restore saved preference (the inline anti-flash script covers the
+    // initial paint; this call keeps the button state in sync on DOMContentLoaded)
+    const saved = localStorage.getItem(this.KEY);
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else if (saved === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      // No saved preference — respect system preference as default
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (!prefersDark) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    }
+
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem(this.KEY, 'dark');
+        Analytics.event('theme_toggle', { theme: 'dark' });
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem(this.KEY, 'light');
+        Analytics.event('theme_toggle', { theme: 'light' });
+      }
+    });
+  }
+};
+
+/* ── 8. Share URL ─────────────────────────────────────────── */
 const ShareCalc = {
   init() {
     const shareBtn = document.querySelector('[data-share]');
@@ -373,6 +415,7 @@ const ShareCalc = {
 
 /* ── Init all modules on DOM ready ───────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  ThemeToggle.init();
   Nav.init();
   ScrollReveal.init();
   FAQ.init();
