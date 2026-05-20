@@ -88,6 +88,28 @@
     ]
   }
   </script>
+
+  <style>
+    .article-faq { margin-top: var(--space-8); }
+    .article-faq > h2 { margin-bottom: var(--space-5); }
+    .article-faq-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .article-faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+    .article-faq-btn {
+      width: 100%; background: none; border: none;
+      padding: var(--space-4) var(--space-5);
+      display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+      cursor: pointer; text-align: left;
+      font-family: var(--font-sans); font-size: var(--text-base); font-weight: 500;
+      color: var(--color-text-primary); transition: background var(--duration-fast);
+    }
+    .article-faq-btn:hover { background: var(--color-bg-surface); }
+    .article-faq-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--color-green); transition: transform 0.3s ease; }
+    .article-faq-item.is-open .article-faq-icon { transform: rotate(45deg); }
+    .article-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s ease; padding: 0 var(--space-5); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+    .article-faq-item.is-open .article-faq-answer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); }
+    .article-faq-answer a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+    .article-faq-answer p { margin: 0; }
+  </style>
 </head>
 
 <body>
@@ -243,26 +265,56 @@
 
           <p>For investors just starting out, the most actionable takeaway is this: buy quality dividend-growth companies at reasonable yields, enable DRIP, and let time do the heavy lifting. The YOC you will have in 15 years is largely determined by the quality and consistency of the dividend growth you select today.</p>
 
+          <div class="article-faq">
           <h2>Frequently asked questions</h2>
+          <div class="article-faq-list">
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What is a good yield on cost?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>There is no universal benchmark — it depends on your holding period and starting yield. As a rough guide, a YOC of 7–10% after 10–15 years of holding a quality dividend-growth stock represents strong performance. Many long-term dividend investors aim to see YOC double or triple their original purchase yield within a decade.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>How is yield on cost different from dividend yield?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Standard dividend yield uses the current market price as the denominator. Yield on cost uses your original purchase price. The two numbers are the same at the moment you buy; they diverge as the stock price changes and the dividend grows over time. YOC is a personal metric — it is different for every investor who bought at a different price.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Does DRIP affect yield on cost?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Yes. When you reinvest dividends through a DRIP, you acquire more shares at the current market price. Each new lot of shares has its own cost basis. Your overall portfolio yield on cost is the weighted average across all your purchase lots — including DRIP purchases. DRIP accelerates the growth of your total income even as it gradually adjusts your blended cost basis upward.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Should I sell a stock with a very high yield on cost?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Not necessarily. A high YOC means you are receiving excellent income relative to your original investment. If the company remains fundamentally sound and continues growing its dividend, holding is often the right choice. However, high YOC should not be a reason to <em>avoid</em> selling if the business has deteriorated — assess the company's current fundamentals, not just your historical return.</p>
+              </div>
+            </div>
+        </div>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <h3 class="faq-question-text">What is a good yield on cost?</h3>
-              <p>There is no universal benchmark — it depends on your holding period and starting yield. As a rough guide, a YOC of 7–10% after 10–15 years of holding a quality dividend-growth stock represents strong performance. Many long-term dividend investors aim to see YOC double or triple their original purchase yield within a decade.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">How is yield on cost different from dividend yield?</h3>
-              <p>Standard dividend yield uses the current market price as the denominator. Yield on cost uses your original purchase price. The two numbers are the same at the moment you buy; they diverge as the stock price changes and the dividend grows over time. YOC is a personal metric — it is different for every investor who bought at a different price.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">Does DRIP affect yield on cost?</h3>
-              <p>Yes. When you reinvest dividends through a DRIP, you acquire more shares at the current market price. Each new lot of shares has its own cost basis. Your overall portfolio yield on cost is the weighted average across all your purchase lots — including DRIP purchases. DRIP accelerates the growth of your total income even as it gradually adjusts your blended cost basis upward.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">Should I sell a stock with a very high yield on cost?</h3>
-              <p>Not necessarily. A high YOC means you are receiving excellent income relative to your original investment. If the company remains fundamentally sound and continues growing its dividend, holding is often the right choice. However, high YOC should not be a reason to <em>avoid</em> selling if the business has deteriorated — assess the company's current fundamentals, not just your historical return.</p>
-            </div>
-          </div>
+        </div>
 
         </div>
 
@@ -378,6 +430,7 @@
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
           <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
@@ -399,6 +452,21 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function() {
+  document.querySelectorAll('.article-faq-item').forEach(function(item) {
+    var btn = item.querySelector('.article-faq-btn');
+    var ans = item.querySelector('.article-faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+})();
+</script>
 
 <script src="/assets/js/core.js?v=2" defer></script>
 </body>

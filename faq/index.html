@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>!function(){var t=localStorage.getItem('ds-theme');t==='light'&&document.documentElement.setAttribute('data-theme','light')}()</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J6FGJX6C"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R1J6FGJX6C');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Frequently Asked Questions | DivSprout</title>
+  <meta name="description" content="Answers to common questions about DivSprout's free dividend calculators, how DRIP works, dividend yield, FIRE planning, and more.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/faq/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FAQ — DivSprout">
+  <meta property="og:description" content="Common questions about DivSprout's free dividend calculators and dividend investing.">
+  <meta property="og:url" content="https://divsprout.com/faq/">
+  <meta property="og:site_name" content="DivSprout">
+  <meta property="og:image" content="https://divsprout.com/assets/images/og-home.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://divsprout.com/assets/images/og-home.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=2">
+  <link rel="stylesheet" href="/assets/css/base.css?v=2">
+  <link rel="stylesheet" href="/assets/css/components.css?v=2">
+  <link rel="stylesheet" href="/assets/css/animations.css?v=2">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Is DivSprout completely free?","acceptedAnswer":{"@type":"Answer","text":"Yes. All calculators and guides on DivSprout are completely free. No account required, no paywall, no premium tier."}},
+      {"@type":"Question","name":"Do you store my portfolio data?","acceptedAnswer":{"@type":"Answer","text":"No. All calculations happen locally in your browser. DivSprout does not collect, store, or transmit any financial data you enter into the calculators."}},
+      {"@type":"Question","name":"What is a DRIP calculator?","acceptedAnswer":{"@type":"Answer","text":"A DRIP calculator projects how your investment grows when dividends are automatically reinvested to purchase more shares. It shows the compounding effect over time, accounting for your starting portfolio, monthly contributions, dividend yield, dividend growth rate, tax rate, and inflation."}},
+      {"@type":"Question","name":"What is dividend yield?","acceptedAnswer":{"@type":"Answer","text":"Dividend yield is the annual dividend paid by a stock divided by its current share price, expressed as a percentage. For example, a stock paying $2.40 per year trading at $48 has a dividend yield of 5%."}},
+      {"@type":"Question","name":"What is the FIRE number?","acceptedAnswer":{"@type":"Answer","text":"Your FIRE number is the portfolio value needed to generate enough dividend income to cover your living expenses without working. DivSprout's FIRE Calculator helps you calculate it based on your target monthly income and expected portfolio yield."}},
+      {"@type":"Question","name":"How accurate are the calculators?","acceptedAnswer":{"@type":"Answer","text":"The calculators use standard financial formulas and are accurate for the assumptions you enter. They are models, not guarantees — real-world returns depend on actual dividend payments, price changes, and tax rules that may differ from your inputs."}},
+      {"@type":"Question","name":"Is this financial advice?","acceptedAnswer":{"@type":"Answer","text":"No. DivSprout provides educational tools and information only. Nothing on this site constitutes financial advice. Always consult a qualified financial adviser before making investment decisions."}}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://divsprout.com/"},
+      {"@type":"ListItem","position":2,"name":"FAQ"}
+    ]
+  }
+  </script>
+
+  <style>
+    .faq-page { padding-top: calc(var(--nav-height) + var(--space-8)); padding-bottom: var(--space-10); }
+    .faq-page__header { text-align: center; margin-bottom: var(--space-8); }
+    .faq-page__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-green); margin-bottom: var(--space-3); }
+    .faq-page__title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 300; line-height: 1.1; letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4); }
+    .faq-page__subtitle { font-size: var(--text-md); color: var(--color-text-secondary); max-width: 480px; margin: 0 auto; line-height: var(--leading-relaxed); }
+
+    .faq-group { max-width: 720px; margin: 0 auto var(--space-8); }
+    .faq-group__title { font-family: var(--font-mono); font-size: 11px; letter-spacing: var(--tracking-widest); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); }
+
+    .faq-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+    .faq-question {
+      width: 100%; background: none; border: none;
+      padding: var(--space-4) var(--space-5);
+      display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+      cursor: pointer; text-align: left;
+      font-family: var(--font-sans); font-size: var(--text-base); font-weight: 500;
+      color: var(--color-text-primary); transition: background var(--duration-fast);
+    }
+    .faq-question:hover { background: var(--color-bg-surface); }
+    .faq-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--color-green); transition: transform 0.3s ease; }
+    .faq-item.is-open .faq-icon { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s ease; padding: 0 var(--space-5); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+    .faq-item.is-open .faq-answer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); }
+    .faq-answer a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+    .faq-answer p { margin: 0 0 var(--space-2); }
+    .faq-answer p:last-child { margin-bottom: 0; }
+
+    .faq-cta { max-width: 720px; margin: 0 auto; text-align: center; padding: var(--space-8); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+    .faq-cta__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 300; margin-bottom: var(--space-2); }
+    .faq-cta__sub { color: var(--color-text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-5); }
+    .faq-cta__buttons { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="DivSprout Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+            <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="nav__logo-text">Div<span>Sprout</span></span>
+      </a>
+      <div class="nav__links">
+        <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield</a>
+        <a href="/calculators/drip/"           class="nav__link">DRIP</a>
+        <a href="/calculators/fire/"           class="nav__link">FIRE</a>
+        <a href="/learn/"                      class="nav__link">Learn</a>
+        <a href="/about/"                      class="nav__link">About</a>
+      </div>
+      <div class="nav__cta">
+        <a href="/calculators/drip/" class="btn btn--primary btn--sm">Try DRIP →</a>
+        <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <svg class="icon-sun" viewBox="0 0 16 16" fill="none" width="15" height="15"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M11.6 3.4l-1 1M4.4 11.6l-1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 16 16" fill="none" width="15" height="15"><path d="M13.5 10A6 6 0 0 1 6 2.5a5.5 5.5 0 1 0 7.5 7.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobile-menu">
+      <a href="/calculators/dividend-yield/" class="nav__link">Dividend Yield Calculator</a>
+      <a href="/calculators/drip/"           class="nav__link">DRIP Calculator</a>
+      <a href="/calculators/fire/"           class="nav__link">FIRE Calculator</a>
+      <a href="/learn/"                      class="nav__link">Learn</a>
+      <a href="/about/"                      class="nav__link">About</a>
+      <a href="/calculators/drip/" class="btn btn--primary" style="margin-top:8px;justify-content:center;">Try DRIP Calculator →</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="faq-page">
+  <div class="container">
+
+    <div class="faq-page__header">
+      <p class="faq-page__eyebrow">FAQ</p>
+      <h1 class="faq-page__title">Common questions</h1>
+      <p class="faq-page__subtitle">Everything you need to know about DivSprout and dividend investing basics.</p>
+    </div>
+
+    <!-- Group 1: About DivSprout -->
+    <div class="faq-group">
+      <div class="faq-group__title">About DivSprout</div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is DivSprout completely free?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. All calculators and guides on DivSprout are completely free. No account required, no paywall, no premium tier. We believe quality financial tools should be accessible to every investor.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do you store my portfolio data?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>No. All calculations happen locally in your browser. DivSprout does not collect, store, or transmit any financial data you enter into the calculators. Your numbers never leave your device.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is this financial advice?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>No. DivSprout provides educational tools and information only. Nothing on this site constitutes financial advice or a recommendation to buy or sell any security. Always consult a qualified financial adviser before making investment decisions.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How accurate are the calculators?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>The calculators use standard financial formulas and produce accurate results for the assumptions you enter. They are models, not predictions — real-world returns depend on actual dividend payments, price changes, and tax rules which may differ from your inputs. Always use conservative assumptions to stress-test your projections.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Group 2: Calculators -->
+    <div class="faq-group">
+      <div class="faq-group__title">The Calculators</div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What does the DRIP Calculator do?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>The <a href="/calculators/drip/">DRIP Calculator</a> projects how your investment portfolio grows when dividends are automatically reinvested to buy more shares. Enter your starting portfolio value, monthly contributions, dividend yield, dividend growth rate, tax rate, and time horizon — and get a year-by-year chart of your projected portfolio growth.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What does the Dividend Yield Calculator do?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>The <a href="/calculators/dividend-yield/">Dividend Yield Calculator</a> calculates the yield for any stock based on its current price and annual dividend per share. It also shows your monthly and annual income projection, a yield quality rating, and how much capital you'd need to generate a target income.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is the FIRE Calculator?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>The <a href="/calculators/fire/">FIRE Calculator</a> (Financial Independence, Retire Early) helps you calculate your FIRE number — the portfolio size needed to generate enough dividend income to cover your living expenses. It shows how many years it will take to reach that target at your current savings rate, with a year-by-year projection chart.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Group 3: Dividend basics -->
+    <div class="faq-group">
+      <div class="faq-group__title">Dividend Investing Basics</div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is dividend yield?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Dividend yield is the annual dividend paid by a stock divided by its current share price, expressed as a percentage. A stock paying $2.40 per year trading at $48 has a dividend yield of 5%. Read our full guide: <a href="/learn/dividend-yield-explained/">Dividend Yield Explained</a>.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is a DRIP?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>A DRIP (Dividend Reinvestment Plan) automatically uses your cash dividends to purchase additional shares of the same stock or fund. Instead of receiving a cash payment, the money buys more shares — which then generate their own future dividends. Over time, this compounding effect can significantly accelerate portfolio growth. Read more: <a href="/learn/what-is-drip/">What is a DRIP?</a></p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is a good dividend yield?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>A yield of 2–5% is generally considered healthy for most sectors. Yields above 7–8% often signal elevated risk and warrant careful scrutiny — a very high yield frequently reflects a falling stock price rather than exceptional income. Sector context matters: utilities and REITs typically yield more than technology companies.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is FIRE investing?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>FIRE stands for Financial Independence, Retire Early. It is a movement focused on aggressive saving and investing to reach a portfolio size large enough to live off investment income — typically dividends or portfolio withdrawals — without needing to work. Your FIRE number is typically calculated as your annual expenses divided by your expected portfolio yield or withdrawal rate.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How does dividend compounding work?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>When you reinvest dividends through a DRIP, each dividend buys more shares. Those shares generate their own dividends, which buy even more shares — creating a self-reinforcing compounding cycle. Combined with regular contributions and growing dividends, this produces exponential rather than linear portfolio growth over time. See: <a href="/learn/how-dividend-compounding-works/">How Dividend Compounding Works</a>.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Are dividends taxed even if reinvested?</span>
+            <span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, in most countries — including the US and UK — dividends are taxable in the year they are received, even if immediately reinvested through a DRIP. Tax-advantaged accounts (Roth IRA, ISA, TFSA) allow dividends to compound free of annual tax, which significantly improves long-term outcomes. Read: <a href="/learn/dividend-tax-explained/">How Dividends Are Taxed</a>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="faq-cta">
+      <p class="faq-cta__title">Still have questions?</p>
+      <p class="faq-cta__sub">Try our free calculators and see how the numbers work for your situation.</p>
+      <div class="faq-cta__buttons">
+        <a href="/calculators/drip/" class="btn btn--primary">DRIP Calculator →</a>
+        <a href="/calculators/fire/" class="btn btn--ghost">FIRE Calculator →</a>
+        <a href="/learn/" class="btn btn--ghost">Browse Guides →</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-3);">
+          <div class="nav__logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" width="18"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="nav__logo-text">Div<span>Sprout</span></span>
+        </a>
+        <p>Free dividend calculators for retail investors. No signup. No paywall.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Calculators</div>
+        <div class="footer__links">
+          <a href="/calculators/dividend-yield/" class="footer__link">Dividend Yield Calculator</a>
+          <a href="/calculators/drip/"           class="footer__link">DRIP Calculator</a>
+          <a href="/calculators/fire/"           class="footer__link">FIRE Calculator</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Learn — Basics</div>
+        <div class="footer__links">
+          <a href="/learn/"                                  class="footer__link">All Guides</a>
+          <a href="/learn/what-is-drip/"                     class="footer__link">What is DRIP?</a>
+          <a href="/learn/dividend-yield-explained/"          class="footer__link">Dividend Yield</a>
+          <a href="/learn/yield-on-cost/"                    class="footer__link">Yield on Cost</a>
+          <a href="/learn/how-dividend-compounding-works/"   class="footer__link">Compounding</a>
+          <a href="/learn/dividend-investing-for-beginners/" class="footer__link">Investing for Beginners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Learn — Strategy</div>
+        <div class="footer__links">
+          <a href="/learn/how-to-live-off-dividends/"    class="footer__link">Live Off Dividends</a>
+          <a href="/learn/dividend-payout-ratio/"        class="footer__link">Payout Ratio</a>
+          <a href="/learn/ex-dividend-date-explained/"   class="footer__link">Ex-Dividend Date</a>
+          <a href="/learn/dividend-growth-investing/"    class="footer__link">Growth Investing</a>
+          <a href="/learn/dividend-aristocrats/"         class="footer__link">Dividend Aristocrats</a>
+          <a href="/learn/best-dividend-etfs/"           class="footer__link">Best Dividend ETFs</a>
+          <a href="/learn/dividend-tax-explained/"       class="footer__link">Dividend Tax</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">DivSprout</div>
+        <div class="footer__links">
+          <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
+          <a href="/sitemap.xml" class="footer__link">Sitemap</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="/privacy/"          class="footer__link">Privacy Policy</a>
+          <a href="/about/#disclaimer" class="footer__link">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 DivSprout. Not financial advice. For educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/core.js?v=2" defer></script>
+<script>
+(function() {
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    var btn = item.querySelector('.faq-question');
+    var ans = item.querySelector('.faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -88,6 +88,28 @@
     ]
   }
   </script>
+
+  <style>
+    .article-faq { margin-top: var(--space-8); }
+    .article-faq > h2 { margin-bottom: var(--space-5); }
+    .article-faq-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .article-faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+    .article-faq-btn {
+      width: 100%; background: none; border: none;
+      padding: var(--space-4) var(--space-5);
+      display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+      cursor: pointer; text-align: left;
+      font-family: var(--font-sans); font-size: var(--text-base); font-weight: 500;
+      color: var(--color-text-primary); transition: background var(--duration-fast);
+    }
+    .article-faq-btn:hover { background: var(--color-bg-surface); }
+    .article-faq-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--color-green); transition: transform 0.3s ease; }
+    .article-faq-item.is-open .article-faq-icon { transform: rotate(45deg); }
+    .article-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s ease; padding: 0 var(--space-5); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+    .article-faq-item.is-open .article-faq-answer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); }
+    .article-faq-answer a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+    .article-faq-answer p { margin: 0; }
+  </style>
 </head>
 
 <body>
@@ -269,26 +291,56 @@
 
           <p>Diversification across multiple dividend-paying stocks and sectors also reduces the risk that any single dividend cut derails the compounding plan — a lesson reinforced by the histories of even the most reliable dividend payers.</p>
 
+          <div class="article-faq">
           <h2>Frequently asked questions</h2>
+          <div class="article-faq-list">
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>How does dividend compounding work?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Dividend compounding works by reinvesting dividend payments into additional shares of the same investment. Those new shares generate their own future dividends, which are also reinvested — creating a cycle where income grows on top of previously generated income. Over time this accelerates, producing exponential rather than linear growth.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>How long does it take to see significant compounding results?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Compounding is slow to start and accelerates over time. The effects become noticeably significant around years 10–15, and dramatic beyond year 20. This is why starting early — even with small amounts — has a disproportionate impact on long-term outcomes.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Does dividend growth affect compounding?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Yes, significantly. When a company grows its dividend each year, compounding benefits from both more shares (from reinvestment) and higher dividends per share. This double compounding effect is why dividend growth investors often achieve better long-term outcomes than investors focused purely on high current yield.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What is the best way to model dividend compounding?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Use a DRIP calculator that accounts for your starting portfolio value, monthly contributions, dividend yield, dividend growth rate, tax rate, and inflation. DivSprout's free DRIP Calculator shows year-by-year projections with all these factors built in, so you can see exactly how compounding builds in your specific situation.</p>
+              </div>
+            </div>
+        </div>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <h3 class="faq-question-text">How does dividend compounding work?</h3>
-              <p>Dividend compounding works by reinvesting dividend payments into additional shares of the same investment. Those new shares generate their own future dividends, which are also reinvested — creating a cycle where income grows on top of previously generated income. Over time this accelerates, producing exponential rather than linear growth.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">How long does it take to see significant compounding results?</h3>
-              <p>Compounding is slow to start and accelerates over time. The effects become noticeably significant around years 10–15, and dramatic beyond year 20. This is why starting early — even with small amounts — has a disproportionate impact on long-term outcomes.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">Does dividend growth affect compounding?</h3>
-              <p>Yes, significantly. When a company grows its dividend each year, compounding benefits from both more shares (from reinvestment) and higher dividends per share. This double compounding effect is why dividend growth investors often achieve better long-term outcomes than investors focused purely on high current yield.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">What is the best way to model dividend compounding?</h3>
-              <p>Use a DRIP calculator that accounts for your starting portfolio value, monthly contributions, dividend yield, dividend growth rate, tax rate, and inflation. DivSprout's free DRIP Calculator shows year-by-year projections with all these factors built in, so you can see exactly how compounding builds in your specific situation.</p>
-            </div>
-          </div>
+        </div>
 
         </div>
 
@@ -404,6 +456,7 @@
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
           <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
@@ -425,6 +478,21 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function() {
+  document.querySelectorAll('.article-faq-item').forEach(function(item) {
+    var btn = item.querySelector('.article-faq-btn');
+    var ans = item.querySelector('.article-faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+})();
+</script>
 
 <script src="/assets/js/core.js?v=2" defer></script>
 </body>

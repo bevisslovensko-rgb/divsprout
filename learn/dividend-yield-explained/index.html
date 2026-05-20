@@ -93,6 +93,28 @@
     ]
   }
   </script>
+
+  <style>
+    .article-faq { margin-top: var(--space-8); }
+    .article-faq > h2 { margin-bottom: var(--space-5); }
+    .article-faq-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .article-faq-item { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+    .article-faq-btn {
+      width: 100%; background: none; border: none;
+      padding: var(--space-4) var(--space-5);
+      display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+      cursor: pointer; text-align: left;
+      font-family: var(--font-sans); font-size: var(--text-base); font-weight: 500;
+      color: var(--color-text-primary); transition: background var(--duration-fast);
+    }
+    .article-faq-btn:hover { background: var(--color-bg-surface); }
+    .article-faq-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--color-green); transition: transform 0.3s ease; }
+    .article-faq-item.is-open .article-faq-icon { transform: rotate(45deg); }
+    .article-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s ease; padding: 0 var(--space-5); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+    .article-faq-item.is-open .article-faq-answer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); }
+    .article-faq-answer a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+    .article-faq-answer p { margin: 0; }
+  </style>
 </head>
 
 <body>
@@ -274,26 +296,56 @@
 
           <p>For example, if you bought a stock at $40 five years ago that now pays $3 per year in dividends, your current market yield might be 3% (if the stock is now at $100), but your yield on cost is 7.5% ($3 ÷ $40). This is a more meaningful measure of actual income return on your invested capital. Read our full guide on <a href="/learn/yield-on-cost/">Yield on Cost (YOC)</a> for a complete explanation.</p>
 
+          <div class="article-faq">
           <h2>Frequently asked questions</h2>
+          <div class="article-faq-list">
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What is a good dividend yield?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>A yield of 2–5% is generally considered healthy for most sectors. Anything above 7–8% warrants careful scrutiny of dividend sustainability. The "best" yield depends on your goals — income investors may prefer higher yields, while growth-oriented investors may accept lower yields from companies with strong dividend growth records.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Why does dividend yield go up when a stock price falls?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Because yield is calculated as annual dividend divided by current share price. When the share price falls and the dividend stays the same, the yield percentage increases mathematically. This is why high yield can sometimes signal a stock in distress rather than an attractive investment.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Is dividend yield the same as dividend rate?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>No. The dividend rate (or dividend per share) is the absolute dollar amount paid per share per year. Dividend yield expresses that amount as a percentage of the current share price. Both are useful — the rate tells you the actual income per share, while the yield lets you compare across different-priced stocks.</p>
+              </div>
+            </div>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>How often is dividend yield updated?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer">
+                <p>Since share price changes continuously during market hours, the yield technically updates in real time. Dividend amounts are declared by the company each quarter (or annually for some stocks). Most financial sites update yield calculations daily using the closing price.</p>
+              </div>
+            </div>
+        </div>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <h3 class="faq-question-text">What is a good dividend yield?</h3>
-              <p>A yield of 2–5% is generally considered healthy for most sectors. Anything above 7–8% warrants careful scrutiny of dividend sustainability. The "best" yield depends on your goals — income investors may prefer higher yields, while growth-oriented investors may accept lower yields from companies with strong dividend growth records.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">Why does dividend yield go up when a stock price falls?</h3>
-              <p>Because yield is calculated as annual dividend divided by current share price. When the share price falls and the dividend stays the same, the yield percentage increases mathematically. This is why high yield can sometimes signal a stock in distress rather than an attractive investment.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">Is dividend yield the same as dividend rate?</h3>
-              <p>No. The dividend rate (or dividend per share) is the absolute dollar amount paid per share per year. Dividend yield expresses that amount as a percentage of the current share price. Both are useful — the rate tells you the actual income per share, while the yield lets you compare across different-priced stocks.</p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question-text">How often is dividend yield updated?</h3>
-              <p>Since share price changes continuously during market hours, the yield technically updates in real time. Dividend amounts are declared by the company each quarter (or annually for some stocks). Most financial sites update yield calculations daily using the closing price.</p>
-            </div>
-          </div>
+        </div>
 
         </div>
 
@@ -409,6 +461,7 @@
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
           <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
@@ -430,6 +483,21 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function() {
+  document.querySelectorAll('.article-faq-item').forEach(function(item) {
+    var btn = item.querySelector('.article-faq-btn');
+    var ans = item.querySelector('.article-faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+})();
+</script>
 
 <script src="/assets/js/core.js?v=2" defer></script>
 </body>

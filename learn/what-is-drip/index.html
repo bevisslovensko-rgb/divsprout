@@ -99,6 +99,58 @@
     ]
   }
   </script>
+
+  <style>
+    /* ── Article FAQ accordion ─────────────────────────────── */
+    .article-faq { margin-top: var(--space-8); }
+    .article-faq h2 { margin-bottom: var(--space-5); }
+    .article-faq-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .article-faq-item {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .article-faq-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: var(--space-4) var(--space-5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-4);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-text-primary);
+      transition: background var(--duration-fast);
+    }
+    .article-faq-btn:hover { background: var(--color-bg-surface); }
+    .article-faq-icon {
+      width: 20px; height: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-green);
+      transition: transform 0.3s ease;
+    }
+    .article-faq-item.is-open .article-faq-icon { transform: rotate(45deg); }
+    .article-faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s ease;
+      padding: 0 var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    .article-faq-item.is-open .article-faq-answer {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+    .article-faq-answer a { color: var(--color-green); text-decoration: underline; text-underline-offset: 3px; }
+    .article-faq-answer p { margin: 0; }
+  </style>
 </head>
 
 <body>
@@ -308,30 +360,65 @@
         <div class="article-faq" style="margin-top:var(--space-8);">
           <h2>Frequently asked questions</h2>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <h3 class="faq-question-text">What does DRIP stand for?</h3>
-              <p>DRIP stands for <strong>Dividend Reinvestment Plan</strong>. It is a programme — offered by brokerages or directly by companies — that automatically reinvests cash dividends into additional shares of the same stock or fund.</p>
+          <div class="article-faq-list">
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What does DRIP stand for?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>DRIP stands for <strong>Dividend Reinvestment Plan</strong>. It is a programme — offered by brokerages or directly by companies — that automatically reinvests cash dividends into additional shares of the same stock or fund.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Do you pay tax on reinvested dividends?</h3>
-              <p>Yes. In most tax jurisdictions, dividends are taxable in the year they are received — even if they are immediately reinvested through a DRIP. You do not get a tax deferral simply because the dividend never appeared as cash in your account. Tax-advantaged accounts (Roth IRA, ISA, TFSA) are an exception and allow dividends to compound free of annual tax.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Do you pay tax on reinvested dividends?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Yes. In most tax jurisdictions, dividends are taxable in the year they are received — even if they are immediately reinvested through a DRIP. You do not get a tax deferral simply because the dividend never appeared as cash in your account. Tax-advantaged accounts (Roth IRA, ISA, TFSA) are an exception and allow dividends to compound free of annual tax.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Is DRIP better than taking dividends as cash?</h3>
-              <p>For long-term investors who do not need the income now, DRIP typically produces significantly better outcomes due to compounding. For investors who rely on dividends for living expenses — such as retirees — taking cash dividends is more appropriate. The right choice depends on your financial situation and time horizon.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Is DRIP better than taking dividends as cash?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>For long-term investors who do not need the income now, DRIP typically produces significantly better outcomes due to compounding. For investors who rely on dividends for living expenses — such as retirees — taking cash dividends is more appropriate. The right choice depends on your financial situation and time horizon.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Can I use a DRIP calculator to project my growth?</h3>
-              <p>Yes. DivSprout's free <a href="/calculators/drip/">DRIP Calculator</a> lets you model your portfolio growth with custom starting value, monthly contributions, dividend yield, dividend growth rate, tax rate, and time horizon. It shows a year-by-year breakdown so you can see exactly how compounding builds over time.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Can I use a DRIP calculator to project my growth?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Yes. DivSprout's free <a href="/calculators/drip/">DRIP Calculator</a> lets you model your portfolio growth with custom starting value, monthly contributions, dividend yield, dividend growth rate, tax rate, and time horizon. It shows a year-by-year breakdown so you can see exactly how compounding builds over time.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">What stocks are good for DRIP investing?</h3>
-              <p>Stocks with consistent, growing dividends are typically best for DRIP strategies — particularly <a href="/learn/dividend-aristocrats/">Dividend Aristocrats</a> (companies that have raised dividends for 25+ consecutive years) and high-quality dividend ETFs. Consistency and dividend growth matter more than a high starting yield when DRIP compounding is the goal.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What stocks are good for DRIP investing?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Stocks with consistent, growing dividends are typically best for DRIP strategies — particularly <a href="/learn/dividend-aristocrats/">Dividend Aristocrats</a> (companies that have raised dividends for 25+ consecutive years) and high-quality dividend ETFs. Consistency and dividend growth matter more than a high starting yield when DRIP compounding is the goal.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -343,30 +430,65 @@
         <div class="article-faq" style="margin-top:var(--space-8);">
           <h2>Frequently asked questions</h2>
 
-          <div class="faq-list">
-            <div class="faq-item">
-              <h3 class="faq-question-text">What does DRIP stand for?</h3>
-              <p>DRIP stands for <strong>Dividend Reinvestment Plan</strong>. It is a programme — offered by brokerages or directly by companies — that automatically reinvests cash dividends into additional shares of the same stock or fund.</p>
+          <div class="article-faq-list">
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What does DRIP stand for?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>DRIP stands for <strong>Dividend Reinvestment Plan</strong>. It is a programme — offered by brokerages or directly by companies — that automatically reinvests cash dividends into additional shares of the same stock or fund.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Do you pay tax on reinvested dividends?</h3>
-              <p>Yes. In most tax jurisdictions, dividends are taxable in the year they are received — even if they are immediately reinvested through a DRIP. You do not get a tax deferral simply because the dividend never appeared as cash in your account. Tax-advantaged accounts (Roth IRA, ISA, TFSA) are an exception and allow dividends to compound free of annual tax.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Do you pay tax on reinvested dividends?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Yes. In most tax jurisdictions, dividends are taxable in the year they are received — even if they are immediately reinvested through a DRIP. You do not get a tax deferral simply because the dividend never appeared as cash in your account. Tax-advantaged accounts (Roth IRA, ISA, TFSA) are an exception and allow dividends to compound free of annual tax.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Is DRIP better than taking dividends as cash?</h3>
-              <p>For long-term investors who do not need the income now, DRIP typically produces significantly better outcomes due to compounding. For investors who rely on dividends for living expenses — such as retirees — taking cash dividends is more appropriate. The right choice depends on your financial situation and time horizon.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Is DRIP better than taking dividends as cash?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>For long-term investors who do not need the income now, DRIP typically produces significantly better outcomes due to compounding. For investors who rely on dividends for living expenses — such as retirees — taking cash dividends is more appropriate. The right choice depends on your financial situation and time horizon.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">Can I use a DRIP calculator to project my growth?</h3>
-              <p>Yes. DivSprout's free <a href="/calculators/drip/">DRIP Calculator</a> lets you model your portfolio growth with custom starting value, monthly contributions, dividend yield, dividend growth rate, tax rate, and time horizon. It shows a year-by-year breakdown so you can see exactly how compounding builds over time.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>Can I use a DRIP calculator to project my growth?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Yes. DivSprout's free <a href="/calculators/drip/">DRIP Calculator</a> lets you model your portfolio growth with custom starting value, monthly contributions, dividend yield, dividend growth rate, tax rate, and time horizon. It shows a year-by-year breakdown so you can see exactly how compounding builds over time.</p>
+              </div>
             </div>
 
-            <div class="faq-item">
-              <h3 class="faq-question-text">What stocks are good for DRIP investing?</h3>
-              <p>Stocks with consistent, growing dividends are typically best for DRIP strategies — particularly <a href="/learn/dividend-aristocrats/">Dividend Aristocrats</a> (companies that have raised dividends for 25+ consecutive years) and high-quality dividend ETFs. Consistency and dividend growth matter more than a high starting yield when DRIP compounding is the goal.</p>
+                        <div class="article-faq-item">
+              <button class="article-faq-btn" aria-expanded="false">
+                <span>What stocks are good for DRIP investing?</span>
+                <span class="article-faq-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+              <div class="article-faq-answer" aria-hidden="true">
+                <p>Stocks with consistent, growing dividends are typically best for DRIP strategies — particularly <a href="/learn/dividend-aristocrats/">Dividend Aristocrats</a> (companies that have raised dividends for 25+ consecutive years) and high-quality dividend ETFs. Consistency and dividend growth matter more than a high starting yield when DRIP compounding is the goal.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -477,6 +599,7 @@
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
           <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
@@ -500,5 +623,20 @@
 </footer>
 
 <script src="/assets/js/core.js?v=2" defer></script>
+
+<script>
+(function() {
+  document.querySelectorAll('.article-faq-item').forEach(function(item) {
+    var btn = item.querySelector('.article-faq-btn');
+    var ans = item.querySelector('.article-faq-answer');
+    if (!btn || !ans) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+})();
+</script>
 </body>
 </html>

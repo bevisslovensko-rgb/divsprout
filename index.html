@@ -626,16 +626,16 @@
       transition: transform var(--duration-base);
     }
 
-    .faq-question.open .faq-icon { transform: rotate(45deg); }
+    /* icon rotation handled by .faq-item.is-open .faq-icon */
 
     .faq-answer {
-      display: none;
-      padding: 0 var(--space-5) var(--space-4);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s ease;
+      padding: 0 var(--space-5);
       font-size: var(--text-sm);
       color: var(--color-text-secondary);
       line-height: var(--leading-relaxed);
-      border-top: 1px solid var(--color-border);
-      padding-top: var(--space-4);
     }
 
     .faq-answer a {
@@ -644,7 +644,12 @@
       text-underline-offset: 3px;
     }
 
-    .faq-question.open + .faq-answer { display: block; }
+    .faq-item.is-open .faq-answer {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .faq-item.is-open .faq-icon { transform: rotate(45deg); }
 
     /* ── Calculator cards ─────────────────────────────────── */
     .tools-grid {
@@ -1168,6 +1173,7 @@
         <div class="footer__col-title">DivSprout</div>
         <div class="footer__links">
           <a href="/about/"      class="footer__link">About</a>
+          <a href="/faq/"        class="footer__link">FAQ</a>
           <a href="/sitemap.xml" class="footer__link">Sitemap</a>
         </div>
       </div>
