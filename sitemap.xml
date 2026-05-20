@@ -3,35 +3,49 @@
 
   <url>
     <loc>https://divsprout.com/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://divsprout.com/calculators/dividend-yield/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://divsprout.com/calculators/drip/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://divsprout.com/calculators/fire/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
+    <loc>https://divsprout.com/learn/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://divsprout.com/faq/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
     <loc>https://divsprout.com/about/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -43,41 +57,28 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Learn — Foundations -->
+
   <url>
-    <loc>https://divsprout.com/learn/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <loc>https://divsprout.com/learn/dividend-investing-for-beginners/</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://divsprout.com/learn/what-is-drip/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://divsprout.com/learn/dividend-yield-explained/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <url>
-    <loc>https://divsprout.com/learn/yield-on-cost/</loc>
-    <lastmod>2026-05-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://divsprout.com/learn/how-dividend-compounding-works/</loc>
-    <lastmod>2026-05-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
 
   <url>
     <loc>https://divsprout.com/learn/dividend-payout-ratio/</loc>
@@ -88,6 +89,38 @@
 
   <url>
     <loc>https://divsprout.com/learn/ex-dividend-date-explained/</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Learn — Getting started (new) -->
+
+  <url>
+    <loc>https://divsprout.com/learn/how-to-start-investing/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://divsprout.com/learn/how-to-buy-dividend-stocks/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://divsprout.com/learn/dividend-investing-vs-index-funds/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Learn — Strategy &amp; income -->
+
+  <url>
+    <loc>https://divsprout.com/learn/how-to-live-off-dividends/</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -114,19 +147,50 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Learn — Income vehicles (new) -->
+
   <url>
-    <loc>https://divsprout.com/learn/dividend-investing-for-beginners/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://divsprout.com/learn/reits-explained/</loc>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://divsprout.com/learn/how-to-live-off-dividends/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://divsprout.com/learn/monthly-dividend-stocks/</loc>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>http
+    <loc>https://divsprout.com/learn/dividend-growth-stocks/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Learn — Deeper concepts -->
+
+  <url>
+    <loc>https://divsprout.com/learn/yield-on-cost/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://divsprout.com/learn/how-dividend-compounding-works/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://divsprout.com/learn/dividend-tax-explained/</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
