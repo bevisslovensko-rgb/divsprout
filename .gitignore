@@ -24,3 +24,4 @@ node_modules/
 
 # Sandbox mount artifacts (never commit)
 mnt/
+instagram/ffmpeg.exe 
