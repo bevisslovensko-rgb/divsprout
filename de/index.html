@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J6FGJX6C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R1J6FGJX6C');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dividendenrechner App — DivSprout | Monatliche Dividenden berechnen</title>
+  <meta name="description" content="DivSprout ist die kostenlose Dividendenrechner-App für Privatanleger. Berechne monatliche Dividendeneinnahmen, DRIP-Zinseszins-Wachstum und deinen FIRE-Zeitplan. Keine Anmeldung, komplett kostenlos.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://divsprout.com/de/">
+
+  <link rel="alternate" hreflang="de" href="https://divsprout.com/de/">
+  <link rel="alternate" hreflang="ko" href="https://divsprout.com/ko/">
+  <link rel="alternate" hreflang="en" href="https://divsprout.com/">
+  <link rel="alternate" hreflang="x-default" href="https://divsprout.com/">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Dividendenrechner App — DivSprout">
+  <meta property="og:description" content="Monatliche Dividendeneinnahmen, DRIP-Zinseszins und FIRE-Zeitplan in einer kostenlosen App berechnen. Keine Anmeldung erforderlich.">
+  <meta property="og:url"         content="https://divsprout.com/de/">
+  <meta property="og:site_name"   content="DivSprout">
+  <meta property="og:image"       content="https://divsprout.com/assets/images/og-home.png">
+
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Dividendenrechner App — DivSprout">
+  <meta name="twitter:description" content="Monatliche Dividendeneinnahmen, DRIP-Zinseszins und FIRE-Zeitplan in einer kostenlosen App.">
+  <meta name="twitter:image"       content="https://divsprout.com/assets/images/og-home.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "DivSprout - Dividendenrechner",
+    "description": "Kostenlose Dividendenrechner-App für Privatanleger. Berechne monatliche Dividendeneinnahmen, DRIP-Wachstum und FIRE-Zeitplan.",
+    "operatingSystem": "Android",
+    "applicationCategory": "FinanceApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "url": "https://play.google.com/store/apps/details?id=com.bevisslovensko.divflow",
+    "inLanguage": "de",
+    "publisher": { "@type": "Organization", "name": "DivSprout", "url": "https://divsprout.com" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Ist DivSprout wirklich kostenlos?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ja, DivSprout ist vollständig kostenlos. Keine versteckten Kosten, keine Abonnements, keine Anmeldung erforderlich." }
+      },
+      {
+        "@type": "Question",
+        "name": "Funktioniert die App ohne Internet?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ja, DivSprout funktioniert vollständig offline. Alle Berechnungen erfolgen lokal auf deinem Gerät." }
+      },
+      {
+        "@type": "Question",
+        "name": "Was ist ein Dividendenrechner?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ein Dividendenrechner berechnet, wie viel passives Einkommen dein Portfolio durch Dividenden generiert — monatlich und jährlich, über beliebige Zeiträume." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0a0b0d;
+      --bg-surface:   #111318;
+      --bg-card:      #181c22;
+      --text:         #f0f2f5;
+      --text-2:       #8a9ab0;
+      --text-3:       #4a5568;
+      --green:        #22d47a;
+      --green-dim:    rgba(34,212,122,0.10);
+      --green-border: rgba(34,212,122,0.25);
+      --border:       rgba(255,255,255,0.07);
+      --font-body:    'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+      --font-display: 'Fraunces', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,11,13,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex; align-items: center; padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 17px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .logo-text span { color: var(--green); }
+    .nav-lang {
+      margin-left: auto; font-size: 13px;
+      color: var(--text-3); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-lang:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 88px 24px 64px; text-align: center;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--green); background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 9999px; padding: 5px 16px; margin-bottom: 28px;
+    }
+    .badge::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--green);
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: -0.03em; color: var(--text);
+      margin-bottom: 20px;
+    }
+    h1 em { font-style: italic; color: var(--green); }
+    .hero-sub {
+      font-size: 17px; color: var(--text-2);
+      max-width: 540px; margin: 0 auto 40px; line-height: 1.75;
+    }
+    .cta-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+    }
+    .btn-play {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--green); color: #0a0b0d;
+      font-family: var(--font-body);
+      font-size: 15px; font-weight: 700;
+      padding: 14px 28px; border-radius: 12px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-play:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-play svg { width: 20px; height: 20px; }
+    .cta-note { font-size: 13px; color: var(--text-3); letter-spacing: 0.02em; }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; justify-content: center;
+      gap: 48px; flex-wrap: wrap;
+      max-width: 900px; margin: 0 auto 72px; padding: 0 24px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: var(--font-body);
+      font-size: 36px; font-weight: 700;
+      color: var(--green); letter-spacing: -0.03em; line-height: 1;
+    }
+    .stat-label { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+
+    /* ── FEATURES ── */
+    .features { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+    .section-label {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--green); text-align: center; margin-bottom: 40px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; margin-bottom: 16px;
+    }
+    .feature-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .feature-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px;
+    }
+    .how-inner { max-width: 900px; margin: 0 auto; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px; margin-top: 40px;
+    }
+    .step { text-align: center; }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: var(--green);
+      margin: 0 auto 16px;
+    }
+    .step-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .step-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── FAQ ── */
+    .faq { max-width: 900px; margin: 0 auto; padding: 64px 24px; }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .faq-q { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── CTA BOTTOM ── */
+    .cta-bottom {
+      max-width: 900px; margin: 0 auto;
+      padding: 64px 24px 88px; text-align: center;
+    }
+    .cta-bottom h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300; line-height: 1.15;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .cta-bottom h2 em { font-style: italic; color: var(--green); }
+    .cta-bottom p { font-size: 16px; color: var(--text-2); margin-bottom: 36px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px; text-align: center;
+    }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+    footer p { font-size: 13px; color: var(--text-3); }
+    footer a { color: var(--text-3); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 34px; }
+      .stats { gap: 28px; }
+      .stat-num { font-size: 28px; }
+      .hero { padding: 64px 20px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <svg width="28" height="28" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="#0a0b0d"/>
+      <path d="M16 26C16 26 9 20 9 14C9 10.1 12.1 8 16 8s7 2.1 7 6c0 6-7 12-7 12z"
+        fill="none" stroke="#22d47a" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M16 26V17M16 17L13.5 19.5M16 17L18.5 19.5"
+        stroke="#22d47a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="logo-text">Div<span>Sprout</span></span>
+    <a href="/" class="nav-lang">English →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">Dividenden-App</div>
+  <h1>Pflanze heute.<br><em>Ernte für immer.</em></h1>
+  <p class="hero-sub">
+    DivSprout ist der kostenlose Dividendenrechner für Privatanleger.
+    Berechne monatliche Dividendeneinnahmen, simuliere Zinseszins-Wachstum mit DRIP
+    und finde heraus, wann du finanzielle Unabhängigkeit erreichst.
+  </p>
+  <div class="cta-wrap">
+    <a class="btn-play" href="https://play.google.com/store/apps/details?id=com.bevisslovensko.divflow" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/>
+      </svg>
+      Kostenlos bei Google Play
+    </a>
+    <span class="cta-note">Android · Kostenlos · Keine Anmeldung</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Sprachen<br>(Deutsch inklusive)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Offline nutzbar<br>kein Internet nötig</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">Gratis</div>
+    <div class="stat-label">Dauerhaft kostenlos<br>keine versteckten Gebühren</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5,0 ★</div>
+    <div class="stat-label">Google Play<br>Bewertung</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <p class="section-label">Funktionen</p>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Dividendeneinnahmen berechnen</div>
+      <div class="feature-desc">
+        Gib Startkapital, monatliche Sparrate, Dividendenrendite und Anlagehorizont ein —
+        und sieh sofort, wie viel monatliches passives Einkommen dein Portfolio
+        in 1, 5, 10, 20 oder 30 Jahren generiert.
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🌱</div>
+      <div class="feature-title">DRIP-Zinseszins-Simulation</div>
+      <div class="feature-desc">
+        Visualisiere das Wachstum deines Portfolios mit automatischer Dividenden-Wiederanlage (DRIP).
+        Sieh in einem interaktiven Chart, wie der Zinseszins-Effekt dein Vermögen
+        über Jahrzehnte vervielfacht.
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔥</div>
+      <div class="feature-title">FIRE-Rechner</div>
+      <div class="feature-desc">
+        Setze dein monatliches Einkommensziel für finanzielle Unabhängigkeit
+        und erfahre exakt, in welchem Jahr du es erreichst —
+        basierend auf deinem aktuellen Spar- und Investitionsplan.
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Meilenstein-Tracker</div>
+      <div class="feature-desc">
+        Verfolge automatisch, wann du 500 €, 1.000 € oder 2.000 € monatliche
+        Dividenden erreichst. Klare Ziele, klarer Fortschritt.
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📤</div>
+      <div class="feature-title">Ergebnisse teilen</div>
+      <div class="feature-desc">
+        Speichere deine Berechnungen als übersichtliche Karte und teile sie
+        in Dividenden-Communities oder mit Freunden.
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Vollständiger Datenschutz</div>
+      <div class="feature-desc">
+        Alle eingegebenen Daten bleiben auf deinem Gerät. Kein Server-Upload,
+        keine Kontopflicht, 100 % offline — deine Finanzdaten gehören dir.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <p class="section-label">So funktioniert es</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Zahlen eingeben</div>
+        <div class="step-desc">Startkapital, monatliche Sparrate, Dividendenrendite und Anlagedauer eintragen.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Sofort berechnen</div>
+        <div class="step-desc">Die App berechnet Jahrzehnte an Dividendenwachstum in Echtzeit und zeigt es als Chart.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Ziel festlegen</div>
+        <div class="step-desc">FIRE-Ziel setzen und genau sehen, wann du finanziell unabhängig bist.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Plan umsetzen</div>
+        <div class="step-desc">Verschiedene Szenarien speichern, vergleichen und den optimalen Investitionsplan finden.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <p class="section-label">Häufige Fragen</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Ist DivSprout wirklich kostenlos?</div>
+      <div class="faq-a">Ja, vollständig. Keine versteckten Gebühren, kein Abo, keine Anmeldung. Die App ist dauerhaft kostenlos nutzbar.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Funktioniert die App ohne Internetverbindung?</div>
+      <div class="faq-a">Ja. Alle Berechnungen laufen lokal auf deinem Gerät. Du brauchst kein Internet — ideal für unterwegs.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Was ist DRIP und warum ist es wichtig?</div>
+      <div class="faq-a">DRIP steht für Dividend Reinvestment Plan — das automatische Wiederanlegen von Dividenden in neue Aktien. Durch den Zinseszins-Effekt beschleunigt DRIP den Vermögensaufbau erheblich. DivSprout zeigt dir genau, wie stark dieser Effekt über die Zeit wirkt.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Für welche Anleger ist DivSprout geeignet?</div>
+      <div class="faq-a">Für jeden, der in dividendenstarke Aktien oder ETFs investiert — vom Einsteiger bis zum erfahrenen Privatanleger. Die App ist bewusst einfach gehalten, liefert aber präzise Projektionen.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BOTTOM -->
+<section class="cta-bottom">
+  <h2>Jetzt pflanzen.<br><em>Für immer ernten.</em></h2>
+  <p>Starte deinen Weg zur finanziellen Unabhängigkeit mit DivSprout.<br>Kostenlos, ohne Anmeldung, sofort.</p>
+  <div class="cta-wrap">
+    <a class="btn-play" href="https://play.google.com/store/apps/details?id=com.bevisslovensko.divflow" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/>
+      </svg>
+      Kostenlos bei Google Play
+    </a>
+    <span class="cta-note">Android · Kostenlos · Keine Anmeldung</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <p>
+      © 2026 DivSprout &nbsp;·&nbsp;
+      <a href="/">divsprout.com</a> &nbsp;·&nbsp;
+      <a href="/privacy/">Datenschutz</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
