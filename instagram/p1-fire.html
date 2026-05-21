@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Single Post — FIRE Number</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #040507;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .slide-label {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #4a5568; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .slide {
+    width: 540px; height: 675px;
+    background: #0a0b0d; position: relative;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+
+  .glow-tr {
+    position: absolute; top: -60px; right: -60px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,200,74,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-bl {
+    position: absolute; bottom: -60px; left: -60px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,212,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,200,74,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600;
+    color: #f0f2f5; letter-spacing: -0.01em;
+  }
+  .logo svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .logo span { color: #22d47a; }
+  .top-bar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 28px 0;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase;
+    color: #e8c84a;
+  }
+  .tag::before {
+    content: ''; display: block; width: 18px; height: 2px;
+    background: #e8c84a; border-radius: 1px;
+  }
+  .url {
+    position: absolute; bottom: 20px; right: 28px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #4a5568; letter-spacing: 0.05em;
+  }
+
+  .body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 16px 34px 56px; position: relative; z-index: 2; gap: 16px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    font-weight: 500; color: #e8c84a;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .headline {
+    font-family: 'Fraunces', serif; font-size: 34px;
+    font-weight: 700; line-height: 1.12;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .headline .gold { color: #e8c84a; }
+
+  /* Central formula card */
+  .formula-card {
+    background: #111318;
+    border: 1px solid rgba(232,200,74,0.20);
+    border-radius: 14px; padding: 20px 22px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .formula-label {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #e8c84a; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .formula {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .formula-part {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .formula-value {
+    font-family: 'Fraunces', serif; font-size: 26px;
+    font-weight: 700; line-height: 1; color: #f0f2f5;
+  }
+  .formula-sub {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #8a9ab0; letter-spacing: 0.06em; text-align: center;
+  }
+  .formula-op {
+    font-family: 'DM Mono', monospace; font-size: 22px;
+    color: #4a5568; font-weight: 400; padding: 0 2px;
+  }
+  .formula-result {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    background: rgba(232,200,74,0.10);
+    border: 1px solid rgba(232,200,74,0.22);
+    border-radius: 10px; padding: 10px 16px;
+    flex: 1;
+  }
+  .formula-result-value {
+    font-family: 'Fraunces', serif; font-size: 30px;
+    font-weight: 700; color: #e8c84a; line-height: 1;
+  }
+  .formula-result-sub {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #8a9ab0; text-align: center; letter-spacing: 0.05em;
+  }
+
+  /* Example scenarios */
+  .scenarios { display: flex; flex-direction: column; gap: 9px; }
+  .scenario-row {
+    display: flex; align-items: center; gap: 12px;
+    background: #111318; border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 11px 14px;
+  }
+  .sc-expenses {
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    color: #f0f2f5; font-weight: 500; width: 85px; flex-shrink: 0;
+  }
+  .sc-divider {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #4a5568; flex-shrink: 0;
+  }
+  .sc-yield {
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    color: #8a9ab0; width: 60px; flex-shrink: 0;
+  }
+  .sc-arrow { font-size: 11px; color: #4a5568; flex-shrink: 0; }
+  .sc-result {
+    font-family: 'DM Mono', monospace; font-size: 15px;
+    font-weight: 500; color: #e8c84a; margin-left: auto;
+  }
+
+  .insight {
+    background: rgba(34,212,122,0.07);
+    border: 1px solid rgba(34,212,122,0.18);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 13px; color: #22d47a; line-height: 1.5; text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-label">SINGLE POST — Screenshot below ↓</div>
+
+<div class="slide">
+  <div class="glow-tr"></div>
+  <div class="glow-bl"></div>
+  <div class="glow-center"></div>
+
+  <div class="top-bar">
+    <div class="logo">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+        <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Div<span>Sprout</span>
+    </div>
+    <div class="tag">FIRE Number</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">Financial Independence</div>
+    <div class="headline">What's your<br><span class="gold">dividend FIRE</span><br>number?</div>
+
+    <div class="formula-card">
+      <div class="formula-label">The formula</div>
+      <div class="formula">
+        <div class="formula-part">
+          <div class="formula-value">$60k</div>
+          <div class="formula-sub">Annual expenses</div>
+        </div>
+        <div class="formula-op">÷</div>
+        <div class="formula-part">
+          <div class="formula-value">4%</div>
+          <div class="formula-sub">Portfolio yield</div>
+        </div>
+        <div class="formula-op">=</div>
+        <div class="formula-result">
+          <div class="formula-result-value">$1.5M</div>
+          <div class="formula-result-sub">Your FIRE number</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenarios">
+      <div class="scenario-row">
+        <div class="sc-expenses">$40k/yr</div>
+        <div class="sc-divider">÷</div>
+        <div class="sc-yield">4% yield</div>
+        <div class="sc-arrow">→</div>
+        <div class="sc-result">$1,000,000</div>
+      </div>
+      <div class="scenario-row">
+        <div class="sc-expenses">$60k/yr</div>
+        <div class="sc-divider">÷</div>
+        <div class="sc-yield">4% yield</div>
+        <div class="sc-arrow">→</div>
+        <div class="sc-result">$1,500,000</div>
+      </div>
+      <div class="scenario-row">
+        <div class="sc-expenses">$60k/yr</div>
+        <div class="sc-divider">÷</div>
+        <div class="sc-yield">5% yield</div>
+        <div class="sc-arrow">→</div>
+        <div class="sc-result">$1,200,000</div>
+      </div>
+      <div class="scenario-row">
+        <div class="sc-expenses">$80k/yr</div>
+        <div class="sc-divider">÷</div>
+        <div class="sc-yield">4% yield</div>
+        <div class="sc-arrow">→</div>
+        <div class="sc-result">$2,000,000</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      🔥 Higher yield = smaller FIRE number. Calculate yours free at divsprout.com/calculators/fire
+    </div>
+  </div>
+
+  <div class="url">divsprout.com</div>
+</div>
+
+</body>
+</html>

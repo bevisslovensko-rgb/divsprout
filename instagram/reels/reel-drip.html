@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #020304; display: flex; justify-content: center; padding: 30px; }
+  #reel {
+    width: 540px; height: 960px;
+    background: #070809;
+    position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  /* Every card fills the whole reel, hidden by default */
+  .card {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="reel">
+
+  <!-- Subtle ambient glows -->
+  <div id="ga" style="position:absolute;top:-140px;right:-140px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(34,212,122,0.17) 0%,transparent 65%);pointer-events:none;opacity:0;"></div>
+  <div id="gb" style="position:absolute;bottom:-140px;left:-140px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(34,212,122,0.09) 0%,transparent 65%);pointer-events:none;opacity:0;"></div>
+
+  <!-- Logo — appears during chart and stays -->
+  <div id="logo" style="position:absolute;top:28px;left:30px;display:flex;align-items:center;gap:9px;z-index:200;opacity:0;">
+    <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
+      <path d="M50 88C50 88 18 62 18 37.5C18 23.4 32.8 14 50 14C67.2 14 82 23.4 82 37.5C82 62 50 88 50 88Z" stroke="#22d47a" stroke-width="5.5" stroke-linejoin="round"/>
+      <line x1="50" y1="88" x2="50" y2="48" stroke="#22d47a" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="50" y1="60" x2="37" y2="72" stroke="#22d47a" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="50" y1="60" x2="63" y2="72" stroke="#22d47a" stroke-width="5.5" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:#f0f2f5;">Div<span style="color:#22d47a">Sprout</span></span>
+  </div>
+
+  <!-- URL watermark -->
+  <div id="url" style="position:absolute;bottom:22px;right:28px;font-family:'DM Mono',monospace;font-size:11px;color:#2a3640;letter-spacing:0.06em;z-index:200;opacity:0;">divsprout.com</div>
+
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- CARD 1 · "$10,000" · 0–5s          -->
+  <!-- ═══════════════════════════════════ -->
+  <div id="c1" class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;">
+    <div id="e-tag" style="font-family:'DM Mono',monospace;font-size:12px;color:#22d47a;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:24px;opacity:0;">The DRIP Effect</div>
+    <div id="e-num" style="font-family:'Fraunces',serif;font-size:100px;font-weight:700;color:#f0f2f5;line-height:1;letter-spacing:-0.03em;text-align:center;opacity:0;filter:drop-shadow(0 0 40px rgba(34,212,122,0.25));">$10,000</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- CARD 2 · "at 8% yield…" · 5–10s   -->
+  <!-- ═══════════════════════════════════ -->
+  <div id="c2" class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 60px;text-align:center;">
+    <div id="e-l1" style="font-family:'Fraunces',serif;font-size:40px;font-weight:300;font-style:italic;color:#8a9ab0;line-height:1.3;opacity:0;">at 8% dividend yield</div>
+    <div id="e-l2" style="font-family:'Fraunces',serif;font-size:40px;font-weight:300;font-style:italic;color:#8a9ab0;line-height:1.3;opacity:0;">reinvested every quarter</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- CARD 3 · "for 20 years." · 10–14s  -->
+  <!-- ═══════════════════════════════════ -->
+  <div id="c3" class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 52px;text-align:center;">
+    <div id="e-l3" style="font-family:'Fraunces',serif;font-size:64px;font-weight:700;font-style:italic;color:#22d47a;line-height:1.05;letter-spacing:-0.02em;opacity:0;">for 20 years.</div>
+    <div id="e-q" style="font-family:'DM Sans',sans-serif;font-size:20px;color:#4a5568;opacity:0;">What happens to your money?</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- CARD 4 · Chart · 14–24s            -->
+  <!-- ═══════════════════════════════════ -->
+  <div id="c4" class="card" style="display:flex;flex-direction:column;padding:82px 44px 48px;gap:10px;">
+
+    <!-- Year counter -->
+    <div style="text-align:center;flex-shrink:0;">
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:#4a5568;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px;">Year</div>
+      <div id="yr" style="font-family:'DM Mono',monospace;font-size:76px;font-weight:500;color:#f0f2f5;line-height:1;">0</div>
+    </div>
+
+    <!-- Bars area -->
+    <div style="flex:1;display:flex;gap:28px;align-items:stretch;min-height:0;">
+
+      <!-- DRIP bar -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div id="dv" style="font-family:'DM Mono',monospace;font-size:16px;color:#22d47a;font-weight:500;flex-shrink:0;">$10,000</div>
+        <!-- track -->
+        <div style="flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(255,255,255,0.03);border-radius:10px;overflow:hidden;min-height:0;">
+          <div id="bd" style="width:100%;height:0%;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#2ee885 0%,#16a058 100%);box-shadow:0 -8px 28px rgba(34,212,122,0.45);"></div>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#22d47a;flex-shrink:0;">With DRIP</div>
+      </div>
+
+      <!-- No-DRIP bar -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div id="nv" style="font-family:'DM Mono',monospace;font-size:16px;color:#2e3d4a;font-weight:500;flex-shrink:0;">$10,000</div>
+        <div style="flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(255,255,255,0.03);border-radius:10px;overflow:hidden;min-height:0;">
+          <div id="bn" style="width:100%;height:0%;background:#1c2228;border:1px solid rgba(255,255,255,0.06);"></div>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#2e3d4a;flex-shrink:0;">No DRIP</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CARD 5 · "$46,610 with DRIP" · 24–30s -->
+  <!-- ════════════════════════════════════ -->
+  <div id="c5" class="card" style="display:flex;flex-direction:column;justify-content:center;padding:100px 50px 80px;gap:16px;">
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:#22d47a;letter-spacing:0.14em;text-transform:uppercase;opacity:0.8;">After 20 years</div>
+    <div id="e-big" style="font-family:'DM Mono',monospace;font-size:72px;font-weight:500;color:#22d47a;line-height:1;letter-spacing:-0.01em;opacity:0;transform-origin:left center;transform:scale(0.88);text-shadow:0 0 50px rgba(34,212,122,0.30);">$46,610</div>
+    <div id="e-sub1" style="font-family:'DM Sans',sans-serif;font-size:20px;color:#8a9ab0;opacity:0;">✓ &nbsp;with DRIP</div>
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CARD 6 · Contrast + badge · 30–35s  -->
+  <!-- ════════════════════════════════════ -->
+  <div id="c6" class="card" style="display:flex;flex-direction:column;justify-content:center;padding:100px 50px 80px;gap:24px;">
+    <div id="e-nd" style="opacity:0;">
+      <div style="font-family:'DM Mono',monospace;font-size:48px;font-weight:500;color:#2e3d4a;line-height:1;">$26,533</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:18px;color:#2e3d4a;margin-top:8px;">without DRIP</div>
+    </div>
+    <div style="width:100%;height:1px;background:rgba(255,255,255,0.04);"></div>
+    <div id="e-badge" style="opacity:0;background:rgba(34,212,122,0.09);border:1px solid rgba(34,212,122,0.20);border-radius:16px;padding:20px 24px;">
+      <div style="font-family:'DM Mono',monospace;font-size:32px;color:#22d47a;letter-spacing:-0.01em;">+$20,077 extra</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:15px;color:#8a9ab0;margin-top:8px;line-height:1.5;">from one checkbox<br>in your broker app</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- CARD 7 · CTA · 35–40s              -->
+  <!-- ════════════════════════════════════ -->
+  <div id="c7" class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 50px;gap:22px;">
+    <div id="e-emoji" style="font-size:66px;line-height:1;opacity:0;">🌱</div>
+    <div id="e-ch" style="font-family:'Fraunces',serif;font-size:48px;font-weight:700;line-height:1.08;color:#f0f2f5;letter-spacing:-0.02em;opacity:0;">Calculate<br>your <span style="color:#22d47a;font-style:italic;">DRIP</span><br>number</div>
+    <div id="e-cs" style="font-family:'DM Sans',sans-serif;font-size:17px;color:#8a9ab0;line-height:1.6;opacity:0;">Free calculator. Any stock,<br>any yield, any timeline.</div>
+    <div id="e-cbtn" style="background:#22d47a;color:#070809;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:16px 32px;border-radius:100px;box-shadow:0 10px 32px rgba(34,212,122,0.40);letter-spacing:0.02em;opacity:0;">
+      divsprout.com/calculators/drip
+    </div>
+  </div>
+
+</div><!-- #reel -->
+<script>
+// ─── tiny helpers ────────────────────────────────────────────
+function cl(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
+function pr(t,s,e)  { return cl((t-s)/(e-s),0,1); }
+function eo(t)      { return 1-Math.pow(1-t,3); }   // ease-out cubic
+function ei(t)      { return t*t; }                   // ease-in quad
+function eio(t)     { return t<.5 ? 2*t*t : -1+(4-2*t)*t; } // ease-in-out
+
+// fade with upward drift
+function din(el, p) {
+  el.style.opacity   = p;
+  el.style.transform = `translateY(${(1-p)*14}px)`;
+}
+
+const g = id => document.getElementById(id);
+const fmt = n => '$'+Math.round(n).toLocaleString('en-US');
+const dripV  = y => 10000*Math.pow(1.08,y);
+const nodripV= y => 10000*Math.pow(1.05,y);
+
+// ─── card timing table ───────────────────────────────────────
+// TOTAL = 40s  (40 * 30fps = 1200 frames)
+const CARDS = [
+  { id:'c1', s:0,  e:6  },
+  { id:'c2', s:6,  e:11 },
+  { id:'c3', s:11, e:15 },
+  { id:'c4', s:15, e:25 },
+  { id:'c5', s:25, e:31 },
+  { id:'c6', s:31, e:36 },
+  { id:'c7', s:36, e:40 },
+];
+const FD = 0.5; // cross-fade duration in seconds
+
+function cardOp(t, s, e) {
+  if (t < s-FD || t > e+FD) return 0;
+  if (t < s) return (t-(s-FD))/FD;           // fade in
+  if (t > e) return Math.max(0,1-(t-e)/FD);  // fade out
+  return 1;
+}
+
+// ─── master render ───────────────────────────────────────────
+function render(t) {
+
+  // glows always on
+  g('ga').style.opacity = cl(pr(t,0,2.5),0,1);
+  g('gb').style.opacity = cl(pr(t,1,3.5),0,1)*0.75;
+
+  // logo + url appear at chart card
+  const lop = cl(pr(t,15,17),0,1);
+  g('logo').style.opacity = lop;
+  g('url').style.opacity  = lop;
+
+  // card opacities
+  CARDS.forEach(c => {
+    const el = g(c.id);
+    const op = cardOp(t, c.s, c.e);
+    el.style.opacity      = op;
+    el.style.pointerEvents= op>0.01?'auto':'none';
+  });
+
+  // ── CARD 1 internals (0–6s) ──────────────────────────────
+  din( g('e-tag'), eo(pr(t, 0.8, 2.2)) );
+  din( g('e-num'), eo(pr(t, 1.6, 3.2)) );
+
+  // ── CARD 2 internals (6–11s) ─────────────────────────────
+  const r2 = t-6;
+  din( g('e-l1'), eo(pr(r2, 0.4, 1.6)) );
+  din( g('e-l2'), eo(pr(r2, 1.6, 2.8)) );
+
+  // ── CARD 3 internals (11–15s) ────────────────────────────
+  const r3 = t-11;
+  din( g('e-l3'), eo(pr(r3, 0.4, 1.6)) );
+  din( g('e-q'),  eo(pr(r3, 1.8, 3.0)) );
+
+  // ── CARD 4: chart (15–25s) ───────────────────────────────
+  if (t >= 15) {
+    // bars animate from 16s to 24s  (8 full seconds)
+    const p   = eio( pr(t, 16.5, 24.5) );
+    const yr  = p * 20;
+    g('yr').textContent = Math.floor(yr);
+    const dv = dripV(yr);
+    const nv = nodripV(yr);
+    g('bd').style.height = cl((dv/46610)*100,0,100)+'%';
+    g('bn').style.height = cl((nv/46610)*100,0,100)+'%';
+    g('dv').textContent  = fmt(dv);
+    g('nv').textContent  = fmt(nv);
+  }
+
+  // ── CARD 5: reveal (25–31s) ──────────────────────────────
+  const r5   = t-25;
+  const bigP = eo( pr(r5, 0.8, 2.4) );
+  g('e-big').style.opacity        = bigP;
+  g('e-big').style.transform      = `scale(${0.88+0.12*bigP})`;
+  g('e-big').style.transformOrigin= 'left center';
+  din( g('e-sub1'), eo(pr(r5, 2.8, 4.2)) );
+
+  // ── CARD 6: contrast (31–36s) ────────────────────────────
+  const r6 = t-31;
+  din( g('e-nd'),    eo(pr(r6, 0.4, 1.8)) );
+  din( g('e-badge'), eo(pr(r6, 2.0, 3.4)) );
+
+  // ── CARD 7: CTA (36–40s) ─────────────────────────────────
+  const r7 = t-36;
+  din( g('e-emoji'), eo(pr(r7, 0.4, 1.4)) );
+  din( g('e-ch'),    eo(pr(r7, 1.0, 2.2)) );
+  din( g('e-cs'),    eo(pr(r7, 2.0, 3.0)) );
+  din( g('e-cbtn'),  eo(pr(r7, 2.8, 3.8)) );
+}
+
+// ─── puppeteer hook ──────────────────────────────────────────
+window.__seek = function(t){ render(t); };
+
+// ─── browser preview ─────────────────────────────────────────
+let T=0;
+(function loop(){
+  T+=1/30; if(T>40) T=0;
+  render(T);
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

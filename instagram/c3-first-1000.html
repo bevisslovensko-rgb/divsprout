@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Carousel — Your First $1,000</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #040507;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .slide-wrapper { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .slide-label {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #4a5568; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .slide {
+    width: 540px; height: 675px;
+    background: #0a0b0d; position: relative;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+
+  .glow-tr {
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,158,255,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-bl {
+    position: absolute; bottom: -80px; left: -80px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,212,122,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-green-tr {
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,212,122,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600;
+    color: #f0f2f5; letter-spacing: -0.01em;
+  }
+  .logo svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .logo span { color: #22d47a; }
+  .counter { font-family: 'DM Mono', monospace; font-size: 11px; color: #4a5568; letter-spacing: 0.06em; }
+  .top-bar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 28px 0;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase;
+    color: #4a9eff;
+  }
+  .tag::before {
+    content: ''; display: block; width: 18px; height: 2px;
+    background: #4a9eff; border-radius: 1px;
+  }
+  .tag.green { color: #22d47a; }
+  .tag.green::before { background: #22d47a; }
+  .url {
+    position: absolute; bottom: 20px; right: 28px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #4a5568; letter-spacing: 0.05em;
+  }
+
+  /* ── SLIDE 1 — Cover ── */
+  .s1-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding: 28px 38px 60px;
+    position: relative; z-index: 2;
+  }
+  .s1-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    font-weight: 500; color: #4a9eff;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .s1-headline {
+    font-family: 'Fraunces', serif; font-size: 52px;
+    font-weight: 700; line-height: 1.05;
+    color: #f0f2f5; letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .s1-headline em { font-style: italic; color: #4a9eff; }
+  .s1-sub { font-size: 15px; line-height: 1.6; color: #8a9ab0; max-width: 340px; }
+  .s1-steps-preview {
+    display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .step-chip {
+    background: rgba(74,158,255,0.10);
+    border: 1px solid rgba(74,158,255,0.20);
+    border-radius: 100px; padding: 5px 12px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #4a9eff; letter-spacing: 0.04em;
+  }
+
+  /* ── SLIDE 2 — Before you invest ── */
+  .s2-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 16px;
+  }
+  .s2-headline {
+    font-family: 'Fraunces', serif; font-size: 29px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s2-headline .blue { color: #4a9eff; }
+  .checklist { display: flex; flex-direction: column; gap: 11px; flex: 1; justify-content: center; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 13px;
+    background: #111318; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .check-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+  .check-icon.blue {
+    background: rgba(74,158,255,0.12); border: 1px solid rgba(74,158,255,0.22);
+  }
+  .check-icon.green {
+    background: rgba(34,212,122,0.12); border: 1px solid rgba(34,212,122,0.22);
+  }
+  .check-text { display: flex; flex-direction: column; gap: 3px; }
+  .check-title { font-size: 13.5px; font-weight: 600; color: #f0f2f5; }
+  .check-sub { font-size: 12px; color: #8a9ab0; line-height: 1.4; }
+
+  /* ── SLIDE 3 — Choose the account ── */
+  .s3-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 16px;
+  }
+  .s3-headline {
+    font-family: 'Fraunces', serif; font-size: 29px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s3-headline .blue { color: #4a9eff; }
+  .account-cards { display: flex; flex-direction: column; gap: 11px; flex: 1; justify-content: center; }
+  .account-card {
+    background: #111318; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .account-card.accent {
+    border-color: rgba(34,212,122,0.25);
+    background: rgba(34,212,122,0.05);
+  }
+  .account-badge {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .account-badge.green { background: rgba(34,212,122,0.12); }
+  .account-badge.blue { background: rgba(74,158,255,0.12); }
+  .account-badge.gold { background: rgba(232,200,74,0.12); }
+  .account-info { display: flex; flex-direction: column; gap: 3px; }
+  .account-title { font-size: 14px; font-weight: 600; color: #f0f2f5; }
+  .account-desc { font-size: 12px; color: #8a9ab0; line-height: 1.4; }
+  .account-tag {
+    margin-top: 3px; display: inline-block;
+    background: rgba(34,212,122,0.10);
+    border: 1px solid rgba(34,212,122,0.20);
+    border-radius: 100px; padding: 2px 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #22d47a; letter-spacing: 0.05em;
+  }
+
+  /* ── SLIDE 4 — Allocation ── */
+  .s4-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 16px;
+  }
+  .s4-headline {
+    font-family: 'Fraunces', serif; font-size: 29px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s4-headline .green { color: #22d47a; }
+  .s4-sub { font-size: 13px; color: #8a9ab0; margin-top: -8px; }
+  .alloc-visual {
+    display: flex; height: 44px; border-radius: 10px; overflow: hidden; gap: 3px;
+  }
+  .alloc-seg {
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+    border-radius: 8px;
+  }
+  .alloc-seg.index { background: linear-gradient(90deg,rgba(34,212,122,0.30),rgba(34,212,122,0.20)); color: #22d47a; flex: 70; }
+  .alloc-seg.etf { background: rgba(74,158,255,0.20); color: #4a9eff; flex: 20; }
+  .alloc-seg.cash { background: rgba(232,200,74,0.15); color: #e8c84a; flex: 10; }
+  .alloc-rows { display: flex; flex-direction: column; gap: 10px; }
+  .alloc-row {
+    display: flex; align-items: center; gap: 13px;
+    background: #111318; border-radius: 10px; padding: 13px 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .alloc-pct {
+    font-family: 'DM Mono', monospace; font-size: 18px;
+    font-weight: 500; width: 48px; flex-shrink: 0;
+  }
+  .alloc-pct.green { color: #22d47a; }
+  .alloc-pct.blue { color: #4a9eff; }
+  .alloc-pct.gold { color: #e8c84a; }
+  .alloc-info { flex: 1; }
+  .alloc-title { font-size: 13.5px; font-weight: 600; color: #f0f2f5; }
+  .alloc-desc { font-size: 12px; color: #8a9ab0; }
+  .alloc-amount {
+    font-family: 'DM Mono', monospace; font-size: 14px;
+    font-weight: 500; color: #f0f2f5;
+  }
+
+  /* ── SLIDE 5 — CTA ── */
+  .s5-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 28px 38px 60px;
+    position: relative; z-index: 2; gap: 18px;
+  }
+  .s5-headline {
+    font-family: 'Fraunces', serif; font-size: 36px;
+    font-weight: 700; line-height: 1.15;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s5-headline .green { color: #22d47a; }
+  .s5-sub { font-size: 14px; line-height: 1.6; color: #8a9ab0; max-width: 340px; }
+  .s5-cta {
+    background: #22d47a; color: #0a0b0d;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 700; letter-spacing: 0.03em;
+    padding: 13px 28px; border-radius: 100px;
+    box-shadow: 0 8px 24px rgba(34,212,122,0.35);
+  }
+  .s5-url { font-family: 'DM Mono', monospace; font-size: 12px; color: #4a5568; }
+  .cta-mini-grid { display: flex; gap: 10px; }
+  .cta-mini {
+    background: #111318; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px; text-align: center;
+    flex: 1;
+  }
+  .cta-mini-icon { font-size: 20px; }
+  .cta-mini-label { font-size: 11px; font-weight: 600; color: #f0f2f5; }
+  .cta-mini-url { font-family: 'DM Mono', monospace; font-size: 10px; color: #4a5568; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 / 5 — Cover -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 01/05 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">01 / 05</div>
+    </div>
+    <div class="s1-body">
+      <div class="s1-eyebrow">Beginner Guide</div>
+      <div class="s1-headline">Your<br>first<br><em>$1,000</em></div>
+      <div class="s1-sub">The exact steps to go from zero investing experience to a real dividend portfolio.</div>
+      <div class="s1-steps-preview">
+        <div class="step-chip">Emergency fund first</div>
+        <div class="step-chip">Pick the right account</div>
+        <div class="step-chip">70/20/10 allocation</div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 2 / 5 — Before you invest -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 02/05 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">02 / 05</div>
+    </div>
+    <div class="s2-body">
+      <div class="tag">Before you invest</div>
+      <div class="s2-headline">2 things to check<br>off <span class="blue">first</span></div>
+      <div class="checklist">
+        <div class="check-item">
+          <div class="check-icon blue">🛡️</div>
+          <div class="check-text">
+            <div class="check-title">Emergency fund: 3–6 months of expenses</div>
+            <div class="check-sub">Investing money you might need soon forces panic selling. Build your safety net first — high-yield savings account.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon blue">💳</div>
+          <div class="check-text">
+            <div class="check-title">Pay off high-interest debt first</div>
+            <div class="check-sub">No dividend stock reliably returns 20%+. If you have credit card debt at 18–22% APR, paying it off is the best investment you can make.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon green">✅</div>
+          <div class="check-text">
+            <div class="check-title">Ready? Start with money you won't need for 5+ years</div>
+            <div class="check-sub">Dividend investing rewards patience. Market dips feel very different when you don't need the cash.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 3 / 5 — Choose account -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 03/05 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-green-tr"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">03 / 05</div>
+    </div>
+    <div class="s3-body">
+      <div class="tag green">Account types</div>
+      <div class="s3-headline">Pick the right<br>account first</div>
+      <div class="account-cards">
+        <div class="account-card accent">
+          <div class="account-badge green">🌟</div>
+          <div class="account-info">
+            <div class="account-title">Roth IRA — Start here</div>
+            <div class="account-desc">Tax-free growth forever. Dividends compound inside, no annual tax drag. $7,000/yr limit.</div>
+            <div class="account-tag">Best for long-term compounding</div>
+          </div>
+        </div>
+        <div class="account-card">
+          <div class="account-badge blue">🏢</div>
+          <div class="account-info">
+            <div class="account-title">401(k) / employer plan</div>
+            <div class="account-desc">Contribute enough to get the full employer match first — that's a guaranteed 50–100% return on your dollars.</div>
+          </div>
+        </div>
+        <div class="account-card">
+          <div class="account-badge gold">📈</div>
+          <div class="account-info">
+            <div class="account-title">Taxable brokerage account</div>
+            <div class="account-desc">After maxing tax-advantaged accounts. Dividend income is taxed annually — still great, just less tax-efficient.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 4 / 5 — Allocation -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 04/05 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-green-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">04 / 05</div>
+    </div>
+    <div class="s4-body">
+      <div class="tag green">Allocation</div>
+      <div class="s4-headline">How to split<br>your <span class="green">$1,000</span></div>
+      <div class="s4-sub">A simple starter allocation for new investors</div>
+
+      <div class="alloc-visual">
+        <div class="alloc-seg index">70%</div>
+        <div class="alloc-seg etf">20%</div>
+        <div class="alloc-seg cash">10%</div>
+      </div>
+
+      <div class="alloc-rows">
+        <div class="alloc-row">
+          <div class="alloc-pct green">70%</div>
+          <div class="alloc-info">
+            <div class="alloc-title">Broad index fund (e.g. VTI)</div>
+            <div class="alloc-desc">Instant diversification, low cost, long-term growth</div>
+          </div>
+          <div class="alloc-amount">$700</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-pct blue">20%</div>
+          <div class="alloc-info">
+            <div class="alloc-title">Dividend ETF (e.g. SCHD)</div>
+            <div class="alloc-desc">Quality dividend stocks, built-in diversification</div>
+          </div>
+          <div class="alloc-amount">$200</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-pct gold">10%</div>
+          <div class="alloc-info">
+            <div class="alloc-title">Cash / Money market</div>
+            <div class="alloc-desc">Dry powder for opportunities or rebalancing</div>
+          </div>
+          <div class="alloc-amount">$100</div>
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 5 / 5 — CTA -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 05/05 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-green-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">05 / 05</div>
+    </div>
+    <div class="s5-body">
+      <div style="font-size: 52px; line-height: 1;">🚀</div>
+      <div class="s5-headline">Turn $1,000 into<br>a <span class="green">dividend machine</span></div>
+      <div class="s5-sub">Use our free tools to see exactly what your $1,000 could grow into — pick a yield, a timeline, and watch the math.</div>
+      <div class="cta-mini-grid">
+        <div class="cta-mini">
+          <div class="cta-mini-icon">💧</div>
+          <div class="cta-mini-label">DRIP Calculator</div>
+          <div class="cta-mini-url">/calculators/drip</div>
+        </div>
+        <div class="cta-mini">
+          <div class="cta-mini-icon">📊</div>
+          <div class="cta-mini-label">Yield Calculator</div>
+          <div class="cta-mini-url">/calculators/dividend-yield</div>
+        </div>
+        <div class="cta-mini">
+          <div class="cta-mini-icon">🔥</div>
+          <div class="cta-mini-label">FIRE Calculator</div>
+          <div class="cta-mini-url">/calculators/fire</div>
+        </div>
+      </div>
+      <div class="s5-url">divsprout.com — free, no sign-up</div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+</body>
+</html>

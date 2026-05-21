@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Carousel — High Yield is a Trap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #040507;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .slide-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .slide-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #4a5568;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .slide {
+    width: 540px;
+    height: 675px;
+    background: #0a0b0d;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .glow-tr {
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,212,122,0.16) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-bl {
+    position: absolute; bottom: -80px; left: -80px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,212,122,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-red {
+    position: absolute; top: -60px; right: -60px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(239,68,68,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600;
+    color: #f0f2f5; letter-spacing: -0.01em;
+  }
+  .logo svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .logo span { color: #22d47a; }
+  .counter {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #4a5568; letter-spacing: 0.06em;
+  }
+  .top-bar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 28px 0;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase;
+    color: #22d47a;
+  }
+  .tag::before {
+    content: ''; display: block; width: 18px; height: 2px;
+    background: #22d47a; border-radius: 1px;
+  }
+  .tag.red { color: #ef4444; }
+  .tag.red::before { background: #ef4444; }
+  .url {
+    position: absolute; bottom: 20px; right: 28px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: #4a5568; letter-spacing: 0.05em;
+  }
+
+  /* ── SLIDE 1 — Cover ── */
+  .s1-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding: 28px 38px 60px;
+    position: relative; z-index: 2;
+  }
+  .s1-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    font-weight: 500; color: #ef4444;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .s1-headline {
+    font-family: 'Fraunces', serif; font-size: 48px;
+    font-weight: 700; line-height: 1.08;
+    color: #f0f2f5; letter-spacing: -0.02em; margin-bottom: 22px;
+  }
+  .s1-headline em { font-style: italic; color: #ef4444; }
+  .s1-headline .green { color: #22d47a; font-style: italic; }
+  .s1-sub { font-size: 15px; line-height: 1.6; color: #8a9ab0; max-width: 360px; }
+  .s1-tag-row {
+    display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-block;
+    border-radius: 100px; padding: 7px 16px;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+  }
+  .pill.red {
+    background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.25);
+    color: #ef4444;
+  }
+  .pill.green {
+    background: rgba(34,212,122,0.10); border: 1px solid rgba(34,212,122,0.25);
+    color: #22d47a;
+  }
+
+  /* ── SLIDE 2 — The temptation ── */
+  .s2-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 18px;
+  }
+  .s2-headline {
+    font-family: 'Fraunces', serif; font-size: 30px;
+    font-weight: 700; line-height: 1.15;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s2-headline .red { color: #ef4444; }
+  .compare-row {
+    display: flex; gap: 12px;
+  }
+  .compare-card {
+    flex: 1; border-radius: 12px; padding: 18px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .compare-card.bad {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.22);
+  }
+  .compare-card.good {
+    background: rgba(34,212,122,0.06);
+    border: 1px solid rgba(34,212,122,0.22);
+  }
+  .compare-icon {
+    font-size: 22px; line-height: 1;
+  }
+  .compare-title {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    font-weight: 500;
+  }
+  .compare-title.red { color: #ef4444; }
+  .compare-title.green { color: #22d47a; }
+  .compare-yield {
+    font-family: 'DM Mono', monospace; font-size: 28px;
+    font-weight: 500; line-height: 1;
+  }
+  .compare-yield.red { color: #ef4444; }
+  .compare-yield.green { color: #22d47a; }
+  .compare-desc {
+    font-size: 12px; color: #8a9ab0; line-height: 1.5;
+  }
+  .s2-insight {
+    background: #111318; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 13.5px; color: #8a9ab0; line-height: 1.6;
+  }
+  .s2-insight strong { color: #f0f2f5; }
+
+  /* ── SLIDE 3 — SVG Line chart ── */
+  .s3-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 48px; position: relative; z-index: 2; gap: 14px;
+  }
+  .s3-headline {
+    font-family: 'Fraunces', serif; font-size: 27px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s3-headline .green { color: #22d47a; }
+  .s3-sub { font-size: 13px; color: #8a9ab0; margin-top: -6px; }
+  .chart-area {
+    flex: 1; position: relative;
+  }
+  .chart-area svg {
+    width: 100%; height: 100%;
+  }
+  .legend {
+    display: flex; gap: 20px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #8a9ab0;
+  }
+  .legend-dot {
+    width: 12px; height: 3px; border-radius: 2px;
+  }
+  .legend-dot.green { background: #22d47a; }
+  .legend-dot.red { background: #ef4444; }
+
+  /* ── SLIDE 4 — Year 20 payoff ── */
+  .s4-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 18px;
+  }
+  .s4-headline {
+    font-family: 'Fraunces', serif; font-size: 30px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s4-headline .green { color: #22d47a; }
+  .payoff-grid {
+    display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;
+  }
+  .payoff-row {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .payoff-label-wrap {
+    width: 130px; flex-shrink: 0;
+  }
+  .payoff-title {
+    font-size: 12px; font-weight: 600; color: #f0f2f5;
+  }
+  .payoff-sub { font-size: 11px; color: #4a5568; }
+  .payoff-bar-wrap {
+    flex: 1; height: 42px; background: #111318;
+    border-radius: 8px; overflow: hidden;
+  }
+  .payoff-bar {
+    height: 100%; border-radius: 8px;
+    display: flex; align-items: center; padding: 0 12px;
+    font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500;
+    white-space: nowrap;
+  }
+  .payoff-bar.green {
+    background: linear-gradient(90deg, rgba(34,212,122,0.25), rgba(34,212,122,0.12));
+    color: #22d47a; border: 1px solid rgba(34,212,122,0.22);
+  }
+  .payoff-bar.red {
+    background: rgba(239,68,68,0.10);
+    color: #ef4444; border: 1px solid rgba(239,68,68,0.18);
+  }
+  .crossover-badge {
+    background: rgba(34,212,122,0.10);
+    border: 1px solid rgba(34,212,122,0.22);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 13.5px; color: #22d47a; line-height: 1.5; text-align: center;
+  }
+
+  /* ── SLIDE 5 — Danger signs ── */
+  .s5-body {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 18px 38px 52px; position: relative; z-index: 2; gap: 16px;
+  }
+  .s5-headline {
+    font-family: 'Fraunces', serif; font-size: 30px;
+    font-weight: 700; line-height: 1.2;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s5-headline .red { color: #ef4444; }
+  .danger-list { display: flex; flex-direction: column; gap: 11px; flex: 1; justify-content: center; }
+  .danger-item {
+    display: flex; align-items: flex-start; gap: 13px;
+    background: #111318; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .danger-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.22);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0; margin-top: 1px;
+  }
+  .danger-text { display: flex; flex-direction: column; gap: 3px; }
+  .danger-title { font-size: 13.5px; font-weight: 600; color: #f0f2f5; }
+  .danger-sub { font-size: 12px; color: #8a9ab0; line-height: 1.4; }
+
+  /* ── SLIDE 6 — CTA ── */
+  .s6-body {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 28px 38px 60px;
+    position: relative; z-index: 2; gap: 18px;
+  }
+  .s6-headline {
+    font-family: 'Fraunces', serif; font-size: 34px;
+    font-weight: 700; line-height: 1.15;
+    color: #f0f2f5; letter-spacing: -0.02em;
+  }
+  .s6-headline .green { color: #22d47a; }
+  .s6-sub { font-size: 14px; line-height: 1.6; color: #8a9ab0; max-width: 340px; }
+  .s6-cta {
+    background: #22d47a; color: #0a0b0d;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 700; letter-spacing: 0.03em;
+    padding: 13px 28px; border-radius: 100px;
+    box-shadow: 0 8px 24px rgba(34,212,122,0.35);
+  }
+  .s6-url {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: #4a5568; letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 / 6 — Cover -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 01/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-red"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">01 / 06</div>
+    </div>
+    <div class="s1-body">
+      <div class="s1-eyebrow">Common Mistake</div>
+      <div class="s1-headline">High Yield<br>is a <em>Trap</em>.<br>Growth <span class="green">wins</span>.</div>
+      <div class="s1-sub">Why a 2% dividend growing 10% per year crushes a static 6% yield by year 12.</div>
+      <div class="s1-tag-row">
+        <div class="pill red">6% static yield</div>
+        <div class="pill green">2% + 10%/yr growth</div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 2 / 6 — The temptation -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 02/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-red"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">02 / 06</div>
+    </div>
+    <div class="s2-body">
+      <div class="tag red">The temptation</div>
+      <div class="s2-headline">More yield <span class="red">≠</span> more money</div>
+      <div class="compare-row">
+        <div class="compare-card bad">
+          <div class="compare-icon">⚠️</div>
+          <div class="compare-title red">High yielder</div>
+          <div class="compare-yield red">6%</div>
+          <div class="compare-desc">Looks great on paper. But yield doesn't grow — and neither does your income.</div>
+        </div>
+        <div class="compare-card good">
+          <div class="compare-icon">🌱</div>
+          <div class="compare-title green">Dividend grower</div>
+          <div class="compare-yield green">2%</div>
+          <div class="compare-desc">Starts lower. Raises dividends 10%+ every year. Income snowballs.</div>
+        </div>
+      </div>
+      <div class="s2-insight">
+        <strong>The trap:</strong> Chasing yield often means buying stressed companies that <strong>can't grow</strong> — or will cut dividends in a downturn.
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 3 / 6 — SVG line chart -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 03/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">03 / 06</div>
+    </div>
+    <div class="s3-body">
+      <div class="tag">Annual Income</div>
+      <div class="s3-headline">The <span class="green">crossover</span> happens around year 12</div>
+      <div class="s3-sub">Annual dividend income from $10,000 invested</div>
+
+      <!-- SVG chart: x=years 0-20, y=income 0-1300 -->
+      <!-- Static 6%: $600 every year (flat line) -->
+      <!-- Growing 2%@10%/yr: yr0=$200, yr12≈$629, yr20=$1,346 -->
+      <div class="chart-area">
+        <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg" style="overflow: visible">
+          <!-- Grid lines -->
+          <line x1="40" y1="20" x2="40" y2="240" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="40" y1="240" x2="420" y2="240" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <!-- Horizontal grid -->
+          <line x1="40" y1="187" x2="420" y2="187" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="134" x2="420" y2="134" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="81" x2="420" y2="81" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="28" x2="420" y2="28" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <!-- Y axis labels -->
+          <text x="34" y="244" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="end">$0</text>
+          <text x="34" y="191" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="end">$350</text>
+          <text x="34" y="138" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="end">$700</text>
+          <text x="34" y="85" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="end">$1,050</text>
+          <text x="34" y="32" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="end">$1,400</text>
+
+          <!-- X axis labels: yr 0,5,10,15,20 -->
+          <!-- x range: 40 to 420 = 380px for 20 years → 19px/year -->
+          <text x="40" y="255" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="middle">Yr 0</text>
+          <text x="135" y="255" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="middle">Yr 5</text>
+          <text x="230" y="255" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="middle">Yr 10</text>
+          <text x="325" y="255" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="middle">Yr 15</text>
+          <text x="420" y="255" fill="#4a5568" font-family="DM Mono, monospace" font-size="10" text-anchor="middle">Yr 20</text>
+
+          <!-- Static 6% line: $600/yr flat -->
+          <!-- y = 240 - (600/1400)*220 = 240 - 94.3 = 145.7 -->
+          <line x1="40" y1="146" x2="420" y2="146" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+
+          <!-- Growing 2%@10%/yr line -->
+          <!-- yr0:200, yr1:220, yr2:242, yr3:266, yr4:293, yr5:322, yr6:354, yr7:390, yr8:429, yr9:472, yr10:519, yr11:571, yr12:628, yr13:691, yr14:760, yr15:836, yr16:919, yr17:1011, yr18:1112, yr19:1224, yr20:1346 -->
+          <!-- y formula: 240 - (val/1400)*220 -->
+          <!-- yr0:x=40,y=208.6 | yr5:x=135,y=190.4 | yr10:x=230,y=158.7 | yr12:x=268,y=145.6 | yr15:x=325,y=109.4 | yr20:x=420,y=28.6 -->
+          <polyline
+            points="40,209 59,205 78,201 97,196 116,193 135,190 154,185 173,180 192,173 211,166 230,159 249,151 268,146 287,137 306,127 325,109 344,99 363,86 382,71 401,54 420,29"
+            fill="none" stroke="#22d47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Glow under growing line -->
+          <polyline
+            points="40,209 59,205 78,201 97,196 116,193 135,190 154,185 173,180 192,173 211,166 230,159 249,151 268,146 287,137 306,127 325,109 344,99 363,86 382,71 401,54 420,29 420,240 40,240"
+            fill="url(#greenGrad)" opacity="0.12"/>
+          <defs>
+            <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#22d47a"/>
+              <stop offset="100%" stop-color="#22d47a" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Crossover point marker -->
+          <circle cx="268" cy="146" r="5" fill="#22d47a" opacity="0.9"/>
+          <circle cx="268" cy="146" r="9" fill="none" stroke="#22d47a" stroke-width="1.5" opacity="0.4"/>
+          <text x="275" y="136" fill="#22d47a" font-family="DM Mono, monospace" font-size="10">crossover!</text>
+
+          <!-- Year 20 labels -->
+          <text x="424" y="32" fill="#22d47a" font-family="DM Mono, monospace" font-size="11" font-weight="500">$1,346</text>
+          <text x="424" y="150" fill="#ef4444" font-family="DM Mono, monospace" font-size="11" font-weight="500">$600</text>
+        </svg>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot green"></div>2% yield, 10%/yr growth</div>
+        <div class="legend-item"><div class="legend-dot red"></div>6% static yield</div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 4 / 6 — Year 20 payoff -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 04/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">04 / 06</div>
+    </div>
+    <div class="s4-body">
+      <div class="tag">Year 20 payoff</div>
+      <div class="s4-headline">Annual income from<br>$10,000 at <span class="green">year 20</span></div>
+      <div class="payoff-grid">
+        <!-- Growing: $1,346 → 100% width -->
+        <div class="payoff-row">
+          <div class="payoff-label-wrap">
+            <div class="payoff-title">2% Growing</div>
+            <div class="payoff-sub">+10% raises/yr</div>
+          </div>
+          <div class="payoff-bar-wrap">
+            <div class="payoff-bar green" style="width:100%">$1,346/yr</div>
+          </div>
+        </div>
+        <!-- Static: $600 → 44.6% width -->
+        <div class="payoff-row">
+          <div class="payoff-label-wrap">
+            <div class="payoff-title">6% Static</div>
+            <div class="payoff-sub">never raised</div>
+          </div>
+          <div class="payoff-bar-wrap">
+            <div class="payoff-bar red" style="width:44.6%">$600/yr</div>
+          </div>
+        </div>
+      </div>
+      <div class="crossover-badge">
+        The "low yield" stock now pays <strong>2.24× more</strong> income every year 🌱
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 5 / 6 — Danger signs -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 05/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-red"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">05 / 06</div>
+    </div>
+    <div class="s5-body">
+      <div class="tag red">Warning signs</div>
+      <div class="s5-headline">When high yield<br>is a <span class="red">danger signal</span></div>
+      <div class="danger-list">
+        <div class="danger-item">
+          <div class="danger-icon">📉</div>
+          <div class="danger-text">
+            <div class="danger-title">Yield over 8–10%</div>
+            <div class="danger-sub">Often signals a falling share price, not generosity. The market is pricing in a cut.</div>
+          </div>
+        </div>
+        <div class="danger-item">
+          <div class="danger-icon">⚡</div>
+          <div class="danger-text">
+            <div class="danger-title">Payout ratio above 80%</div>
+            <div class="danger-sub">Company is paying out most of its earnings — no room to raise or sustain dividends.</div>
+          </div>
+        </div>
+        <div class="danger-item">
+          <div class="danger-icon">🔻</div>
+          <div class="danger-text">
+            <div class="danger-title">Dividend hasn't grown in 5+ years</div>
+            <div class="danger-sub">Inflation silently erodes your real income. A "safe" 6% becomes a 4% real yield over a decade.</div>
+          </div>
+        </div>
+        <div class="danger-item">
+          <div class="danger-icon">🏚️</div>
+          <div class="danger-text">
+            <div class="danger-title">Declining free cash flow</div>
+            <div class="danger-sub">Dividends are only as safe as the cash flow backing them. Always check FCF coverage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 6 / 6 — CTA -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 06/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span>Sprout</span>
+      </div>
+      <div class="counter">06 / 06</div>
+    </div>
+    <div class="s6-body">
+      <div style="font-size: 52px; line-height: 1;">🌱</div>
+      <div class="s6-headline">See how dividend<br>growth <span class="green">compounds</span><br>your income</div>
+      <div class="s6-sub">Model any dividend growth rate with our free DRIP calculator. Pick a stock, set a growth rate, watch the math.</div>
+      <div class="s6-cta">Try the DRIP Calculator</div>
+      <div class="s6-url">divsprout.com/calculators/drip</div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+</body>
+</html>

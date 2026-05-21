@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Carousel — Time Beats Money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #040507;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .slide-wrapper { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .slide-label { font-family: 'DM Mono', monospace; font-size: 11px; color: #4a5568; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .slide {
+    width: 540px; height: 675px;
+    background: #0a0b0d;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  /* Glows */
+  .glow-tr { position:absolute; top:-80px; right:-80px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(34,212,122,0.18) 0%,transparent 70%); pointer-events:none; }
+  .glow-bl { position:absolute; bottom:-80px; left:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(34,212,122,0.10) 0%,transparent 70%); pointer-events:none; }
+  .glow-gold-br { position:absolute; bottom:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(232,200,74,0.12) 0%,transparent 70%); pointer-events:none; }
+
+  /* Logo */
+  .logo { display:flex; align-items:center; gap:7px; font-family:'Fraunces',serif; font-size:15px; font-weight:600; color:#f0f2f5; letter-spacing:-0.01em; }
+  .logo svg { width:20px; height:20px; flex-shrink:0; }
+  .logo .g { color:#22d47a; }
+
+  /* Top bar */
+  .top-bar { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:22px 28px 0; }
+  .counter { font-family:'DM Mono',monospace; font-size:11px; color:#4a5568; letter-spacing:0.06em; }
+
+  /* Tag */
+  .tag { display:inline-flex; align-items:center; gap:8px; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.10em; text-transform:uppercase; }
+  .tag::before { content:''; display:block; width:18px; height:2px; border-radius:1px; }
+  .tag-green { color:#22d47a; } .tag-green::before { background:#22d47a; }
+  .tag-gold  { color:#e8c84a; } .tag-gold::before  { background:#e8c84a; }
+
+  .url { position:absolute; bottom:20px; right:28px; font-family:'DM Mono',monospace; font-size:10px; color:#4a5568; letter-spacing:0.05em; }
+
+  /* ── Pill ── */
+  .pill { display:inline-block; border-radius:100px; padding:7px 16px; font-family:'DM Mono',monospace; font-size:12px; }
+  .pill-green { background:rgba(34,212,122,0.10); border:1px solid rgba(34,212,122,0.25); color:#22d47a; }
+  .pill-gold  { background:rgba(232,200,74,0.10);  border:1px solid rgba(232,200,74,0.25);  color:#e8c84a; }
+  .pill-muted { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#4a5568; }
+
+  /* ── Person cards ── */
+  .person-card {
+    background:#111318; border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:16px 18px;
+    display:flex; align-items:flex-start; gap:14px;
+  }
+  .person-card.alex { border-color:rgba(34,212,122,0.22); background:rgba(34,212,122,0.05); }
+  .person-card.sam  { border-color:rgba(74,158,255,0.18);  background:rgba(74,158,255,0.04); }
+  .person-avatar {
+    width:40px; height:40px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex-shrink:0;
+  }
+  .person-avatar.alex { background:rgba(34,212,122,0.15); }
+  .person-avatar.sam  { background:rgba(74,158,255,0.15); }
+  .person-info { flex:1; display:flex; flex-direction:column; gap:3px; }
+  .person-name { font-size:14px; font-weight:700; }
+  .person-name.alex { color:#22d47a; }
+  .person-name.sam  { color:#4a9eff; }
+  .person-detail { font-size:12.5px; color:#8a9ab0; line-height:1.5; }
+
+  /* ── Amount comparison ── */
+  .amount-row { display:flex; align-items:center; gap:16px; }
+  .amount-label { width:80px; flex-shrink:0; font-size:13px; font-weight:600; }
+  .amount-label.alex { color:#22d47a; }
+  .amount-label.sam  { color:#4a9eff; }
+  .amount-bar-wrap { flex:1; height:40px; background:#111318; border-radius:8px; overflow:hidden; }
+  .amount-bar { height:100%; border-radius:8px; display:flex; align-items:center; padding-left:12px; font-family:'DM Mono',monospace; font-size:14px; font-weight:500; white-space:nowrap; }
+  .amount-bar.alex { background:linear-gradient(90deg,rgba(34,212,122,0.25),rgba(34,212,122,0.12)); color:#22d47a; border:1px solid rgba(34,212,122,0.22); }
+  .amount-bar.sam  { background:rgba(74,158,255,0.12); color:#4a9eff; border:1px solid rgba(74,158,255,0.18); }
+
+  /* ── Result bars ── */
+  .result-row { display:flex; flex-direction:column; gap:7px; }
+  .result-meta { display:flex; justify-content:space-between; align-items:baseline; }
+  .result-who { font-size:13px; font-weight:600; }
+  .result-who.alex { color:#22d47a; }
+  .result-who.sam  { color:#4a9eff; }
+  .result-val { font-family:'DM Mono',monospace; font-size:17px; font-weight:500; }
+  .result-val.alex { color:#22d47a; }
+  .result-val.sam  { color:#4a9eff; }
+  .result-track { height:42px; background:#111318; border-radius:8px; overflow:hidden; }
+  .result-fill { height:100%; border-radius:8px; display:flex; align-items:center; padding-left:12px; }
+  .result-fill.alex { background:linear-gradient(90deg,rgba(34,212,122,0.28),rgba(34,212,122,0.14)); border:1px solid rgba(34,212,122,0.22); }
+  .result-fill.sam  { background:rgba(74,158,255,0.10); border:1px solid rgba(74,158,255,0.14); }
+
+  /* ── Insight box ── */
+  .insight { background:rgba(34,212,122,0.07); border:1px solid rgba(34,212,122,0.18); border-radius:12px; padding:14px 18px; font-size:13.5px; color:#22d47a; line-height:1.55; }
+  .insight strong { font-weight:700; }
+
+  /* ── Checklist ── */
+  .check-list { display:flex; flex-direction:column; gap:13px; }
+  .check-item { display:flex; align-items:flex-start; gap:12px; }
+  .check-dot { width:24px; height:24px; border-radius:50%; background:rgba(34,212,122,0.12); border:1px solid rgba(34,212,122,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; margin-top:1px; }
+  .check-text { font-size:14px; color:#8a9ab0; line-height:1.55; }
+  .check-text strong { color:#f0f2f5; font-weight:600; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ SLIDE 1 — Cover ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 01/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">01 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 38px 60px;position:relative;z-index:2;gap:18px;">
+      <div class="tag tag-green">Investing Truth</div>
+      <div style="font-family:'Fraunces',serif;font-size:52px;font-weight:700;line-height:1.06;color:#f0f2f5;letter-spacing:-0.02em;">You don't<br>need more<br><span style="color:#22d47a;font-style:italic;">money.</span></div>
+      <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:400;font-style:italic;color:#8a9ab0;line-height:1.3;">You need more <span style="color:#f0f2f5;font-weight:600;">time.</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+        <div class="pill pill-green">$36,000 invested</div>
+        <div class="pill pill-muted">beats</div>
+        <div class="pill" style="background:rgba(74,158,255,0.10);border:1px solid rgba(74,158,255,0.22);color:#4a9eff;">$108,000 invested</div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 2 — Two investors ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 02/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">02 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;padding:18px 36px 52px;position:relative;z-index:2;gap:18px;">
+      <div class="tag tag-green">Meet two investors</div>
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#f0f2f5;letter-spacing:-0.02em;line-height:1.15;">Same goal.<br>Same amount.<br>Different <span style="color:#22d47a;font-style:italic;">start date.</span></div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center;">
+        <div class="person-card alex">
+          <div class="person-avatar alex">🌱</div>
+          <div class="person-info">
+            <div class="person-name alex">Alex — starts at 25</div>
+            <div class="person-detail">Invests <strong style="color:#f0f2f5;">$300/month</strong> for just <strong style="color:#f0f2f5;">10 years</strong>, then stops completely. Total invested: <strong style="color:#22d47a;">$36,000</strong></div>
+          </div>
+        </div>
+
+        <div class="person-card sam">
+          <div class="person-avatar sam">⏳</div>
+          <div class="person-info">
+            <div class="person-name sam">Sam — starts at 35</div>
+            <div class="person-detail">Invests <strong style="color:#f0f2f5;">$300/month</strong> for <strong style="color:#f0f2f5;">30 years</strong> straight. Total invested: <strong style="color:#4a9eff;">$108,000</strong></div>
+          </div>
+        </div>
+
+        <div class="insight">
+          Both retire at 65 with <strong>8% average annual return.</strong><br>Who ends up with more money?
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 3 — What they put in ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 03/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">03 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;padding:18px 36px 52px;position:relative;z-index:2;gap:20px;">
+      <div class="tag tag-green">Total invested</div>
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#f0f2f5;letter-spacing:-0.02em;line-height:1.2;">Sam puts in<br><span style="color:#4a9eff;">3× more cash.</span></div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center;">
+        <!-- Alex bar: $36,000 → 33% -->
+        <div class="amount-row">
+          <div class="amount-label alex">Alex</div>
+          <div class="amount-bar-wrap">
+            <div class="amount-bar alex" style="width:33%;">$36,000</div>
+          </div>
+        </div>
+        <!-- Sam bar: $108,000 → 100% -->
+        <div class="amount-row">
+          <div class="amount-label sam">Sam</div>
+          <div class="amount-bar-wrap">
+            <div class="amount-bar sam" style="width:100%;">$108,000</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
+          <div style="background:#111318;border:1px solid rgba(34,212,122,0.20);border-radius:12px;padding:14px 16px;">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:#22d47a;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Alex invests</div>
+            <div style="font-family:'DM Mono',monospace;font-size:22px;color:#22d47a;">10 years</div>
+            <div style="font-size:12px;color:#4a5568;margin-top:3px;">age 25 – 35, then stops</div>
+          </div>
+          <div style="background:#111318;border:1px solid rgba(74,158,255,0.15);border-radius:12px;padding:14px 16px;">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4a9eff;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Sam invests</div>
+            <div style="font-family:'DM Mono',monospace;font-size:22px;color:#4a9eff;">30 years</div>
+            <div style="font-size:12px;color:#4a5568;margin-top:3px;">age 35 – 65, non-stop</div>
+          </div>
+        </div>
+
+        <div class="insight" style="margin-top:4px;">
+          Sam tries to <strong>make up for lost time</strong> with more money.<br>Spoiler: it doesn't work.
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 4 — The result ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 04/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-gold-br"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">04 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;padding:18px 36px 52px;position:relative;z-index:2;gap:20px;">
+      <div class="tag tag-gold">At age 65</div>
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#f0f2f5;letter-spacing:-0.02em;line-height:1.2;">The result will<br>shock you.</div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center;">
+        <!-- Alex result: $552,000 → 100% -->
+        <div class="result-row">
+          <div class="result-meta">
+            <div class="result-who alex">🌱 Alex (invested $36k)</div>
+            <div class="result-val alex">$552,000</div>
+          </div>
+          <div class="result-track">
+            <div class="result-fill alex" style="width:100%;"></div>
+          </div>
+        </div>
+
+        <!-- Sam result: $447,000 → 81% -->
+        <div class="result-row">
+          <div class="result-meta">
+            <div class="result-who sam">⏳ Sam (invested $108k)</div>
+            <div class="result-val sam">$447,000</div>
+          </div>
+          <div class="result-track">
+            <div class="result-fill sam" style="width:81%;"></div>
+          </div>
+        </div>
+
+        <div style="background:rgba(232,200,74,0.08);border:1px solid rgba(232,200,74,0.22);border-radius:12px;padding:16px 18px;margin-top:4px;">
+          <div style="font-family:'DM Mono',monospace;font-size:22px;color:#e8c84a;">Alex wins by $105,000</div>
+          <div style="font-size:13px;color:#8a9ab0;margin-top:6px;line-height:1.5;">…despite investing <strong style="color:#f0f2f5;">$72,000 less</strong> than Sam. 🤯</div>
+        </div>
+
+        <div style="font-size:12px;color:#4a5568;text-align:center;">8% annual return · dividends reinvested</div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 5 — The lesson ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 05/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">05 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;padding:18px 36px 52px;position:relative;z-index:2;gap:20px;">
+      <div class="tag tag-green">What this means for you</div>
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#f0f2f5;letter-spacing:-0.02em;line-height:1.2;">Every year<br>you wait costs<br>you <span style="color:#22d47a;font-style:italic;">more</span> than<br>you think.</div>
+
+      <div class="check-list" style="flex:1;justify-content:center;display:flex;flex-direction:column;">
+        <div class="check-item">
+          <div class="check-dot">⏰</div>
+          <div class="check-text"><strong>1 year of delay</strong> = you need to invest ~15% more money to catch up</div>
+        </div>
+        <div class="check-item">
+          <div class="check-dot">📉</div>
+          <div class="check-text"><strong>Waiting for the "right time"</strong> is the most expensive financial mistake</div>
+        </div>
+        <div class="check-item">
+          <div class="check-dot">💡</div>
+          <div class="check-text"><strong>Even $50/month</strong> started today beats $500/month started in 10 years</div>
+        </div>
+        <div class="check-item">
+          <div class="check-dot">🌱</div>
+          <div class="check-text"><strong>Dividend stocks + DRIP</strong> amplify this further — reinvested income compounds on top of growth</div>
+        </div>
+      </div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 6 — CTA ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">SLIDE 06/06 — Screenshot below ↓</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+    <div class="top-bar">
+      <div class="logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/><path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Div<span class="g">Sprout</span></div>
+      <div class="counter">06 / 06</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px 42px 60px;position:relative;z-index:2;gap:20px;">
+      <div style="font-size:52px;line-height:1;">⏰</div>
+      <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:700;line-height:1.12;color:#f0f2f5;letter-spacing:-0.02em;">The best time<br>to start was<br><span style="color:#22d47a;font-style:italic;">yesterday.</span></div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:15px;color:#8a9ab0;line-height:1.6;max-width:340px;">The second best time is right now.<br>See exactly how your money grows — free DRIP calculator, no sign-up.</div>
+      <div style="background:#22d47a;color:#0a0b0d;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:14px 30px;border-radius:100px;box-shadow:0 8px 28px rgba(34,212,122,0.38);letter-spacing:0.02em;">Try the DRIP Calculator</div>
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:#4a5568;">divsprout.com/calculators/drip</div>
+    </div>
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+</body>
+</html>

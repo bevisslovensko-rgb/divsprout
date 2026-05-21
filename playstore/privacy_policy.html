@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DivSprout - Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for DivSprout - Dividend Calculator Android app.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-base:        #0a0b0d;
+      --bg-surface:     #111318;
+      --bg-elevated:    #181c22;
+      --text-primary:   #f0f2f5;
+      --text-secondary: #8a9ab0;
+      --text-muted:     #4a5568;
+      --green:          #22d47a;
+      --green-dim:      rgba(34, 212, 122, 0.10);
+      --green-glow:     rgba(34, 212, 122, 0.20);
+      --border:         rgba(255, 255, 255, 0.07);
+      --border-accent:  rgba(34, 212, 122, 0.25);
+      --font-body:      'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+      --font-display:   'Fraunces', Georgia, serif;
+      --max-width:      720px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 13, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .logo-text span { color: var(--green); }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      padding: 80px 24px 48px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid var(--border-accent);
+      border-radius: 9999px;
+      padding: 5px 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-meta {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ── LEAD CARD ───────────────────────────────────────── */
+    .lead-card {
+      max-width: var(--max-width);
+      margin: 0 auto 56px;
+      padding: 0 24px;
+    }
+
+    .lead-card-inner {
+      background: var(--green-dim);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 24px 28px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .lead-card-inner strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ── CONTENT ─────────────────────────────────────────── */
+    .content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 24px 0 12px;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 12px 0 16px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding: 5px 0 5px 22px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0.6;
+    }
+
+    a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .footer-logo-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .footer-logo-text span { color: var(--green); }
+
+    .footer-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-meta a {
+      color: var(--text-muted);
+    }
+
+    .footer-meta a:hover {
+      color: var(--green);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 480px) {
+      h1 { font-size: 32px; }
+      .hero { padding: 56px 20px 36px; }
+      .lead-card, .content { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <svg class="logo-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#0a0b0d"/>
+        <path d="M16 26C16 26 9 20 9 14C9 10.1 12.1 8 16 8s7 2.1 7 6c0 6-7 12-7 12z"
+          fill="none" stroke="#22d47a" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M16 26V17M16 17L13.5 19.5M16 17L18.5 19.5"
+          stroke="#22d47a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">Div<span>Sprout</span></span>
+      <span class="nav-badge">Dividend Calculator</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-label">Legal</div>
+    <h1>Privacy <em>Policy</em></h1>
+    <p class="hero-meta">Last updated: May 21, 2026</p>
+  </header>
+
+  <!-- LEAD -->
+  <div class="lead-card">
+    <div class="lead-card-inner">
+      <strong>DivSprout is a simple offline dividend calculator.</strong> We do not collect, store, or share any personal data you enter into the app. All calculations happen locally on your device.
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="section">
+      <h2>1. Information We Collect</h2>
+      <p>DivSprout does not collect any personally identifiable information. The app works completely offline and all investment data you enter (initial investment, dividend yield, etc.) stays on your device and is never transmitted to any server.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Local Data Storage (SharedPreferences)</h2>
+      <p>DivSprout uses Android's SharedPreferences to store your app settings and saved data locally on your device. This includes:</p>
+      <ul>
+        <li>Saved investment scenarios (name, parameters, results)</li>
+        <li>FIRE goal settings</li>
+        <li>Custom milestone configurations</li>
+        <li>Calculator input preferences</li>
+      </ul>
+      <p>This data is stored entirely on your device, is not encrypted, and is never transmitted to any server. If you uninstall the app, all locally stored data will be permanently deleted. No cloud backup or sync is performed.</p>
+    </div>
+
+    <div class="section">
+      <h2>3. Advertising (Google AdMob)</h2>
+      <p>DivSprout displays advertisements provided by Google AdMob, including both banner ads and rewarded video ads. Google AdMob may collect and use certain data to show relevant ads. This includes:</p>
+      <ul>
+        <li>Device identifiers (Advertising ID)</li>
+        <li>IP address and approximate location</li>
+        <li>Device type, operating system, and language</li>
+        <li>Ad interaction data (views, clicks)</li>
+      </ul>
+      <h3>Rewarded Ads</h3>
+      <p>DivSprout uses rewarded video ads to unlock additional scenario save slots. Watching a rewarded ad is optional and user-initiated. The ad content and data collection associated with rewarded ads are managed entirely by Google AdMob.</p>
+      <p>This data is collected by Google, not by us. For more information about how Google uses data, please visit:</p>
+      <ul>
+        <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+        <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Google AdMob Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>4. User Consent (GDPR)</h2>
+      <p>If you are located in the European Economic Area (EEA), including Slovakia and the Czech Republic, you will be asked to provide consent for personalized advertising when you first launch the app. You can manage your advertising preferences at any time through your device settings.</p>
+      <p>To opt out of personalized ads on Android:</p>
+      <ul>
+        <li>Go to Settings → Google → Ads</li>
+        <li>Enable "Opt out of Ads Personalization"</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>5. External Links</h2>
+      <p>DivSprout contains a link to our website (<a href="https://divsprout.com" target="_blank" rel="noopener">divsprout.com</a>) for educational articles and tips about dividend investing. When you tap this link, you will be taken to an external website. We encourage you to review the privacy policy of any external site you visit. DivSprout does not share any personal data when opening this link.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Data Storage</h2>
+      <p>DivSprout does not maintain any databases or servers. No investment data, personal information, or usage statistics are stored outside of your device. The app does not require any account registration or login. All user data (scenarios, milestones, FIRE goals) is stored locally using Android SharedPreferences.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Children's Privacy</h2>
+      <p>DivSprout is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided personal information through the app, please contact us.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Third-Party Services</h2>
+      <p>DivSprout uses the following third-party services:</p>
+      <ul>
+        <li><strong style="color:#f0f2f5">Google AdMob</strong> — for displaying banner advertisements and rewarded video ads. Subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li><strong style="color:#f0f2f5">Google Play In-App Review API</strong> — for requesting app ratings. No personal data is collected by this feature.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>9. Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this page periodically.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Contact Us</h2>
+      <p>If you have any questions or concerns about this Privacy Policy, please contact us at:</p>
+      <p><a href="mailto:bevis.slovensko@gmail.com">bevis.slovensko@gmail.com</a></p>
+      <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">This privacy policy applies to the DivSprout Android application available on Google Play.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#0a0b0d"/>
+          <path d="M16 26C16 26 9 20 9 14C9 10.1 12.1 8 16 8s7 2.1 7 6c0 6-7 12-7 12z"
+            fill="none" stroke="#22d47a" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M16 26V17M16 17L13.5 19.5M16 17L18.5 19.5"
+            stroke="#22d47a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="footer-logo-text">Div<span>Sprout</span></span>
+      </div>
+      <p class="footer-meta">
+        © 2026 DivSprout. All rights reserved.
+        &nbsp;·&nbsp;
+        <a href="https://divsprout.com" target="_blank" rel="noopener">divsprout.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://play.google.com/store/apps/details?id=com.bevisslovensko.divflow" target="_blank" rel="noopener">Google Play</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
