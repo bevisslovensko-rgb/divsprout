@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a1a0e; }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: radial-gradient(ellipse at 50% 80%, #0f2d14 0%, #081208 60%, #040d06 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 120px;
+  }
+
+  .headline {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+  .headline .top {
+    font-size: 32px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .headline h1 {
+    font-size: 88px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.0;
+  }
+  .headline h1 .green { color: #22d47a; }
+  .headline .sub {
+    margin-top: 22px;
+    font-size: 34px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  /* Ground line */
+  .ground {
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34,212,122,0.4), transparent);
+  }
+
+  /* Coin in ground */
+  .coin {
+    position: absolute;
+    bottom: 212px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffe87a, #f0c030 60%, #b08010);
+    box-shadow: 0 0 30px rgba(240,192,48,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: rgba(180,120,0,0.8);
+    z-index: 5;
+  }
+
+  /* Tree SVG container */
+  .tree-wrap {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 550px;
+  }
+
+  /* Floating coins */
+  .float-coin {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffe87a, #f0c030 60%, #b08010);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: rgba(150,100,0,0.7);
+    box-shadow: 0 0 20px rgba(240,192,48,0.3);
+  }
+
+  .brand {
+    position: absolute;
+    bottom: 48px;
+    right: 60px;
+    font-size: 26px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 2px;
+  }
+  .brand span { color: rgba(34,212,122,0.4); }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="headline">
+    <div class="top">Dividend investing</div>
+    <h1>Plant <span class="green">today.</span><br>Harvest forever.</h1>
+    <div class="sub">One share at a time.</div>
+  </div>
+
+  <!-- Tree SVG -->
+  <div class="tree-wrap">
+    <svg viewBox="0 0 500 550" xmlns="http://www.w3.org/2000/svg" width="500" height="550">
+      <!-- trunk -->
+      <rect x="232" y="380" width="36" height="120" rx="8" fill="#2d5a1b"/>
+      <!-- roots -->
+      <path d="M250 495 Q220 510 190 520" stroke="#1f3d12" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M250 495 Q280 510 310 522" stroke="#1f3d12" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M250 495 Q235 515 225 530" stroke="#1f3d12" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- canopy layers -->
+      <ellipse cx="250" cy="290" rx="160" ry="110" fill="#1a4d20"/>
+      <ellipse cx="250" cy="240" rx="130" ry="90" fill="#206228"/>
+      <ellipse cx="250" cy="195" rx="100" ry="75" fill="#267830"/>
+      <ellipse cx="250" cy="155" rx="70" ry="55" fill="#2d9138"/>
+      <ellipse cx="250" cy="120" rx="45" ry="40" fill="#33a83e"/>
+      <!-- highlight -->
+      <ellipse cx="220" cy="145" rx="25" ry="18" fill="rgba(34,212,122,0.15)"/>
+    </svg>
+  </div>
+
+  <!-- Coin in ground -->
+  <div class="ground"></div>
+  <div class="coin">$</div>
+
+  <!-- Floating coins around tree -->
+  <div class="float-coin" style="width:44px;height:44px;font-size:20px;top:520px;left:268px;">$</div>
+  <div class="float-coin" style="width:36px;height:36px;font-size:16px;top:480px;left:650px;">$</div>
+  <div class="float-coin" style="width:52px;height:52px;font-size:24px;top:460px;left:340px;">$</div>
+  <div class="float-coin" style="width:38px;height:38px;font-size:17px;top:530px;left:720px;">$</div>
+  <div class="float-coin" style="width:44px;height:44px;font-size:20px;top:505px;left:580px;">$</div>
+  <div class="float-coin" style="width:32px;height:32px;font-size:14px;top:555px;left:430px;">$</div>
+  <div class="float-coin" style="width:48px;height:48px;font-size:22px;top:490px;left:190px;">$</div>
+  <div class="float-coin" style="width:36px;height:36px;font-size:16px;top:545px;left:820px;">$</div>
+
+  <div class="brand">div<span>sprout</span>.com</div>
+</div>
+</body>
+</html>

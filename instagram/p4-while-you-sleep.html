@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #060b1a; }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(180deg, #060b1a 0%, #0d1832 60%, #1a2a4a 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* Stars */
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  /* Moon */
+  .moon {
+    position: absolute;
+    top: 80px;
+    right: 120px;
+    width: 120px;
+    height: 120px;
+    background: #ffeaa0;
+    border-radius: 50%;
+    box-shadow: 0 0 60px 20px rgba(255,234,160,0.3), 0 0 120px 40px rgba(255,234,160,0.1);
+  }
+  .moon::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    width: 90px;
+    height: 90px;
+    background: #0d1832;
+    border-radius: 50%;
+  }
+
+  /* City skyline */
+  .skyline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+  }
+
+  /* Windows glow */
+  .window {
+    position: absolute;
+    background: rgba(255,220,80,0.7);
+    border-radius: 2px;
+  }
+
+  /* Money counter */
+  .counter {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .counter .label-top {
+    font-size: 30px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .counter .amount {
+    font-size: 130px;
+    font-weight: 800;
+    color: #ffeaa0;
+    line-height: 1;
+    text-shadow: 0 0 80px rgba(255,234,160,0.4);
+  }
+  .counter .earned {
+    font-size: 36px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 12px;
+    letter-spacing: 2px;
+    font-weight: 400;
+  }
+  .counter .earned span {
+    color: #22d47a;
+    font-weight: 600;
+  }
+
+  .sub {
+    position: relative;
+    z-index: 10;
+    font-size: 38px;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .brand {
+    position: absolute;
+    bottom: 48px;
+    right: 60px;
+    font-size: 26px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 2px;
+  }
+  .brand span { color: rgba(34,212,122,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="moon"></div>
+
+  <!-- Stars -->
+  <div class="star" style="width:3px;height:3px;top:60px;left:80px;opacity:0.8;"></div>
+  <div class="star" style="width:2px;height:2px;top:90px;left:220px;opacity:0.6;"></div>
+  <div class="star" style="width:4px;height:4px;top:40px;left:380px;opacity:0.9;"></div>
+  <div class="star" style="width:2px;height:2px;top:130px;left:500px;opacity:0.5;"></div>
+  <div class="star" style="width:3px;height:3px;top:70px;left:640px;opacity:0.7;"></div>
+  <div class="star" style="width:2px;height:2px;top:110px;left:780px;opacity:0.8;"></div>
+  <div class="star" style="width:3px;height:3px;top:50px;left:900px;opacity:0.6;"></div>
+  <div class="star" style="width:2px;height:2px;top:160px;left:160px;opacity:0.5;"></div>
+  <div class="star" style="width:4px;height:4px;top:200px;left:440px;opacity:0.4;"></div>
+  <div class="star" style="width:2px;height:2px;top:180px;left:720px;opacity:0.7;"></div>
+  <div class="star" style="width:3px;height:3px;top:240px;left:300px;opacity:0.3;"></div>
+
+  <div class="counter">
+    <div class="label-top">while you slept</div>
+    <div class="amount">$47</div>
+    <div class="earned">landed in your account — <span>tax-free sleep</span></div>
+  </div>
+
+  <div class="sub">Dividends don't clock out.</div>
+
+  <!-- Skyline SVG -->
+  <svg class="skyline" viewBox="0 0 1080 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <rect x="0" y="150" width="1080" height="150" fill="#050a18"/>
+    <!-- buildings -->
+    <rect x="0" y="200" width="60" height="100" fill="#0a1428"/>
+    <rect x="60" y="160" width="80" height="140" fill="#0c1830"/>
+    <rect x="140" y="120" width="50" height="180" fill="#0a1428"/>
+    <rect x="190" y="180" width="70" height="120" fill="#0c1830"/>
+    <rect x="260" y="100" width="60" height="200" fill="#0a1428"/>
+    <rect x="320" y="170" width="40" height="130" fill="#0c1830"/>
+    <rect x="360" y="140" width="90" height="160" fill="#0a1428"/>
+    <rect x="450" y="80" width="70" height="220" fill="#0c1830"/>
+    <rect x="520" y="160" width="50" height="140" fill="#0a1428"/>
+    <rect x="570" y="120" width="80" height="180" fill="#0c1830"/>
+    <rect x="650" y="90" width="60" height="210" fill="#0a1428"/>
+    <rect x="710" y="155" width="70" height="145" fill="#0c1830"/>
+    <rect x="780" y="130" width="55" height="170" fill="#0a1428"/>
+    <rect x="835" y="170" width="80" height="130" fill="#0c1830"/>
+    <rect x="915" y="110" width="65" height="190" fill="#0a1428"/>
+    <rect x="980" y="150" width="100" height="150" fill="#0c1830"/>
+    <!-- windows lit up -->
+    <rect x="70" y="170" width="10" height="8" fill="rgba(255,220,80,0.6)" rx="1"/>
+    <rect x="90" y="185" width="10" height="8" fill="rgba(255,220,80,0.5)" rx="1"/>
+    <rect x="150" y="130" width="10" height="8" fill="rgba(255,220,80,0.7)" rx="1"/>
+    <rect x="150" y="150" width="10" height="8" fill="rgba(255,220,80,0.4)" rx="1"/>
+    <rect x="270" y="115" width="10" height="8" fill="rgba(255,220,80,0.6)" rx="1"/>
+    <rect x="290" y="130" width="10" height="8" fill="rgba(255,220,80,0.5)" rx="1"/>
+    <rect x="460" y="95" width="10" height="8" fill="rgba(255,220,80,0.7)" rx="1"/>
+    <rect x="480" y="110" width="10" height="8" fill="rgba(255,220,80,0.4)" rx="1"/>
+    <rect x="460" y="125" width="10" height="8" fill="rgba(255,220,80,0.6)" rx="1"/>
+    <rect x="580" y="130" width="10" height="8" fill="rgba(255,220,80,0.5)" rx="1"/>
+    <rect x="600" y="148" width="10" height="8" fill="rgba(255,220,80,0.7)" rx="1"/>
+    <rect x="660" y="100" width="10" height="8" fill="rgba(255,220,80,0.6)" rx="1"/>
+    <rect x="660" y="118" width="10" height="8" fill="rgba(255,220,80,0.4)" rx="1"/>
+    <rect x="920" y="120" width="10" height="8" fill="rgba(255,220,80,0.6)" rx="1"/>
+    <rect x="940" y="138" width="10" height="8" fill="rgba(255,220,80,0.5)" rx="1"/>
+  </svg>
+
+  <div class="brand">div<span>sprout</span>.com</div>
+</div>
+</body>
+</html>

@@ -3,14 +3,13 @@ const path = require('path');
 const fs = require('fs');
 
 const files = [
-  'c1-drip.html',
-  'c2-dividend-growth.html',
-  'c3-first-1000.html',
-  'p1-fire.html',
-  'p2-brand.html',
-  'c4-time-beats-money.html',
-  'c5-how-much-to-invest.html',
-  'profile-pic.html',
+  // --- pridaj sem nový súbor keď chceš vygenerovať PNG ---
+  'c6-qqq-vs-schd.html',
+  'p3-snowball.html',
+  'p4-while-you-sleep.html',
+  'p5-plant-today.html',
+  'p6-freedom-number.html',
+  'p7-first-dollar.html',
 ];
 
 async function run() {

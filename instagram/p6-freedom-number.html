@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0c0c0c; }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: #0c0c0c;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* Grid lines */
+  .grid {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image:
+      linear-gradient(rgba(34,212,122,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,212,122,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Center glow */
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(34,212,122,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* Big number */
+  .big-number {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .big-number .label {
+    font-size: 28px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .big-number .amount {
+    font-size: 180px;
+    font-weight: 900;
+    color: #22d47a;
+    line-height: 1;
+    letter-spacing: -4px;
+    text-shadow: 0 0 100px rgba(34,212,122,0.5), 0 0 40px rgba(34,212,122,0.3);
+  }
+  .big-number .period {
+    font-size: 42px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+
+  /* Divider */
+  .divider {
+    position: relative;
+    z-index: 10;
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34,212,122,0.5), transparent);
+    margin: 28px 0;
+  }
+
+  /* Bottom text */
+  .bottom-text {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+  .bottom-text .headline {
+    font-size: 52px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .bottom-text .sub {
+    margin-top: 16px;
+    font-size: 30px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  /* Corner accent */
+  .corner {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    width: 80px;
+    height: 80px;
+    border-top: 3px solid rgba(34,212,122,0.3);
+    border-left: 3px solid rgba(34,212,122,0.3);
+  }
+  .corner.br {
+    top: auto; left: auto;
+    bottom: 60px; right: 60px;
+    border-top: none; border-left: none;
+    border-bottom: 3px solid rgba(34,212,122,0.3);
+    border-right: 3px solid rgba(34,212,122,0.3);
+  }
+
+  .brand {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: 3px;
+  }
+  .brand span { color: rgba(34,212,122,0.35); }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="grid"></div>
+  <div class="glow"></div>
+  <div class="corner"></div>
+  <div class="corner br"></div>
+
+  <div class="big-number">
+    <div class="label">your freedom number</div>
+    <div class="amount">$2,000</div>
+    <div class="period">per month in dividends</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="bottom-text">
+    <div class="headline">That's the number<br>that changes everything.</div>
+    <div class="sub">What's yours?</div>
+  </div>
+
+  <div class="brand">div<span>sprout</span>.com</div>
+</div>
+</body>
+</html>

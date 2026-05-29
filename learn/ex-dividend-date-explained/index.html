@@ -56,6 +56,19 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What time do I need to buy a stock to qualify for the dividend?", "acceptedAnswer": { "@type": "Answer", "text": "You must own shares before the market opens on the ex-dividend date. Buying at any point during the trading day before the ex-date qualifies you. There is no advantage to buying earlier in the day — the cut-off is market open on the ex-date itself." } },
+      { "@type": "Question", "name": "Why doesn't the stock price always drop by the exact dividend amount on the ex-date?", "acceptedAnswer": { "@type": "Answer", "text": "Normal market movements — news, sentiment, sector trends — overlay the dividend adjustment. On any given ex-date the stock might open higher due to positive news, masking the dividend adjustment. Over large samples the average adjustment closely matches the dividend, but other forces can dominate on any individual day." } },
+      { "@type": "Question", "name": "Can I sell my shares right after the ex-dividend date and still keep the dividend?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once you've passed the ex-dividend date as a holder, you're entitled to the upcoming dividend regardless of when you sell. However, the share price typically drops by the dividend amount on the ex-date, so the economics of selling immediately are neutral." } },
+      { "@type": "Question", "name": "Where can I find upcoming ex-dividend dates?", "acceptedAnswer": { "@type": "Answer", "text": "Most brokerage platforms display ex-dividend dates for stocks you hold or watch. Financial data sites like Nasdaq.com and Dividend.com maintain searchable ex-dividend calendars. ETF providers (Vanguard, iShares, Schwab) publish distribution dates on their websites." } }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://divsprout.com/" },
@@ -197,6 +210,62 @@
           <p>If you're selling a stock you hold: consider whether you'd prefer to sell before or after the ex-date. Selling before the ex-date means you lose the upcoming dividend; selling after means you receive it but typically see the share price adjusted down. The total value is similar either way — the choice mainly affects whether you receive the proceeds as a dividend payment or as a slightly higher sale price.</p>
 
           <p>Most brokerage platforms show the upcoming ex-dividend date in the stock's details page or dividend history section. For well-known dividend payers, this information is also widely available on financial data sites.</p>
+
+          <h2 id="special-dividends">Special dividends and their ex-dates</h2>
+
+          <p>Beyond regular quarterly or annual dividends, companies occasionally pay special dividends — one-time distributions that are separate from the regular dividend schedule. Special dividends can be significantly larger than regular dividends; some companies pay special dividends equal to several years' worth of regular payments when they have exceptional cash on hand, complete an asset sale, or wish to return capital before a tax law change.</p>
+
+          <p>Special dividends have their own ex-dividend dates, which are set and announced separately from the regular dividend. The same rules apply: own the shares before the ex-date to receive the payment. Because special dividends are by definition irregular and often large, the share price adjustment on the ex-date is typically more pronounced and visible than the usual small quarterly adjustment.</p>
+
+          <p>For income investors holding a stock that announces a special dividend, the decision about whether to sell before or after the ex-date becomes more meaningful — because the price drop on the ex-date will be larger, making the timing more financially significant. The tax treatment of special dividends also varies and is worth checking, as they are sometimes classified differently than regular qualified dividends.</p>
+
+          <h2 id="ex-dates-and-drip">Ex-dividend dates and DRIP reinvestment</h2>
+
+          <p>If you've set up automatic dividend reinvestment (DRIP) through your brokerage, the ex-dividend date is still the critical date — you simply don't need to do anything manually. Dividends accrue to shareholders of record, and when the payment date arrives, your brokerage automatically uses the cash to purchase additional shares of the same stock, typically at the prevailing market price on the payment date.</p>
+
+          <p>One nuance worth understanding: shares purchased through DRIP reinvestment acquire their own ex-dividend date eligibility from the moment of purchase. If your reinvested dividend buys new shares a week before an upcoming ex-date, those new shares will qualify for the next payment. If the payment date falls after the ex-date, however, the newly purchased shares won't qualify for that specific cycle — they'll begin generating dividends from the following payment onward.</p>
+
+          <h2 id="etf-ex-dates">How ex-dividend dates work for ETFs</h2>
+
+          <p>Dividend ETFs work the same way as individual stocks for ex-dividend purposes — you must own the ETF before the ex-date to receive the distribution. However, ETFs have some unique characteristics. Equity ETFs typically distribute dividends on a quarterly or monthly basis, collecting dividends from all the individual holdings in the fund and then passing them through to ETF shareholders as a single distribution.</p>
+
+          <p>The ETF's distribution amount fluctuates each quarter depending on the dividends collected from its holdings. Unlike individual stocks where the company explicitly declares a specific dividend amount well in advance, ETF distribution amounts are often estimated and may vary from the prior quarter. The ETF provider typically announces the distribution amount and ex-date several days before the event.</p>
+
+          <p>For monthly-paying ETFs — common among income-focused funds like those holding REITs or preferred stocks — the same ex-date mechanics apply, just repeated twelve times per year rather than four. Investors who rely on dividend ETFs for regular income should note that monthly ETF distributions can be less predictable in amount than quarterly individual stock dividends, but the higher frequency of payments can be valuable for cash flow management.</p>
+
+          <h2 id="ex-date-faq">Frequently asked questions</h2>
+
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">What time do I need to buy a stock to qualify for the dividend?</button>
+              <div class="faq-answer">
+                <p>You must own the shares before the market opens on the ex-dividend date. Buying at any point during the trading day before the ex-date (including in after-hours trading the evening before) qualifies you for the dividend. There's no advantage to buying earlier in the day versus later — the cut-off is the market open on the ex-date itself.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">Why doesn't the stock price always drop by the exact dividend amount on the ex-date?</button>
+              <div class="faq-answer">
+                <p>Because normal market movements — driven by news, sentiment, sector trends, and overall market direction — overlay the dividend adjustment. On any given ex-date, the stock might open up 1% due to positive news, masking a $0.50 dividend adjustment that would have otherwise pushed it slightly lower. Over large samples the average adjustment closely matches the dividend, but on any individual day, other forces can dominate.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">Can I sell my shares right after the ex-dividend date and still keep the dividend?</button>
+              <div class="faq-answer">
+                <p>Yes. Once you've passed the ex-dividend date as a holder, you're entitled to the upcoming dividend regardless of when you sell. You could technically sell on the ex-date itself and still receive the dividend when it's paid out weeks later. However, the share price typically drops by the dividend amount on the ex-date, so the economics of selling immediately are neutral — you receive the dividend but sell at a proportionally lower price.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">Where can I find upcoming ex-dividend dates?</button>
+              <div class="faq-answer">
+                <p>Most brokerage platforms display ex-dividend dates for stocks you hold or watch. Financial data sites like Nasdaq.com, Seeking Alpha, and Dividend.com maintain searchable ex-dividend calendars. For ETFs, check the ETF provider's website directly — Vanguard, iShares, and Schwab all publish distribution dates for their funds.</p>
+              </div>
+            </div>
+
+          </div>
 
         </div>
 

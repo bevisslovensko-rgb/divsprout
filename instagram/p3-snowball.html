@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; display: flex; justify-content: center; align-items: center; }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: #0d0d0d;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* Concentric circle rings */
+  .rings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ring {
+    border-radius: 50%;
+    border: 1.5px solid rgba(34,212,122,0.12);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Growing balls */
+  .balls {
+    position: absolute;
+    bottom: 140px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+  }
+  .ball {
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3fffaa, #22d47a 50%, #0f7a40);
+    flex-shrink: 0;
+  }
+
+  .label {
+    position: absolute;
+    color: rgba(255,255,255,0.35);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .main-text {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 320px;
+  }
+  .main-text .top {
+    font-size: 34px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .main-text .headline {
+    font-size: 82px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.0;
+  }
+  .main-text .headline span {
+    color: #22d47a;
+  }
+
+  .brand {
+    position: absolute;
+    bottom: 48px;
+    right: 60px;
+    font-size: 26px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+  }
+  .brand span { color: #22d47a; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- rings -->
+  <div class="rings">
+    <div class="ring" style="width:900px;height:900px;"></div>
+    <div class="ring" style="width:700px;height:700px;border-color:rgba(34,212,122,0.18);"></div>
+    <div class="ring" style="width:500px;height:500px;border-color:rgba(34,212,122,0.25);"></div>
+    <div class="ring" style="width:300px;height:300px;border-color:rgba(34,212,122,0.3);"></div>
+  </div>
+
+  <div class="main-text">
+    <div class="top">Dividend compounding</div>
+    <div class="headline">Small ball.<br><span>Big snowball.</span></div>
+  </div>
+
+  <!-- growing balls -->
+  <div class="balls">
+    <div style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); display:flex; align-items:flex-end; gap:0px;">
+      <div class="ball" style="width:40px;height:40px; margin-right:20px;"></div>
+      <div class="ball" style="width:80px;height:80px; margin-right:24px;"></div>
+      <div class="ball" style="width:140px;height:140px; margin-right:28px;"></div>
+      <div class="ball" style="width:220px;height:220px; margin-right:32px;"></div>
+      <div class="ball" style="width:340px;height:340px;"></div>
+    </div>
+
+    <!-- year labels -->
+    <div class="label" style="bottom: 48px; left: 312px;">Year 1</div>
+    <div class="label" style="bottom: 88px; left: 372px;">Year 3</div>
+    <div class="label" style="bottom: 148px; left: 438px;">Year 5</div>
+    <div class="label" style="bottom: 228px; left: 508px;">Year 10</div>
+    <div class="label" style="bottom: 348px; left: 600px;">Year 20</div>
+  </div>
+
+  <div class="brand">div<span>sprout</span>.com</div>
+</div>
+</body>
+</html>

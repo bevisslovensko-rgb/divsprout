@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Carousel — QQQ vs SCHD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #040507;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .slide-wrapper { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .slide-label { font-family: 'DM Mono', monospace; font-size: 11px; color: #4a5568; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .slide {
+    width: 540px; height: 675px;
+    background: #0a0b0d;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  /* Glows */
+  .glow-tr { position:absolute; top:-80px; right:-80px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(34,212,122,0.18) 0%,transparent 70%); pointer-events:none; }
+  .glow-bl { position:absolute; bottom:-80px; left:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(34,212,122,0.10) 0%,transparent 70%); pointer-events:none; }
+  .glow-blue { position:absolute; top:-60px; left:-60px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(74,158,255,0.14) 0%,transparent 70%); pointer-events:none; }
+  .glow-blue-br { position:absolute; bottom:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(74,158,255,0.10) 0%,transparent 70%); pointer-events:none; }
+
+  /* Logo */
+  .logo { display:flex; align-items:center; gap:7px; font-family:'Fraunces',serif; font-size:15px; font-weight:600; color:#f0f2f5; letter-spacing:-0.01em; }
+  .logo svg { width:20px; height:20px; flex-shrink:0; }
+  .logo .g { color:#22d47a; }
+
+  /* Top bar */
+  .top-bar { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:22px 28px 0; }
+  .counter { font-family:'DM Mono',monospace; font-size:11px; color:#4a5568; letter-spacing:0.06em; }
+
+  /* Tag */
+  .tag { display:inline-flex; align-items:center; gap:8px; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.10em; text-transform:uppercase; }
+  .tag::before { content:''; display:block; width:18px; height:2px; border-radius:1px; }
+  .tag-green { color:#22d47a; } .tag-green::before { background:#22d47a; }
+  .tag-blue  { color:#4a9eff; } .tag-blue::before  { background:#4a9eff; }
+
+  .url { position:absolute; bottom:20px; right:28px; font-family:'DM Mono',monospace; font-size:10px; color:#4a5568; letter-spacing:0.05em; }
+
+  /* Pill */
+  .pill { display:inline-block; border-radius:100px; padding:7px 16px; font-family:'DM Mono',monospace; font-size:12px; }
+  .pill-green { background:rgba(34,212,122,0.10); border:1px solid rgba(34,212,122,0.25); color:#22d47a; }
+  .pill-blue  { background:rgba(74,158,255,0.10);  border:1px solid rgba(74,158,255,0.25);  color:#4a9eff; }
+  .pill-muted { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#4a5568; }
+  .pill-red   { background:rgba(248,113,113,0.10); border:1px solid rgba(248,113,113,0.25); color:#f87171; }
+
+  /* Stat row */
+  .stat-row { display:flex; gap:12px; }
+  .stat-card {
+    flex:1; background:#111318; border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:16px 18px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .stat-card.qqq { border-color:rgba(74,158,255,0.22); background:rgba(74,158,255,0.05); }
+  .stat-card.schd { border-color:rgba(34,212,122,0.22); background:rgba(34,212,122,0.05); }
+  .stat-ticker { font-family:'DM Mono',monospace; font-size:13px; font-weight:500; }
+  .stat-ticker.qqq { color:#4a9eff; }
+  .stat-ticker.schd { color:#22d47a; }
+  .stat-val { font-family:'Fraunces',serif; font-size:28px; font-weight:700; line-height:1; }
+  .stat-val.qqq { color:#4a9eff; }
+  .stat-val.schd { color:#22d47a; }
+  .stat-desc { font-size:12px; color:#4a5568; line-height:1.4; margin-top:2px; }
+
+  /* Year table */
+  .year-table { display:flex; flex-direction:column; gap:0; border:1px solid rgba(255,255,255,0.07); border-radius:12px; overflow:hidden; }
+  .year-row { display:grid; grid-template-columns:60px 1fr 1fr; align-items:center; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .year-row:last-child { border-bottom:none; }
+  .year-row.header { background:#111318; padding:8px 14px; }
+  .year-row.winner-qqq { background:rgba(74,158,255,0.04); }
+  .year-row.winner-schd { background:rgba(34,212,122,0.04); }
+  .yr-year { font-family:'DM Mono',monospace; font-size:12px; color:#4a5568; }
+  .yr-header { font-family:'DM Mono',monospace; font-size:10px; color:#4a5568; letter-spacing:0.08em; text-transform:uppercase; }
+  .yr-val { font-family:'DM Mono',monospace; font-size:13px; text-align:right; }
+  .yr-val.pos-q { color:#4a9eff; }
+  .yr-val.pos-s { color:#22d47a; }
+  .yr-val.neg { color:#f87171; }
+  .yr-val.winner { font-weight:700; }
+
+  /* Insight box */
+  .insight { background:rgba(34,212,122,0.07); border:1px solid rgba(34,212,122,0.18); border-radius:12px; padding:14px 18px; font-size:13.5px; color:#22d47a; line-height:1.55; }
+  .insight.blue { background:rgba(74,158,255,0.07); border-color:rgba(74,158,255,0.18); color:#4a9eff; }
+  .insight strong { font-weight:700; }
+
+  /* Check list */
+  .check-list { display:flex; flex-direction:column; gap:13px; }
+  .check-item { display:flex; align-items:flex-start; gap:12px; }
+  .check-dot { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; margin-top:1px; }
+  .check-dot.green { background:rgba(34,212,122,0.12); border:1px solid rgba(34,212,122,0.25); }
+  .check-dot.blue  { background:rgba(74,158,255,0.12); border:1px solid rgba(74,158,255,0.25); }
+  .check-text { font-size:13.5px; color:#8a9ab0; line-height:1.55; }
+  .check-text strong { color:#f0f2f5; font-weight:600; }
+
+  /* VS divider */
+  .vs-badge { width:40px; height:40px; border-radius:50%; background:#111318; border:1px solid rgba(255,255,255,0.10); display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:11px; color:#4a5568; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ SLIDE 1 — Cover ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 1 / 5 — Cover</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-blue"></div>
+
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span class="g">Sprout</span>
+      </div>
+      <div class="counter">01 / 05</div>
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 36px; gap:28px; position:relative; z-index:2;">
+
+      <div class="tag tag-green">ETF Comparison</div>
+
+      <div style="display:flex; align-items:center; gap:20px;">
+        <div style="font-family:'DM Mono',monospace; font-size:52px; font-weight:700; color:#4a9eff; line-height:1;">QQQ</div>
+        <div class="vs-badge">vs</div>
+        <div style="font-family:'DM Mono',monospace; font-size:52px; font-weight:700; color:#22d47a; line-height:1;">SCHD</div>
+      </div>
+
+      <div style="font-family:'Fraunces',serif; font-size:26px; font-weight:300; color:#f0f2f5; line-height:1.25; letter-spacing:-0.02em;">
+        Growth or income?<br><em style="color:#22d47a;">The data decides.</em>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="pill pill-blue">~18% CAGR (QQQ)</span>
+        <span class="pill pill-green">~3.5% yield (SCHD)</span>
+        <span class="pill pill-red">−32.6% in 2022 (QQQ)</span>
+      </div>
+
+      <div style="font-size:13px; color:#4a5568; line-height:1.5;">Swipe for year-by-year data, risk breakdown, and the verdict →</div>
+    </div>
+
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 2 — Key Stats ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 2 / 5 — Key Stats</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span class="g">Sprout</span>
+      </div>
+      <div class="counter">02 / 05</div>
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 28px; gap:20px; position:relative; z-index:2;">
+
+      <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:#f0f2f5; line-height:1.2;">By the numbers</div>
+
+      <div class="stat-row">
+        <div class="stat-card qqq">
+          <div class="stat-ticker qqq">QQQ</div>
+          <div class="stat-val qqq">0.20%</div>
+          <div class="stat-desc">Expense ratio<br>(QQQM: 0.15%)</div>
+        </div>
+        <div class="stat-card schd">
+          <div class="stat-ticker schd">SCHD</div>
+          <div class="stat-val schd">0.06%</div>
+          <div class="stat-desc">Expense ratio<br>One of the lowest</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card qqq">
+          <div class="stat-ticker qqq">QQQ yield</div>
+          <div class="stat-val qqq">~0.5%</div>
+          <div class="stat-desc">Nearly zero income.<br>Returns = price gains.</div>
+        </div>
+        <div class="stat-card schd">
+          <div class="stat-ticker schd">SCHD yield</div>
+          <div class="stat-val schd">~3.5%</div>
+          <div class="stat-desc">Growing ~11%/yr<br>since 2011</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card qqq">
+          <div class="stat-ticker qqq">QQQ beta</div>
+          <div class="stat-val qqq">~1.2×</div>
+          <div class="stat-desc">20% more volatile<br>than S&P 500</div>
+        </div>
+        <div class="stat-card schd">
+          <div class="stat-ticker schd">SCHD beta</div>
+          <div class="stat-val schd">~0.7×</div>
+          <div class="stat-desc">30% less volatile<br>than S&P 500</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 3 — Year by Year ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 3 / 5 — Annual Returns</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span class="g">Sprout</span>
+      </div>
+      <div class="counter">03 / 05</div>
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 28px; gap:16px; position:relative; z-index:2;">
+
+      <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:#f0f2f5;">Total return, year by year</div>
+
+      <div class="year-table">
+        <div class="year-row header">
+          <div class="yr-header">Year</div>
+          <div class="yr-header" style="text-align:right; color:#4a9eff;">QQQ</div>
+          <div class="yr-header" style="text-align:right; color:#22d47a;">SCHD</div>
+        </div>
+        <div class="year-row winner-qqq">
+          <div class="yr-year">2020</div>
+          <div class="yr-val pos-q winner">+48.6%</div>
+          <div class="yr-val pos-s">+11.8%</div>
+        </div>
+        <div class="year-row winner-schd">
+          <div class="yr-year">2021</div>
+          <div class="yr-val pos-q">+27.3%</div>
+          <div class="yr-val pos-s winner">+29.0%</div>
+        </div>
+        <div class="year-row winner-schd">
+          <div class="yr-year">2022</div>
+          <div class="yr-val neg">−32.6%</div>
+          <div class="yr-val pos-s winner">−5.5%</div>
+        </div>
+        <div class="year-row winner-qqq">
+          <div class="yr-year">2023</div>
+          <div class="yr-val pos-q winner">+54.9%</div>
+          <div class="yr-val pos-s">+6.9%</div>
+        </div>
+        <div class="year-row winner-qqq">
+          <div class="yr-year">2024</div>
+          <div class="yr-val pos-q winner">+25.6%</div>
+          <div class="yr-val pos-s">+12.0%</div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <strong>The pattern:</strong> QQQ wins most bull market years — often by a wide margin. SCHD wins when things get rough.
+      </div>
+
+    </div>
+
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 4 — The Risk Nobody Talks About ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 4 / 5 — The Risk</div>
+  <div class="slide">
+    <div class="glow-blue-br"></div>
+    <div class="glow-tr"></div>
+
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span class="g">Sprout</span>
+      </div>
+      <div class="counter">04 / 05</div>
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 28px; gap:22px; position:relative; z-index:2;">
+
+      <div>
+        <div class="tag tag-blue" style="margin-bottom:12px;">The risk nobody mentions</div>
+        <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:#f0f2f5; line-height:1.25;">QQQ lost <span style="color:#f87171;">83%</span> during the dot-com crash</div>
+      </div>
+
+      <div style="background:rgba(248,113,113,0.07); border:1px solid rgba(248,113,113,0.20); border-radius:12px; padding:16px 18px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between;">
+          <span style="font-size:13px; color:#8a9ab0;">QQQ peak (Mar 2000)</span>
+          <span style="font-family:'DM Mono',monospace; font-size:13px; color:#f87171;">100%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="font-size:13px; color:#8a9ab0;">QQQ trough (Oct 2002)</span>
+          <span style="font-family:'DM Mono',monospace; font-size:13px; color:#f87171;">−83%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="font-size:13px; color:#8a9ab0;">Full recovery</span>
+          <span style="font-family:'DM Mono',monospace; font-size:13px; color:#f87171;">2017 — 17 years later</span>
+        </div>
+      </div>
+
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-dot blue">→</div>
+          <div class="check-text"><strong>50%+ of QQQ is technology.</strong> One bad cycle hits hard.</div>
+        </div>
+        <div class="check-item">
+          <div class="check-dot blue">→</div>
+          <div class="check-text"><strong>Zero financials in QQQ.</strong> Excluded by Nasdaq-100 rules — missed the 2021–22 bank rally entirely.</div>
+        </div>
+        <div class="check-item">
+          <div class="check-dot green">✓</div>
+          <div class="check-text"><strong>SCHD held up both times.</strong> Quality dividend screens filter out the most fragile companies.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="url">divsprout.com</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SLIDE 5 — Verdict ══════════════════════ -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 5 / 5 — Verdict</div>
+  <div class="slide">
+    <div class="glow-tr"></div>
+    <div class="glow-bl"></div>
+
+    <div class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M10 17C10 17 4 12 4 7.5C4 5.015 6.686 3 10 3s6 2.015 6 4.5c0 4.5-6 9.5-6 9.5z" stroke="#22d47a" stroke-width="1.3" fill="none"/>
+          <path d="M10 17V9.5M10 9.5L7.5 12M10 9.5L12.5 12" stroke="#22d47a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Div<span class="g">Sprout</span>
+      </div>
+      <div class="counter">05 / 05</div>
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 28px; gap:20px; position:relative; z-index:2;">
+
+      <div style="font-family:'Fraunces',serif; font-size:24px; font-weight:600; color:#f0f2f5; line-height:1.2;">So which one should you buy?</div>
+
+      <div style="background:#111318; border:1px solid rgba(74,158,255,0.22); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:'DM Mono',monospace; font-size:13px; color:#4a9eff;">Choose QQQ if…</div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-dot blue">→</div>
+            <div class="check-text" style="font-size:13px;">You have <strong>20+ years</strong> and can hold through −30% crashes</div>
+          </div>
+          <div class="check-item">
+            <div class="check-dot blue">→</div>
+            <div class="check-text" style="font-size:13px;">You <strong>don't need income</strong> — only care about ending value</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#111318; border:1px solid rgba(34,212,122,0.22); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:'DM Mono',monospace; font-size:13px; color:#22d47a;">Choose SCHD if…</div>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-dot green">→</div>
+            <div class="check-text" style="font-size:13px;">You want <strong>growing dividend income</strong> you can live off</div>
+          </div>
+          <div class="check-item">
+            <div class="check-dot green">→</div>
+            <div class="check-text" style="font-size:13px;">You're <strong>near or in retirement</strong> and need stability</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight" style="font-size:13px;">
+        <strong>Best answer for most people:</strong> Hold both. QQQ for growth, SCHD as your income foundation.
+      </div>
+
+    </div>
+
+    <div class="url">divsprout.com/learn/qqq-vs-schd/</div>
+  </div>
+</div>
+
+</body>
+</html>
